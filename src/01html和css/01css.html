@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="testcss.css">
+    <style>
+        span {
+            color: blueviolet;
+            padding: 2px;
+        }
+
+        .mydiv {
+            font-size: 22px;
+            text-align: center;
+            /* 快捷键tac */
+            text-indent: 2em;
+            /* em也是单位长度  是相对于本内容的单位长度 比如段落是汉子那就是一个汉子的长度 */
+        }
+
+        .red {
+            color: red;
+        }
+
+        div {
+            font-size: 20px;
+            font-weight: bold;
+            /*font-family设置字体 字体加粗bold相当于700 700没有单位哦 normal不加粗相当于400*/
+        }
+
+        em {
+            font-style: normal;
+            /*font-style 设置斜体 normal不斜体 italic 设置字体斜体 */
+            /* 当然字体样式是可以连着写的中间空格隔开 选择器{ font: font-style font-weight font-size/line-height font-family } 某个属性不写使用默认值 但必须保留font-size和font-family属性，否则font属性将不起作用。*/
+        }
+
+        /* CSS外观属性
+        color: 属性值有三种 1 关键字 2 16进制表示用#开头 #rrggbb 第二个r和第一个r值相同可以省略一个 红色：#ff0000 或者#f00 3 rgb
+        line-height 行高 快捷键lh+table 单位也是用px 一般比字号大7.8px就好了
+        text-align 让标签里面的内容水平对齐 left right center
+        text-indent 首行缩进
+        text-decoration 文本装饰 none 取消文本效果（对em strong del设置decoration:none 取消有的效果，只有强调的作用了） underline 下划线 overline上划线 line-through 删除线
+         */
+    </style>
+</head>
+
+<body>
+    <p>我们行内写样式是很臃肿的并且有些样式可能不生效</p>
+    <hr color="red">
+    CSS 美化HTML <br>
+    行内样式：<p style="color: saddlebrown;padding-left: 20">style属性，注意使用；分开</p>
+    内部样式表： <span>我是内部样式表只需要在head里添加style标签然后按照格式书写</span>
+    外部样式表： <div>书写CSS文件，里面不需要写style关键字了 html文件直接link一下</div>
+    <h3 style="color: red">选择器</h3>
+    标签选择器 <br>
+    类选择器 <div class="mydiv red">上面点申明，下面class调用</div>
+    id选择器 用#
+    通配符选择器 * 代表所有标签<br>
+    选择器分组： h1,h2,h3{...} <br>
+    属性选择器： a[href] {...} 含有属性href的A标签 <br>
+    后代选择器： div p {} .suibian p {} 都OK
+    <h3>CSS字体样式属性</h3>
+    <div style="font-size: 20px">必须带px单位！！属性值可以是相对长度单位(em--相对于当前对象内文本的字体尺寸;px--像素)，也可以是绝对长度单位（in;cm;mm;pt）；</div>
+    Chrome默认字体可以在设置中查看 16px
+    <div style="font-family: 微软雅黑">font-family用于设置字体</div>
+    <em>我是em标签效果 用CSS样式做成不加粗可行？</em>
+    <a href="#" target="_blank">我是超链接</a>
+
+    <h3>元素的显示模式 首先：标签的类型（显示模式）主要有两种：块级元素占据一行或者多行；可以设置宽度对齐属性
+        行内元素不占据控件紧靠自己的大小撑起结构；高宽无效，水平的padding和margin可以设置；行内元素肯定不可以放块元素 行内块元素:input img td </h3>
+    标签的显示模式是可以相互转换的 display: inline(块-》行) block(行-》块) inline-block (转成行内块)
+    <br>在调节样式的时候。行内元素和行内块元素可以看成文本 居中可以使用text-align
+    神奇
+    <h1>标签就是盒子</h1>
+    <div>1.写 三个 div 给定 100 * 100 的红色盒子 -- 宽度 高度 背景色
+
+        2.三个 span 也要求 150 * 150 绿色盒子
+
+        三个 a 链接 80 * 20 蓝色 盒子 要求 必须一行显示 这三个盒子
+    </div>
+    <div id='renwu1'>1</div>
+    <div id='renwu1'>2</div>
+    <div id='renwu1'>3</div>
+    <span id='renwu2'>1</span>
+    <span id='renwu2'>2</span>
+    <span id='renwu2'>3</span>
+    <div id='renwu3'></div>
+
+    <hr>
+    <h3>测量行高</h3>
+    顶线，中线，基线，底线 分别是小学英语抄写本上面的四根线<br>
+    行高： 基线与基线的距离 底线与底线之间的距离 也就是说汉字高度加上行间距
+    我们将行高设置和盒子高度一样，也就是字体的高度是不变的加入是游览器默认的16px，剩下的高度就是
+    间距，默认会平分成上下两部分；所以字体就显示出来在中间的效果
+    <br>如果我们设置行高大于盒子高度会出现什么效果？ =》 文字偏下 因为行高-盒子高度 /2 就是文本的上间距
+
+    <hr>
+    <h3>CSS 三大特性 层叠性（样式采用后者居上，按照CSS后者为准）继承性（子标签继承父标签某些样式：文本颜色字号）优先级（权重） </h3>
+    权重：*或者继承 0000 元素选择器0001 class0010 id0100 行内样式 1000 !important 无穷大
+    权重可以叠加 div p {权重0001 + 0001 = 0002} class{权重0010更大} 数字中没有进制之说，000，20也是存在并且小于0010
+    只定义了父类，有important 传入子组件权重也是0 但是父组件 空格 子组件构成的后代选择器等选择器的权重是叠加的
+<h3 >background背景</h3>
+<div id="background"></div>
+CSS三大模型：盒子；浮动；定位。 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+盒子由元素内容，内边距padding,border,margin外边距
+<div id="border">Chrome F12 盒子的蓝色区域是内容区域，设置的width和height 青色代表内边距 橙色代表外边距</div>
+盒子的border长度是不是包括内容的长度（width和height）+左右padding的数值？ 
+因此：padding 会撑开带有width和height属性的盒子 如果盒子卡死200*200同时padding是20则需要设置盒子width、height: 160px 
+<br>小知识点  li前面的小点去掉 用list-style: none  先画盒子？padding后再更改width height
+<br>大的 用于展示产品的都用插入图片，小的logo 很小的图或者超大的背景用背景图片（方便调整位置）
+<br>相邻盒子外边距会自动取最大的一个！！ div1 margin-bottom: 100px div2 margin-top: 50px 最终他两间隔100px
+嵌套块元素垂直塌陷 overflow: hidden
+</body>
+
+</html>
