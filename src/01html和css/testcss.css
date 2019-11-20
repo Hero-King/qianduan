@@ -19,6 +19,7 @@ div {
     padding: 0;
     margin: 0;
     text-indent: 2em;
+    *font-size : 24px;  /* 前面的*代表只有IE6IE7执行这行代码  */
 }
 
 /* 组选择器、并集选择器 */
