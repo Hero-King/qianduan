@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+        .taobao {
+            height: 280px;
+            width: 520px;
+            background-image: url('taobao.jpg');
+            margin: 100px auto;
+            position: relative;
+        }
+        .taobao a {
+            width: 20px;
+            height: 20px;
+            display: block;
+            background-color: blue;
+            position: absolute;
+            top: 50%;
+            margin-top: -10px;
+        }
+        .left{
+            left: 0px
+        }
+        .right{
+            right: 0px
+        }
+        .taobao ul {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            width: 40px;
+            height: 20px;
+            background-color: rgba(255, 255,255, 0.5);
+            list-style: none;
+            margin-left: -20px;
+            border-radius: 10px;
+        }
+        .taobao li {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="taobao">
+        <img src="taobao.jpg" alt="">
+        <a href="#" class="left"></a>
+        <a href="#" class="right"></a>
+        <ul>
+            <li>1</li>
+            <li>1</li>
+        </ul>
+    </div>
+</body>
+
+</html>
