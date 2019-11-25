@@ -19,7 +19,8 @@ div {
     padding: 0;
     margin: 0;
     text-indent: 2em;
-    *font-size : 24px;  /* 前面的*代表只有IE6IE7执行这行代码  */
+    *font-size: 24px;
+    /* 前面的*代表只有IE6IE7执行这行代码  */
 }
 
 /* 组选择器、并集选择器 */
@@ -145,6 +146,16 @@ a:hover {
     /* radius半径 px 50%   10px 20px 30px 40px（左上右上顺时针转）   */
 
     /* 盒子阴影 box-shadow : 水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影颜色 内/外部阴影 水平阴影就是阴影横向出来的距离 模糊距离指的是模糊块（虚虚的那一块）的宽度 （第五节课笔记）*/
-    box-shadow:
+    /* box-shadow: */
+}
 
+#pointer {
+    cursor: pointer;
+}
+
+#text {
+    cursor: text;
+}
+#move {
+    cursor: move;
 }
