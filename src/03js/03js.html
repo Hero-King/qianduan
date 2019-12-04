@@ -26,14 +26,12 @@
          * object:对象---->
          *
          * */
-        //如何获取这个变量的数据类型是什么? 使用typeof 来获取
+        //如何获取这个变量的数据类型是什么? 使用typeof关键字 来获取
         //typeof 的使用的语法
         /*
          * 都可以获取这个变量的数据类型是什么!
          * typeof 变量名
          * typeof(变量名)
-         *
-         *
          *
          * */
         var num = 10;
@@ -47,12 +45,42 @@
         console.log(typeof str); //string
         console.log(typeof flag); //boolean
         console.log(String(nll)); //是null
-        console.log(typeof nll); //不是null
+        console.log(typeof nll); //不是null 而是object 存储的是对象,只不过没有指向
         console.log(typeof undef); //undefined
         console.log(typeof obj); //object
         console.log(typeof (num));
         //    console.log("10");
         //    console.log(10);
+
+        // JS浮点数也是不准确存储的
+        /*
+        var num ;
+        console.log(num+10 == NAN ) false  
+        console.log(isNaN(num)) false NaN(not a number不是一个数字,和其他类型比较就是false)
+        boolean 类型:
+        undefined 表示一个申明了没有赋值的变量,变量只申明时候 var num;
+        null是变量的值为空 或者说指向了空  var str = null ; 这个变量是对象类型 释放内存也是用的=null
+        
+        转Boolean: Boolean()
+        转数字: parseInt parseFloat [Number()比前面两个严格]
+        转字符串: tostring()  String(10) 
+        变量有意思 可以使用toString方法,没有意思不可以使用
+        数组里面的数据类型可以是不同的;同时可以使用访问数组的方式设置数组值
+
+        函数--重点
+        定义: function 函数名(参数){函数体}  这是函数表达式,会提升,重名覆盖
+            匿名函数: function (){}  函数表达式 var aa = function (){} 变量指向函数对象
+        调用: 函数名();
+        函数名命名规则: 不允许重名; 遵循驼峰命名法
+        console.log(sum)会输出函数的代码 函数名就是函数代码; 自调用,申明的时候立即调用,一次性的: (函数代码)()是不是和aa()一样 如(function(){})()
+        自调用一次性的  解决命名函数冲突问题
+        不写var 也可以定义变量,但是是隐式的全局变量
+        typeOf  结果是function
+        作用域:
+        预解析:
+        */
+       alert('都是弟弟');
+        (function(){console.log('我是函数自调用,永远不会被冲突')})();
     </script>
 </body>
 
