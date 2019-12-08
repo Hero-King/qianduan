@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+    /**
+     * 学习使用DOM 文档对象模型
+     * 书籍推荐--->无基础  JS王者归来  晋升看JS高级
+     * 把整个页面一个HTML文件看成文档 树根对象  所有的标签是对象
+     * 每个标签都是一个对象,都是一个元素element
+     * 节点Node就是 标签+属性+文本
+     * btn.onClick = function(){
+     *  alert("哈哈哈")
+     *  btn.type = "text";
+     *  btn.value="嘎嘎"
+     *  this.id = "id1"    这里可以用this 代表事件源 或者说谁调用这个匿名函数  btn按钮  而不是window对象
+     * }
+     * 
+     * script标签的作用  JS代码是从上到下执行的,不能再页面还没有渲染出来的时候去操作某个节点
+     * so script的位置要想好写在哪里;
+     * html里面标签的属性是没有px的  CSS里面才是的
+     * 
+        每一个HTML标签都看成元素,在JS中用对象表示,元素的属性都挂在了对象下面
+     * 修改标签文本内容  成对的标签  innerText   input输入框内容设置它的value属性
+     * 修改超链接的指向  herf属性
+     * 获取div1里面的p  还使用document对象吗?? 应该这样document.getElementById("div1").getElementsByTagName("p")
+     * JS修改状态 checked属性设置boolean值  disabled  禁用  对于html disabled = "disabled"  可以省略只写disabled   readonly
+     * 获取到某个元素.style.backgroundColor  style样式的属性都是将 -  改成 大写字母
+     * 获取某个元素,设置给他设置一个样式  强不强   JSDOM操作时候,设置className为某个样式
+     * 
+     * 超链接默认有点击跳转事件  可以在事件处理函数中return false 结束函数
+     * 设置标签中的文本内容,也可以使用textContent属性 但是浏览器打架,低版本的IE不支持textContent
+     *                  当然innerText属性低版本的火狐不支持  -->兼容代码
+     * 当某个属性在浏览器中不支持,那么返回的数据类型就是undefined 就可以根据这个判断是否兼容然后写兼容带代码 工具JS文件中书写处理函数,然后script标签引入,就可以调用 当然这里是都在window对象下面
+     * HTML的标签可以自定义属性,就是直接写<li score="10"   然后这个标签就有了自定义的score属性,但是JS获取到的DOM对象是没有这个属性的 不可以直接.出来的
+     * 可以通过使用 getAttribute("score") 方法获取  JS使用setAttribute()设置自定义的属性
+     * 懂了吗  也就是说JS代码获取到的元素标签对象身上只有标准属性,标准属性设置,获取可以直接点出来  但是自定义属性点不出来,需要使用提供的方法  removeAttribute移除属性 可以是自定义的也可以是自带的还可以移除样式removeAttribute("class")
+     *  
+     * 
+     * 
+     */
+    
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

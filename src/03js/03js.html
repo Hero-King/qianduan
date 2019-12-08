@@ -84,8 +84,25 @@
         
         对象
         创建:常见的有三种方式
-        1.
-         
+        1.调用系统构造函数 new Object()
+        2.自定义函数,工厂模式 function person(name.age){avr obj = new Object();obj.name = name return obj}
+                自定义构造函数 function Person(name.age){this.name=name;this.age=age} var per = new Person("aa",12)
+        
+        3.自面量 var obj ={}
+        设置对象属性的两种方式  obj.name = "wang" 或者obj["name"]="wang" 
+            obj.play()  或者obj["play"]()
+         JSON也是对象
+         遍历对象原始方法:  for (var key in object){}
+         普通类型作为参数传递,传递的是值;
+         引用类型作为参数传递,传递的是地址
+
+        JS中三种对象: 内置对象(Math Date String Array Object)  自定义对象 BOM对象
+
+        JS字符串: 字符串就是多个字符组成的数组;  不可变性(更改字符串的值在内存中会新增一块空间并重新指向新的空间)
+        String对象
+        var str1 = '你好'  没有堆空间
+        var str2 = new String ('你好')   堆空间
+
          */
         alert('都是弟弟');
         (function () {
@@ -93,11 +110,49 @@
         })();
 
         f();
-        var num =20 ;
+        var num = 20;
+
         function f() {
             console.log(num); //undefined 因为函数申明提前,可以调用函数;其次变量申明到函数内最上面,并没有赋值
-            var num =10;
+            var num = 10;
         }
+
+        // 自己实现系统的math.max方法
+        function MyMath() {
+            this.getMax = function () {
+                let max = arguments[0];
+                for (let i = 0; i < arguments.length; i++) {
+                    if (max < arguments[i]) max = arguments[i];
+                }
+                return max;
+            }
+        }
+        var myMath = new MyMath();
+        console.log(myMath.getMax(1,2,5,50,23,-10));
+
+        // 随机产生一个十六进制的颜色  #3412ff
+        function getColor(){
+            // 随机生成0-255的数字 
+            let ran = parseInt(Math.random()*256);    
+            let red = ran.toString(16);     //将数字转换成16进制
+            ran = parseInt(Math.random()*256);    
+            let green = ran.toString(16);     //将数字转换成16进制
+            ran = parseInt(Math.random()*256);    
+            let blue = ran.toString(16);     //将数字转换成16进制
+            return '#'+red+green+blue;     //等等
+        }
+        console.log(getColor());    //例如#d85fd7
+
+        // console.log(new Date().getMonth()); //老外的日期是从0 开始的0-11月
+    
+        // 封装函数返回指定格式的日期: 2019年12月7日 11:12:13  获取当前时间
+        function getDate(){
+            let date = new Date();
+            return date.getFullYear() + '年'+(date.getMonth()+1) +'月'+date.getDate()+'日'+' '+date.getHours()+'时'+date.getMinutes()+'分'+date.getSeconds()+'秒';
+        };
+        console.log(getDate());
+
+
     </script>
 </body>
 
