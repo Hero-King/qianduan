@@ -65,6 +65,21 @@
             后一个兄弟节点 nextSibling 
             后一个兄弟元素 nextElementSibling 
         */
+
+        /*
+        元素创建:  为了提高用户体验, 并不是页面的首次加载完成必须的东西和并不是所有用户都需要看到的东西
+            使用元素创建的方式,响应用户
+        1. document.write("标签和代码")  缺陷 如果页面加载完成后调用这个方法,会把body标签里面所有内容全部干掉
+        2. 对象.innerHtml = "标签和代码"
+        3. document.createElement("p")  父亲调用appendChild() 
+        代码执行完成这些创建元素的方法后,就可以调用获取节点的方法,获取那些刚创建的节点  
+        
+        循环创建元素的时候,绑定事件使用函数申明,可以节约内存,提高效率,匿名函数的话会创建很多个
+        只创建一个元素-->事件处理啊函数中  有子元素删除,没有则创建
+        给同一个元素绑定多个相同事件  getElementBuId("btn1").addEventListener('click',事件处理函数)
+        如果是IE8 用attachEvent('onClick',回调)  所有的事件名字本来没有on前缀的  后面微软加上去的 形成传统
+        */
+
         console.log(document.getElementById('div1')); //这里写就是返回了null因为代码从上往下执行,先执行了JS脚本 此时页面没有渲染出来这个节点
     </script>
 </head>
@@ -76,6 +91,10 @@
     <p>我是P标签</p>
     <span>121212</span>
     <p>我是P标签</p>
+    <p>　　1、肖申克的救赎</p>
+    <p>　　2、阿甘正传</p>
+    <p>　　3、盗梦空间</p>
+    <p>坦坦尼克号  当幸福来敲门  希特勒名单  教父  星际穿越 罗马假日</p>
 </div>
 <script>
     console.log(document.getElementById('div1'));
@@ -90,8 +109,6 @@
         }
     }
     // 使用节点的方式  让P标签换背景色
-    
-
 </script>
 
 <body>
