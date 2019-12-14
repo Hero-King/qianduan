@@ -22,7 +22,7 @@
     <input type="button" value="摇起来" onclick="move()">   <!-- 这里的需要加上括号 -->
     <input type="button" value="停止" onclick="" id="stop">
     <div id="div1">
-        <img src="1.jpg" alt="">
+        <img src="1.jpg" alt="" id="img1">
         <img src="2.jpg" alt="">
     </div>
     <script>
@@ -35,6 +35,11 @@
             timeId = setInterval(function () {
                 let left = parseInt(Math.random() * 99) + 1;
                 let top = parseInt(Math.random() * 99) + 50;
+                let img1 =  document.getElementById('img1');
+                let div1 =  document.getElementById('div1');
+                // 怎么获取img1的left属性值? 因为是在style标签中设置的 不能直接点出来
+                console.log(img1.style.left);   // 空串
+                console.log(div1.offsetLeft);   //返回了 数字
                 document.getElementById('div1').style.left = left + 'px';
                 document.getElementById('div1').style.top = top + 'px';
             }, 500)

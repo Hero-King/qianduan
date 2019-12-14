@@ -50,6 +50,18 @@
         // document.getAttribute()
         // document.setAttribute()
         /**
+         * 对于获取到的节点,如果样式是在style标签中,那么点不出来的 比如node.style.left  可以写在标签的style属性中 应该用node.offsetLeft
+         * 还有offsetHeight(元素高度)   offsetLeft offsetWidth offsetParent 等   
+         * 数值来源: 没有脱离文档流  就是距离最左边屏幕的offset
+         *          脱离文档流   就是自己的left和margin的值 
+         * scroll系列: 
+         *      scrollWidth 元素中内容实际宽度
+         *      scrollHeight 元素中内容实际高度(没有内容或者小于元素高是元素内边距的高)
+         *      scrollTop   文本上面卷曲的高度  拉动滚动条文本往上面走的距离
+         * client系列 : 可视区域
+         *      clientWidth 盒子可视区域的宽  边框内部的宽度
+         *      clientLeft  左边框的宽度
+         * 
         * 节点的介绍 Node 包括标签 内容 属性等节点类型  记不记得本子上画的图  属性节点在标签节点左边 文本节点在标签节点下面
            节点的属性: nodeType 1代表标签节点 2 代表属性节点 3文本节点
                        nodeName 节点名字 标签节点---大写的标签名  属性节点---小写的属性名  文本节点---#text
