@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        /*
+        JS 的第三个组成 BOM
+        简单理解就是: 操作浏览器的; 地址栏 前后退 右边浏览器的滚动条  左下角的链接
+        浏览器顶级对象 window
+        页面顶级对象 document 
+        页面所有内容都是属于浏览器,也都是window的  window可以省略
+        window的几个属性 name  top 都被预定义好了,所以定义变量的时候避免这名字
+        
+        页面加载事件
+        页面加载完毕: window.onload 事件,当页面的所有内容.标签.属性.文本.外部引入的文件全部完成
+        页面关闭后事件: window.onunload  谷歌没效果
+        页面关闭之前触发: window.onbeforeunload
+
+        localtion对象
+            location.href='www.baidu.com' 使用属性设置url
+            localtion.assign('www.baidu.com') 同上
+            localtion.reload() 重新加载
+            localtion.replace()  没有将之前的记录存到history中
+
+        history对象
+        navigator对象
+            navigator.platform 判断浏览所在的操作系统类型
+            navigator.userAgent 用户浏览器版本什么浏览器等信息 ,手机端还是电脑端       
+        定时器: 小问题-->页面加载完成执行JS代码,然后setInterval 函数执行了间隔时间后才会执行我们定时器里面的回调函数
+                我们想页面加载完毕就执行   可以定时器外面先手动调用一次
+        */
+    </script>
+</body>
+</html>

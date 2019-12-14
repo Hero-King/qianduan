@@ -8,7 +8,7 @@
     <title>Document</title>
     <script>
         /**
-     * 学习使用DOM 文档对象模型
+     * 学习使用DOM 文档对象模型  -------------> 视频只看一遍  笔记才是精华
      * 书籍推荐--->无基础  JS王者归来  晋升看JS高级
      * 把整个页面一个HTML文件看成文档 树根对象  所有的标签是对象
      * 每个标签都是一个对象,都是一个元素element
@@ -73,11 +73,96 @@
         2. 对象.innerHtml = "标签和代码"
         3. document.createElement("p")  父亲调用appendChild() 
         代码执行完成这些创建元素的方法后,就可以调用获取节点的方法,获取那些刚创建的节点  
-        
+         
         循环创建元素的时候,绑定事件使用函数申明,可以节约内存,提高效率,匿名函数的话会创建很多个
         只创建一个元素-->事件处理啊函数中  有子元素删除,没有则创建
-        给同一个元素绑定多个相同事件  getElementBuId("btn1").addEventListener('click',事件处理函数)
+        给同一个元素绑定多个相同事件  getElementBuId("btn1").addEventListener('click',事件处理函数,参数)
         如果是IE8 用attachEvent('onClick',回调)  所有的事件名字本来没有on前缀的  后面微软加上去的 形成传统
+        对于不兼容的属性和方法需要自己手动封装
+        onClick的方式绑定事件   如果申明了同一事件的多个处理函数,后面会把前面的事件处理函数覆盖掉
+        总结绑定事件的区别:
+        * addEventListener();
+        * attachEvent()
+        *
+        * 相同点: 都可以为元素绑定事件
+        * 不同点:
+        * 1.方法名不一样
+        * 2.参数个数不一样addEventListener三个参数,attachEvent两个参数
+        * 3.addEventListener 谷歌,火狐,IE11支持,IE8不支持
+        *   attachEvent 谷歌火狐不支持,IE11不支持,IE8支持
+        * 4.this不同,addEventListener 中的this是当前绑定事件的对象
+        *   attachEvent中的this是window
+        * 5.addEventListener中事件的类型(事件的名字)没有on
+        *  attachEvent中的事件的类型(事件的名字)有on
+        *
+        *  现在遇到的逆境,都是以后成长的阶梯
+        *
+        //1 对象.on事件名字=事件处理函数----绑定事件
+        //  my$("btn").onclick=function () {
+        //    console.log("我猥琐");
+        //  };
+        //  my$("btn2").onclick=function () {
+        //    //1.解绑事件
+        //    my$("btn").onclick=null;
+        //  };
+
+        //  function f1() {
+        //    console.log("第一个");
+        //  }
+        //  function f2() {
+        //    console.log("第二个");
+        //  }
+        //  my$("btn").addEventListener("click",f1,false);
+        //  my$("btn").addEventListener("click",f2,false);
+        //
+        //  //点击第二个按钮把第一个按钮的第一个点击事件解绑
+        //  my$("btn2").onclick=function () {
+        //    //解绑事件的时候,需要在绑定事件的时候,使用命名函数
+        //    my$("btn").removeEventListener("click",f1,false);
+        //  };
+
+              //解绑事件:
+  /*
+  * 注意:用什么方式绑定事件,就应该用对应的方式解绑事件
+  * 1.解绑事件
+  * 对象.on事件名字=事件处理函数--->绑定事件
+  * 对象.on事件名字=null;
+  * 2.解绑事件
+  * 对象.addEventListener("没有on的事件类型",命名函数,false);---绑定事件
+  * 对象.removeEventListener("没有on的事件类型",函数名字,false);
+  * 3.解绑事件
+  * 对象.attachEvent("on事件类型",命名函数);---绑定事件
+  * 对象.detachEvent("on事件类型",函数名字);
+  *
+  *
+  * 
+
+    事件冒泡: 多个元素嵌套,有层次关系,这些元素都注册了点击事件,如果里面的元素触发了事件,那么外面的元素也会触发事件
+  //事件冒泡,阻止事件冒泡,
+  //如何阻止事件冒泡: window.event.cancelBubble=true; IE特有的,谷歌支持,火狐不支持
+  // e.stopPropagation(); 谷歌和火狐支持,
+
+    事件有三个阶段: 控制使用哪个阶段是在事件处理函数中的第三个参数true 还是false  通过属性event.eventPhase属性可以知道当前事件在那个阶段中
+        事件捕获阶段  1   从外向里一次触发
+        事件目标阶段  2   最开始选择的那个
+        事件冒泡阶段  3   从里向外触发事件
+    为同一个元素绑定多个事件,同一个事件处理函数-->可以使用event参数的Type确定到底什么事件,在switch  case
+
+    系统对话框: 页面加载到这里会停止加载  不同浏览器效果不一样并且不能人为改变样式
+        window.alert('你好')
+        window.prompt('请输入账号')
+        let result = window.confirm('你确定退出吗')
+
+
+
+
+
+
+
+
+
+
+
         */
 
         console.log(document.getElementById('div1')); //这里写就是返回了null因为代码从上往下执行,先执行了JS脚本 此时页面没有渲染出来这个节点
@@ -94,7 +179,7 @@
     <p>　　1、肖申克的救赎</p>
     <p>　　2、阿甘正传</p>
     <p>　　3、盗梦空间</p>
-    <p>坦坦尼克号  当幸福来敲门  希特勒名单  教父  星际穿越 罗马假日</p>
+    <p>坦坦尼克号 当幸福来敲门 希特勒名单 教父 星际穿越 罗马假日</p>
 </div>
 <script>
     console.log(document.getElementById('div1'));
