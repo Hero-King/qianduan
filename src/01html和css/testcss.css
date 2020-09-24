@@ -159,3 +159,18 @@ a:hover {
 #move {
     cursor: move;
 }
+
+.testBefore{
+    background-color: pink;
+    position: relative;
+}
+
+.testBefore::before{
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-left: 5px solid;
+    content: ""
+}

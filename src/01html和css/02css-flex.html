@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flex学习</title>
+
+
+    <!-- <style>
+        div {
+            /* 通过设置父元素flex布局 子元素span有了大小宽高*/
+            display: flex;
+            width: 80%;
+            height: 600px;
+            background-color: pink;
+
+            /* 设置主轴的方向 row row-reverse column column-reverse*/
+            flex-direction: row;
+            /*设置主轴上面子元素的排列方式 space-around（平均分配剩余空间） space-between(先两边贴边，在平均分配剩余空间) center flex-start flex-end */
+            justify-content: space-around;
+            /* 主轴上面元素摆不开情况，是否自动换行 默认会在一行，挤压子元素的宽度 */
+            flex-wrap: wrap;
+            /* 设置侧轴对齐方式（只对有一行的盒子有效） 如果侧轴有盒子，就可以通过这个属性设置对齐方式： center: 居中 flex-start flex-end stretch拉伸（子盒子不能有高度） */
+            /* align-items: center; */
+            /* 单行无效果！！如果侧轴有多行盒子(flex-wrap: wrap)侧轴布局使用align-content，我们想实现justify-content的space-around效果 */
+            align-content: space-around;
+
+        }
+
+        div span {
+            /* 子元素属性 */
+            /* flex: 定义子项目分配剩余空间，表示占用的份数 */
+            /* align-self 单个项目和其他项目使用不同的对齐方式，覆盖align-item属性 默认auto继承align-items属性*/
+            width: 200px;
+            /* flex: 1; */
+            height: 100px;
+            background-color: blue;
+            margin-right: 5px;
+        }
+
+        p {
+            display: flex;
+            height: 100px;
+            width: 80%;
+            margin: 0 auto;
+            background-color: pink;
+        }
+
+        p span {
+            /* 不给子元素宽度，导致剩余空间是全部宽度，然后平均分配了三等分  */
+            flex: 1;
+            /* 设置子元素占用的宽度 */
+            flex: 30px;
+
+        }
+
+        p span:nth-child(2) {
+            /* CSS3选择器 */
+            background: #000;
+        }
+    </style> -->
+
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'YYYY-MM-DD',
+                locale: moment.locale('zh-cn')
+            });
+            $('#datetimepicker2').datetimepicker({
+                format: 'YYYY-MM-DD hh:mm',
+                locale: moment.locale('zh-cn')
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+    <!-- flex布局不区分行内元素或者块内元素 -->
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+
+    </div>
+
+    <hr>
+    <p>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </p>
+
+
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <label>选择日期：</label>
+                <!--指定 date标记-->
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <label>选择日期+时间：</label>
+                <!--指定 date标记-->
+                <div class='input-group date' id='datetimepicker2'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
