@@ -40,7 +40,7 @@
         var nll = null;
         var undef;
         var obj = new Object();
-        //是使用typeof 获取变量的类型
+        //是使用typeof 获取变量的类型  typeof 少null 多function object
         console.log(typeof num); //number
         console.log(typeof str); //string
         console.log(typeof flag); //boolean
@@ -51,6 +51,13 @@
         console.log(typeof (num));
         //    console.log("10");
         //    console.log(10);
+        // 如何准确的判断数据类型
+        console.log(Object.prototype.toString.call("1212")) // [object String]
+        console.log(Object.prototype.toString.call([])) // 03js.html:56 [object Array]
+        console.log(Object.prototype.toString.call({})) // 03js.html:57 [object Object]
+        console.log(Object.prototype.toString.call(12)) // [object Number]
+        console.log(Object.prototype.toString.call(null)) // [object Null]
+
 
         // JS浮点数也是不准确存储的
         /*
@@ -129,38 +136,39 @@
             }
         }
         var myMath = new MyMath();
-        console.log(myMath.getMax(1,2,5,50,23,-10));
+        console.log(myMath.getMax(1, 2, 5, 50, 23, -10));
 
         // 随机产生一个十六进制的颜色  #3412ff
-        function getColor(){
+        function getColor() {
             // 随机生成0-255的数字 
-            let ran = parseInt(Math.random()*256);    
-            let red = ran.toString(16);     //将数字转换成16进制
-            ran = parseInt(Math.random()*256);    
-            let green = ran.toString(16);     //将数字转换成16进制
-            ran = parseInt(Math.random()*256);    
-            let blue = ran.toString(16);     //将数字转换成16进制
-            return '#'+red+green+blue;     //等等
+            let ran = parseInt(Math.random() * 256);
+            let red = ran.toString(16); //将数字转换成16进制
+            ran = parseInt(Math.random() * 256);
+            let green = ran.toString(16); //将数字转换成16进制
+            ran = parseInt(Math.random() * 256);
+            let blue = ran.toString(16); //将数字转换成16进制
+            return '#' + red + green + blue; //等等
         }
-        console.log(getColor());    //例如#d85fd7
+        console.log(getColor()); //例如#d85fd7
 
         // console.log(new Date().getMonth()); //老外的日期是从0 开始的0-11月
-    
+
         // 封装函数返回指定格式的日期: 2019年12月7日 11:12:13  获取当前时间
-        function getDate(){
+        function getDate() {
             let date = new Date();
-            return date.getFullYear() + '年'+(date.getMonth()+1) +'月'+date.getDate()+'日'+' '+date.getHours()+'时'+date.getMinutes()+'分'+date.getSeconds()+'秒';
+            return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + ' ' + date
+            .getHours() + '时' + date.getMinutes() + '分' + date.getSeconds() + '秒';
         };
         console.log(getDate());
 
-        function Person(name){
+        function Person(name) {
             this.name = name
         }
 
         // 普通方式使用原型： 
         let aa = new Person("小灰灰")
         console.log(aa.name);
-        Person.prototype.alertMessage = function(){
+        Person.prototype.alertMessage = function () {
             alert("我是原型链加上的")
         }
         aa.alertMessage();
@@ -171,8 +179,50 @@
 
         // jquery学习参见git下面的jquery项目
 
+        // 深浅拷贝[1]
+        function deepClone(obj) {
+            if (obj === null) {
+                return "null";
+            }
+            if (obj === undefined) {
+                return "undefined";
+            }
+            let objNew = {};
+            for (let i in obj) {
+                if (typeof obj[i] === "object") {
+                    objNew[i]  = deepClone( obj[i] )
+                }else{
+                    objNew[ i ] = obj[i]
+                }
+            }
+            return objNew
+        }
+        let objTemp = {
+            name: "wang",
+            age: {
+                age: 12,
+                arr:["arr"]
+            }
+        }
+        let clone = deepClone(objTemp)
+        objTemp.age.age = "12345";
+        console.log(clone)
 
+        // 深浅拷贝[2]
+        let clone2 = JSON.parse(JSON.stringify(objTemp))
+        clone2["age"].age = "age"
+        console.log(objTemp)
 
+        // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
+        console.log(undefined == null)  // true
+        console.log(undefined === null)  // false
+        console.log(0.1 + 0.2) // 0.300000000004
+        console.log((0.1 * 100 + 0.2 * 100) /100)  // 0.3
+
+        // 包装对像
+        //  let str = "123"
+        // str.length   内部实现：   let str1 = new String(str)     str1.length  str1 =null
+        // str.x = 3        str.x 显示 undefined 
     </script>
 </body>
 
