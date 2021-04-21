@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(<App />, document.getElementById('root'));
 
 let rootElement = React.createElement( "div" ,{title: "iam title"}, <div>i am children</div> )
-console.log("react.createElemetn" , rootElement)    
+// console.log("react.createElemetn" , rootElement)    
 /**
  * {
  * $$typeof: Symbol(react.element)
@@ -21,7 +21,7 @@ _self: null
 _source: null}
  */
 
-console.log(<div>jsx</div>)     
+// console.log(<div>jsx</div>)     
 /**
  * {
  * $$typeof: Symbol(react.element)
