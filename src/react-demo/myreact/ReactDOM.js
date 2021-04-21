@@ -1,3 +1,10 @@
+class Component {
+    constructor(props ={}) {
+        this.props = props
+        this.state = {}
+    }
+
+}
 /**
  * 
  * @param {Object} vnode 
@@ -24,9 +31,16 @@ function _render(vnode) {
         return dom = document.createTextNode(String(vnode))
     }
 
-    // 如果是组建
-    if( typeof vnode === "function" ){
-        
+    // 如果是组件
+    if (typeof vnode.type === "function") {
+        // 创建组件实例
+        let comp = createComponent(vnode.type, vnode.attrs)
+        console.log(comp);
+
+        // 渲染组件
+        let renderer = comp.render()   //组件render返回的jsx
+        comp.base =  _render(renderer)
+        return comp.base
     }
 
     const {
@@ -49,6 +63,22 @@ function _render(vnode) {
         childrens.forEach(i => render(i, dom))
     }
     return dom
+}
+
+function createComponent(comp, props) {
+    let inst
+    // 如果是类组件
+    if (comp.prototype && comp.prototype.render) {
+        inst = new comp(props)
+    }else{
+        // 函数组件转换成类组件
+        inst = new Component(props)
+        inst.constructor = comp;
+        inst.render = function (params) {
+            return this.constructor(props)
+        }
+    }
+    return inst
 }
 
 function setAttribute(dom, key, value) {
