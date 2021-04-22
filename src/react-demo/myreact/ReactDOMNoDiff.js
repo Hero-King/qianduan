@@ -1,4 +1,3 @@
-import {diff} from './diff'
 class MyComponent {
     constructor(props = {}) {
         this.props = props
@@ -16,15 +15,8 @@ class MyComponent {
  * @param {Object} vnode 
  * @param {document} container 
  */
-function render(vnode, container, dom) {
-    // container.appendChild(_render(vnode))    
-
-    // 使用diff算法去渲染
-    return diff(vnode, container, dom)
-    // setInterval(() => {
-    //     console.log("render")
-    //     diff(dom, vnode, container)
-    // }, 1000);
+function render(vnode, container) {
+    container.appendChild(_render(vnode))
 }
 /**
  * 
