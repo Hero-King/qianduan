@@ -56,12 +56,13 @@ class HomeClass extends MyComponent{
 
 const ele = <HomeClass title="homeclass title" />
 const yuans = <div title="divtitle" >divText  <span>spanText</span></div>
+// const yuans = <div title="divtitle" >divText  </div>
 let container = document.getElementById("myrender")
 let firstRender = render( yuans ,container, null )
 console.log(firstRender);
 setTimeout(() => {
     
-    render(yuans, null , firstRender)
+    // render(yuans, null , firstRender)
 }, 1000);
 // render( <Home title="home title"/>, document.getElementById("myrender"))
 // render( ele , document.getElementById("myrender"))

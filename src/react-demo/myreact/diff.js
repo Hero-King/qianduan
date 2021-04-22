@@ -34,24 +34,58 @@ function renderByDiff(dom, vnode) {
         if (!dom) {
             dom = document.createElement(vnode.type)
         }
-        setDomAttribute(dom, vnode.props);
+        diffDomAttribute(dom, vnode.props);
 
     }
     let { children } = vnode.props;
-    if (children) {
-        Array.isArray(children) ? children.forEach((item, index) => diff(item, dom, dom.children && dom.children[index]))
-            : diff(children, dom, dom.firstChild)
+    if( (dom.children && dom.children.length > 0) || (children && children.length > 0) ){
+        diffChildren(dom, children);
     }
+    // if (children) {
+    //     Array.isArray(children) ? children.forEach((item, index) => diff(item, dom, dom.children && dom.children[index]))
+    //         : diff(children, dom, dom.firstChild)
+    // }
     return dom
 }
 
-function setDomAttribute(dom, props) {
+//TODOS 不会写！！！
+function diffChildren(dom, vChildren) {
+    if( Array.isArray(vChildren)){
+        vChildren.forEach((vnode, index) => {
+            const curDom = dom.children[index];
+            const oneChild = renderByDiff(curDom, vnode)
+            if( curDom){
+                console.log("已经存在",oneChild, curDom)
+                
+            }else {
+                dom.appendChild(oneChild)
+            }
+        })
+    }else{
+        let child = renderByDiff( dom.children[0], vChildren);
+        dom.innerHTML = "";
+        dom.appendChild(child)
+        
+    }
+}
+
+function diffDomAttribute(dom, props) {
+    let oldDomAttributes = {}
+    Object.values(dom.attributes).forEach(i => oldDomAttributes[i.name] = i.value)
+    
     for (let key in props) {
         let value = props[key]
         if (key === "className") key = "class";
         if (key == "children") continue;
         if (value) {
-            if (dom.getAttribute(key) !== value) dom.setAttribute(key, value)
+            if (dom.getAttribute(key) !== value) {
+                dom.setAttribute(key, value)
+
+            }
         }
+        delete oldDomAttributes[key]
     }
+    Object.keys(oldDomAttributes).forEach(name => {
+        dom.setAttribute(name,null)
+    })
 }
