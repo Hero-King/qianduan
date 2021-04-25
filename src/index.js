@@ -4,6 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+let divdom = document.createElement("div")
+divdom.onclick = function (e) {
+    console.log("dom create div click")
+}
+divdom.innerText = "i am dom create div"
+document.body.appendChild(divdom)
+
 ReactDOM.render(<App />, document.getElementById('root'));
 
 let rootElement = React.createElement( "div" ,{title: "iam title"}, <div>i am children</div> )
