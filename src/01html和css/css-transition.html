@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* transition: 
+            transition-property	规定应用过渡的 CSS 属性的名称。
+            transition-duration	定义过渡效果花费的时间。默认是 0。
+            transition-timing-function	规定过渡效果的时间曲线。默认是 "ease"。
+            transition-delay	规定过渡效果何时开始。默认是 0。
+         */
+        .transtion{
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            /* 使用, 间隔  或者使用all */
+            transition: width 1s, height 1s;
+        }
+        .transtion:hover{
+            width: 200px;
+            height: 200px;
+        }
+
+        ul> li{
+            list-style: none;
+            width: 200px;
+            height: 200px;
+            float:left;
+            /* background-color: pink; */
+            border: 10px solid red ;
+            margin-left: -1px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="transtion">
+    </div>
+
+    <!-- 单行文本溢出使用省略号 -->
+    <div style="white-space: nowrap; overflow: hidden; width: 100px; text-overflow: ellipsis;">我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本我是文本</div>
+
+    <!-- 多行文本溢出使用省略号 -->
+
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+
+</body>
+</html>
