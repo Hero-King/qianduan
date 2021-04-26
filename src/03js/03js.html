@@ -55,10 +55,10 @@
         //    console.log(10);
         // 如何准确的判断数据类型
         console.log(Object.prototype.toString.call("1212")) // [object String]
-        console.log(Object.prototype.toString.call([])) // 03js.html:56 [object Array]
-        console.log(Object.prototype.toString.call({})) // 03js.html:57 [object Object]
-        console.log(Object.prototype.toString.call(12)) // [object Number]
-        console.log(Object.prototype.toString.call(null)) // [object Null]
+        console.log(Object.prototype.toString.call([])); // 03js.html:56 [object Array]
+        console.log(Object.prototype.toString.call({})); // 03js.html:57 [object Object]
+        console.log(Object.prototype.toString.call(12)); // [object Number]
+        console.log(Object.prototype.toString.call(null)); // [object Null]
 
 
         // JS浮点数也是不准确存储的
@@ -116,7 +116,7 @@
          */
         // alert('都是弟弟');
         (function () {
-            console.log('我是函数自调用,永远不会被冲突')
+            console.log('我是函数自调用,永远不会被冲突');
         })();
 
         f();
@@ -159,7 +159,7 @@
         function getDate() {
             let date = new Date();
             return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + ' ' + date
-            .getHours() + '时' + date.getMinutes() + '分' + date.getSeconds() + '秒';
+                .getHours() + '时' + date.getMinutes() + '分' + date.getSeconds() + '秒';
         };
         console.log(getDate());
 
@@ -175,6 +175,9 @@
             console.log("我是原型链加上的");
         }
         aa.alertMessage();
+        console.log(aa.__proto__ === Person.prototype, "原型")   // true
+        //我们知道 Person = new Function   
+        console.log(Person.__proto__ === Function.prototype)    // true
 
         // 静态方法定义和调用
         Person.static = () => console.log("Person static method");
@@ -183,7 +186,43 @@
         // jquery学习参见git下面的jquery项目
 
         // 深浅拷贝[1]
-        function deepClone(obj) {
+        function deepClone(obj, endObj) {
+            let type = typeof obj;
+            if (type === "string" || type === "number" || obj === null || type === "undefined") {
+                return obj
+            }
+            let objNew = endObj || {};
+            for (let i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    if (typeof obj[i] === "object") {   // [] {}
+                        objNew[i] = obj[i].constructor === Array ? [] : {};
+                        deepClone(obj[i], objNew[i])
+                    } else {
+                        objNew[i] = obj[i]
+                    }
+                }
+
+            }
+            return objNew
+        }
+        let objTemp = {
+            name: "wang",
+            age: {
+                age: 12,
+                arr: ["arr"]
+            }
+        }
+        let clone = deepClone(objTemp)
+        objTemp.age.age = "12345";
+        console.log("深拷贝后源数据美变化吗", clone.age.age == 12)
+
+        // 深浅拷贝[2]
+        let clone2 = JSON.parse(JSON.stringify(objTemp))
+        clone2["age"].age = "age"
+        console.log(objTemp)
+
+        // 感觉也可以
+        function deepClone3(obj) {
             if (obj === null) {
                 return "null";
             }
@@ -192,35 +231,22 @@
             }
             let objNew = {};
             for (let i in obj) {
-                if (typeof obj[i] === "object") {
-                    objNew[i]  = deepClone( obj[i] )
-                }else{
-                    objNew[ i ] = obj[i]
+                if (obj.hasOwnProperty(i)) {
+                    if (typeof obj[i] === "object") {
+                        objNew[i] = deepClone(obj[i])
+                    } else {
+                        objNew[i] = obj[i]
+                    }
                 }
             }
             return objNew
         }
-        let objTemp = {
-            name: "wang",
-            age: {
-                age: 12,
-                arr:["arr"]
-            }
-        }
-        let clone = deepClone(objTemp)
-        objTemp.age.age = "12345";
-        console.log(clone)
-
-        // 深浅拷贝[2]
-        let clone2 = JSON.parse(JSON.stringify(objTemp))
-        clone2["age"].age = "age"
-        console.log(objTemp)
 
         // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
         console.log(undefined == null)  // true
         console.log(undefined === null)  // false
         console.log(0.1 + 0.2) // 0.300000000004
-        console.log((0.1 * 100 + 0.2 * 100) /100)  // 0.3
+        console.log((0.1 * 100 + 0.2 * 100) / 100)  // 0.3
 
         // 包装对像
         //  let str = "123"
@@ -233,18 +259,77 @@
         console.log("" + []);   // ""
         console.log("" + {});   // "[object Object]"
         console.log({} + {});   // "[object Object][object Object]"
-        console.log( + "") // 0
+        console.log(+ "") // 0
 
 
+        // 返回的是本地时间， 如果是抢购等  时间需要用后台的  本地时间是可以改变的
+        console.log(new Date())
 
+        let url = "https://cn.bing.com/search?q=伟大的&sp=4";
+        console.log("encodeUrl", encodeURI(url));   // 会把中文ascall编码
+        console.log("encodeURIComponent", encodeURIComponent(url));      // 会把协议等字符也编码
 
         // DOM树构建过程
         /**
          * 1. 访问server 返回二进制html
          * 2. 翻译二进制文件成 index.html
-         * 3. HTMl解析器 解析文件
+         * 3. HTMl解析器 解析文件   词法解析(生成document对象)  生成节点Node  生成DOM树
+         * 解析过程中，如果遇到link标签，使用browser 进程的网络线程去请求文件 （并行的）
+         * 遇到script 标签，默认属性会停止构建dom 执行js文件      async 不停止渲染，下载完成不需要按顺序执行
+         * defer  不停止渲染，渲染完成后执行，在domcontentloaded之前执行完 多个defer 会按顺序执行
+         * 4. css解析器构建css   每个css文件解析成样式表对象cssstylesheet 包含很多cssrule  在解析词法  生成css树
+         * 5. 构建render树 ：  DOM树 + css树
+         * 6. 布局layout: 计算每个dom节点的盒子大小和页面的坐标，
+         * 7.绘制     重要概念： 回流reflow： 元素属性发生改变且影响布局时（padding height），产生回流，相当于刷新页面
+         *                              repaint 重绘  元素属性发生改变且不影响布局时候（背景图片  透明度  字体样式），产生重绘。相当于不刷新页面动态更新
         */
+
+        // 闭包
+        function bibao() {
+            var index = 0;
+            return function () {
+                console.log(index++)
+            }
+        }
+        const bibaoitem = bibao()
+        bibaoitem()     //0
+        bibaoitem()     //1
+        bibaoitem()     //2
+
+        // this    局部函数的this是window 
+        var mythis = {
+            age: 12,
+            getage: function () {
+                console.log(this.age)
+            },
+            getget: function () {
+                var that = this;
+                var bb = function () {
+                    console.log(this)   // windows
+                }
+                bb()
+                console.log(that, "保存下来的that就是调用函数的对象了")  //mythis对象
+            }
+        }
+        mythis.getage()     //12
+        mythis.getget()
+
+        Function.prototype.mybind = function (obj) {
+            var self = this;
+            return function () {
+                self.apply(obj)
+            }
+        }
     </script>
+    <style>
+        img {
+            display: block;
+        }
+    </style>
 </body>
+
+<img src="https://img-blog.csdnimg.cn/img_convert/c27677c78368a4e8d45d0d89aaadbffd.png"
+    alt="c27677c78368a4e8d45d0d89aaadbffd.png">
+<img src="https://images1.pianshen.com/28/85/85579830a1049af8e7dda9890b6451ec.png" />
 
 </html>

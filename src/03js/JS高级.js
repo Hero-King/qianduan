@@ -2,11 +2,15 @@
  *  JS 原型  每一个构造函数都有一个属性叫 prototype  是一个对象,可以给他动态添加属性和方法  这些属性和方法对象可以
  * 直接调用
  * 
+ * https://blog.csdn.net/u014465934/article/details/84836731
+ * 得到： Function是顶层的构造器， Object是顶层的构造函数
+ *          原型上： Function继承了Object 
+ *          构造器上： Function构造了Object
     自己创建出来的对象有个属性 __proto__ 指向了构造函数的原型对象
     对象的__proto__属性和构造函数中的prototype属性是一个对象
-    原型对象中有个属性constructor 指向了构造函数
+    原型对象中有个属性constructor 指向了构造函数  Person.prototype.constructor === Person  Person.__proto__ === Function.prototype
     原型对象是对象,它的__proto__是object对象,即Object构造函数的原型对象  在往上就是null
-
+   构造函数内部的方法，创建实例的时候会复制函数，但是原型对像上面的不会
     通常我们自己定义的构造函数里面定义一些属性,方法定义到原型对象上面达到节约内存的目的
     Student.prototype = {
          方法
@@ -27,6 +31,7 @@
    定时器里面回调函数的this是window,因为是window执行的代码
     function aa(){}.bind(对象,参数1,参数2)  返回一个函数,里面this指向对象  相当是对象.aa但是没有调用哦
     call 函数,改变this指向并直接调用 fn.call(对象,参数1,参数2)   想用哪个方法就先找到哪个方法然后.call传入要处理的数据和参数
+    Function.apply(obj, [])
     apply 就是对数组做处理的时候想想可不可以用已经存在的函数可以就用apply将数组当参数传入
     bind  不调用函数,用于定时器回调  事件处理函数 
     降低网页请求数量和请求资源的体积(压缩代码)
