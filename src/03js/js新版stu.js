@@ -152,4 +152,29 @@ initial connect 建立tcp连接的时间
 request send 发送请求占用的时间
 waiting (TTFB time to first byte ) 等待接受第一个字节的时间   服务器优化这个时间
 content download 下载时间
+
+元素尺寸:  pdf 第四版498
+offsetHeight 元素在垂直方向上占用的像素尺寸，包括它的高度、水平滚动条高度（如果可
+见）和上、下边框的高度。
+ offsetLeft，元素左边框外侧距离包含元素左边框内侧的像素数。
+ offsetTop，元素上边框外侧距离包含元素上边框内侧的像素数。
+ offsetWidth，元素在水平方向上占用的像素尺寸，包括它的宽度、垂直滚动条宽度（如果可
+见）和左、右边框的宽度。
+，offsetLeft 和 offsetTop 是相对于包含元素的，包含元素保存在 offsetParent 属性中。
+offsetParent 不一定是 parentNode。比如，<td>元素的 offsetParent 是作为其祖先的<table>
+元素，因为<table>是节点层级中第一个提供尺寸的元素。
+
+事件对象e
+e.target 就是真实点击的dom元素
+e.currentTarget 是当前事件处理程序所在的元素
+鼠标事件: 
+e.clientX  e.clientY  。这两个属性表示事件发生时鼠标光标在视口中的坐标，所有浏览器都支持。。注意客户端坐标不考虑页面滚动，因此这两个值并不代表鼠标在页面
+上的位置。但是clientX与clientY获取的是相对于当前屏幕的坐标，忽略页面滚动因素，这在很多条件下很有用，但当我们需要考虑页面滚动，也就是相对于文档(body元素)的坐标时怎么办呢？加上滚动的位移就可以了，下边我们试试怎么计算页面滚动的位移。
+其实在Firefox下问题会简单很多，因为Firefox支持属性pageX,与pageY属性，这两个属性已经把页面滚动计算在内了。 
+
+通过 event 对象的 pageX 和 pageY 可以获取。这两个属性表示鼠标光标在页面上的位置，
+因此反映的是光标到页面而非视口左边与上边的距离。
+
+鼠标事件不仅是在浏览器窗口中发生的，也是在整个屏幕上发生的。可以通过 event 对象的
+screenX 和 screenY 属性获取鼠标光标在屏幕上的坐标   针对的是显示器的xy坐标
 */
