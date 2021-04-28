@@ -175,9 +175,9 @@
             console.log("我是原型链加上的");
         }
         aa.alertMessage();
-        console.log(aa.__proto__ === Person.prototype, "原型")   // true
+        console.log(aa.__proto__ === Person.prototype, "原型") // true
         //我们知道 Person = new Function   
-        console.log(Person.__proto__ === Function.prototype)    // true
+        console.log(Person.__proto__ === Function.prototype) // true
 
         // 静态方法定义和调用
         Person.static = () => console.log("Person static method");
@@ -194,7 +194,7 @@
             let objNew = endObj || {};
             for (let i in obj) {
                 if (obj.hasOwnProperty(i)) {
-                    if (typeof obj[i] === "object") {   // [] {}
+                    if (typeof obj[i] === "object") { // [] {}
                         objNew[i] = obj[i].constructor === Array ? [] : {};
                         deepClone(obj[i], objNew[i])
                     } else {
@@ -243,10 +243,10 @@
         }
 
         // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
-        console.log(undefined == null)  // true
-        console.log(undefined === null)  // false
+        console.log(undefined == null) // true
+        console.log(undefined === null) // false
         console.log(0.1 + 0.2) // 0.300000000004
-        console.log((0.1 * 100 + 0.2 * 100) / 100)  // 0.3
+        console.log((0.1 * 100 + 0.2 * 100) / 100) // 0.3
 
         // 包装对像
         //  let str = "123"
@@ -255,19 +255,19 @@
 
         // +法 如果是一般数据类型就处理   如果包含一个引用数据类型 需要先对引用数据调用 valueOf() 如果返回
         // 普通类型 相加即可  不是的话继续调用toString()方法  然后返回值相加
-        console.log([] + []);   // "" 
-        console.log("" + []);   // ""
-        console.log("" + {});   // "[object Object]"
-        console.log({} + {});   // "[object Object][object Object]"
-        console.log(+ "") // 0
+        console.log([] + []); // "" 
+        console.log("" + []); // ""
+        console.log("" + {}); // "[object Object]"
+        console.log({} + {}); // "[object Object][object Object]"
+        console.log(+"") // 0
 
 
         // 返回的是本地时间， 如果是抢购等  时间需要用后台的  本地时间是可以改变的
         console.log(new Date())
 
         let url = "https://cn.bing.com/search?q=伟大的&sp=4";
-        console.log("encodeUrl", encodeURI(url));   // 会把中文ascall编码
-        console.log("encodeURIComponent", encodeURIComponent(url));      // 会把协议等字符也编码
+        console.log("encodeUrl", encodeURI(url)); // 会把中文ascall编码
+        console.log("encodeURIComponent", encodeURIComponent(url)); // 会把协议等字符也编码
 
         // DOM树构建过程
         /**
@@ -282,7 +282,7 @@
          * 6. 布局layout: 计算每个dom节点的盒子大小和页面的坐标，
          * 7.绘制     重要概念： 回流reflow： 元素属性发生改变且影响布局时（padding height），产生回流，相当于刷新页面
          *                              repaint 重绘  元素属性发生改变且不影响布局时候（背景图片  透明度  字体样式），产生重绘。相当于不刷新页面动态更新
-        */
+         */
 
         // 闭包
         function bibao() {
@@ -292,9 +292,9 @@
             }
         }
         const bibaoitem = bibao()
-        bibaoitem()     //0
-        bibaoitem()     //1
-        bibaoitem()     //2
+        bibaoitem() //0
+        bibaoitem() //1
+        bibaoitem() //2
 
         // this    局部函数的this是window 
         var mythis = {
@@ -305,13 +305,13 @@
             getget: function () {
                 var that = this;
                 var bb = function () {
-                    console.log(this)   // windows
+                    console.log(this) // windows
                 }
                 bb()
-                console.log(that, "保存下来的that就是调用函数的对象了")  //mythis对象
+                console.log(that, "保存下来的that就是调用函数的对象了") //mythis对象
             }
         }
-        mythis.getage()     //12
+        mythis.getage() //12
         mythis.getget()
 
         Function.prototype.mybind = function (obj) {
@@ -320,6 +320,11 @@
                 self.apply(obj)
             }
         }
+
+        // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
+        // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
+        // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 
+
     </script>
     <style>
         img {
