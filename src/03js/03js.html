@@ -220,8 +220,37 @@
         let clone2 = JSON.parse(JSON.stringify(objTemp))
         clone2["age"].age = "age"
         console.log(objTemp)
-
+        // json不能处理undefined类型!!
+        console.log(JSON.stringify({
+            string: "string",
+            int: "int",
+            "null": null,
+            "boolean": true,
+            arr: ["1", "2"]
+        }))
+        console.log("json不能处理undefined", JSON.stringify({
+            "undefined": undefined
+        }))
+        //         有时候，对象需要在 JSON.stringify()之上自定义 JSON 序列化。此时，可以在要序列化的对象
+        // 中添加 toJSON()方法，序列化时会基于这个方法返回适当的 JSON 表示。事实上，原生 Date 对象就
+        // 有一个 toJSON()方法，能够自动将 JavaScript 的 Date 对象转换为 ISO 8601 日期字符串（本质上与在
+        // Date 对象上调用 toISOString()方法一样）。
         // 感觉也可以
+        let book = {
+            title: "Professional JavaScript",
+            authors: [
+                "Nicholas C. Zakas",
+                "Matt Frisbie"
+            ],
+            edition: 4,
+            year: 2017,
+            toJSON: function () {
+                return this.title;
+            }
+        };
+        let jsonText = JSON.stringify(book);
+        console.log(null === undefined) // false
+
         function deepClone3(obj) {
             if (obj === null) {
                 return "null";
@@ -321,10 +350,48 @@
             }
         }
 
+        // Object对象
+        let objt = {}
+        Object.defineProperty(objt, "age", {
+            value: 22,
+            enumerable: false, //设置不可枚举 for in 循环不出来
+            writable: true, //设置属性可以修改,
+            configurable: false //设置属性可否被删除
+        })
+        console.log(objt.age)
+
+        // Object.assign   
+        //         这个方法接收一个目标对象和一个
+        // 或多个源对象作为参数，然后将每个源对象中可枚举（Object.propertyIsEnumerable()返回 true）
+        // 和自有（Object.hasOwnProperty()返回 true）属性复制到目标对象。以字符串和符号为键的属性
+        // 会被复制。对每个符合条件的属性，这个方法会使用源对象上的[[Get]]取得属性的值，然后使用目标
+        // 对象上的[[Set]]设置属性的值。
+        dest = {};
+        src = {
+            id: 'src'
+        };
+        result = Object.assign(dest, src);
+        // Object.assign 修改目标对象
+        // 也会返回修改后的目标对象
+        console.log(dest === result); // true
+        console.log(dest !== src); // true
+        console.log(result); // { id: src }
+        console.log(dest); // { id: src } 
+
+        /**
+         * 多个源对象
+         */
+        dest = {};
+        result = Object.assign(dest, {
+            a: 'foo'
+        }, {
+            b: 'bar'
+        });
+        console.log(result); // { a: foo, b: bar }
+
         // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
         // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
         // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 
-
     </script>
     <style>
         img {
