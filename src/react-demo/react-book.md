@@ -44,3 +44,33 @@ const MyContainer = (WrappedComponent) => {
 ### purerender
 react只对参数进行浅比较, 浅比较相同时候不会触发渲染
 purerender 进行深比较
+
+## React
+React是用于构建用户界面的js库
+能够通过组建化的方式构建快速响应的大型web应用程序
+
+### 虚拟dom
+优点：
+处理了浏览器差异性，避免用户操作真实的dom
+内容经过xss处理，防范xss攻击
+容易跨平台
+实现差异更新，减少dom操作
+缺点： 
+首次更新并不会快
+占用内存
+
+### 函数组建和类组建
+怎么区分的： Component.prototype.isreactComponent = {}
+不同：    
+函数组建是函数式编程思想， 类组建需要创建实例，面向对象思想
+类组建创建实例并保存，需要占用内存，函数组建不需要创建实例
+函数组建方便书写单元测试
+函数组建具有值捕获特性   使用定时器三秒后打印值  还是三妙前的数值，而类组建由于共享一个实例，打印的值是三妙后的新值
+生命周期
+跳过更新的方式不同 purecomponent
+类组建编译出来的代码多很多
+
+### purecomponent
+里面重写了shouldcomponentUpdate 
+浅比较了oldstate  newstate   oldprops newprops 如果相同 就返回false 不更新组建
+
