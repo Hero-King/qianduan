@@ -86,11 +86,11 @@ ECMAScript 有 6 种简单数据类型（也称为原始类型）：Undefined、
 String 和 Symbol。Symbol（符号）是 ECMAScript 6 新增的。还有一种复杂数据类型叫 Object（对
 象）。
 
-数据转换: 直接调用 Number()  String()  不要new 
+数据转换: 直接调用 Number()  String()  不要new
 型使用 IEEE 754 格式表示整数和浮点值（在某些语言中也叫双精度值）。
 null和udefined 没有toString 方法  想变成string可以  先用String()转型
 
-转成整数: Number()  
+转成整数: Number()
  布尔值，true 转换为 1，false 转换为 0。
  数值，直接返回。
  null，返回 0。
@@ -110,12 +110,111 @@ symbol。
 let sym = Symbol();
 console.log(typeof sym); // symbol
 
+const m1 = new Map([
+ ["key1", "val1"],
+ ["key2", "val2"],
+ ["key3", "val3"]
+]);
+alert(m1.size); // 3
+Object 只能使用数值、字符串或符号作为键不同，Map 可以使用任何 JavaScript 数据类型作为键 基本上相当于使用严格对象相等的标准来检查键的匹配性。
+与 Object 类型的一个主要差异是，Map 实例会维护键值对的插入顺序，因此可以根据插入顺序执
+行迭代操作。
+const m = new Map([
+ ["key1", "val1"],
+ ["key2", "val2"],
+ ["key3", "val3"]
+]);
+alert(m.entries === m[Symbol.iterator]); // true
+for (let pair of m.entries()) {
+ alert(pair);
+}
+// [key1,val1]
+// [key2,val2]
+// [key3,val3]
+
+WeakMap 
+是 Map 的“兄弟”类型，其 API 也是 Map 的子集。WeakMap 中的“weak”（弱），
+描述的是 JavaScript 垃圾回收程序对待“弱映射”中键的方式。
+弱映射中的键只能是 Object 或者继承自 Object 的类型，尝试使用非对象设置键会抛出
+TypeError。值的类型没有限制。
+
+P195 
+WeakMap 中“weak”表示弱映射的键是“弱弱地拿着”的。意思就是，这些键不属于正式的引用，
+不会阻止垃圾回收。但要注意的是，弱映射中值的引用可不是“弱弱地拿着”的。只要键存在，键/值
+对就会存在于映射中，并被当作对值的引用，因此就不会被当作垃圾回收。
+来看下面的例子：
+const wm = new WeakMap();
+wm.set({}, "val");
+在查看wm 时候 数据丢失了
+set()方法初始化了一个新对象并将它用作一个字符串的键。因为没有指向这个对象的其他引用，
+所以当这行代码执行完成后，这个对象键就会被当作垃圾回收。然后，这个键/值对就从弱映射中消失
+了，使其成为一个空映射。在这个例子中，因为值也没有被引用，所以这对键/值被破坏以后，值本身
+也会成为垃圾回收的目标。
+再看一个稍微不同的例子
+const wm = new WeakMap();
+const container = {
+ key: {}
+};
+wm.set(container.key, "val");
+function removeReference() {
+ container.key = null;
+}
+这一次，container 对象维护着一个对弱映射键的引用，因此这个对象键不会成为垃圾回收的目
+标。不过，如果调用了 removeReference()，就会摧毁键对象的最后一个引用，垃圾回收程序就可以
+把这个键/值对清理掉。
+
+因为 WeakMap 中的键/值对任何时候都可能被销毁，所以没必要提供迭代其键/值对的能力。
+
+迭代
+实现 Iterable 接口（可迭代协议）要求同时具备两种能力：支持迭代的自我识别能力和创建实现
+Iterator 接口的对象的能力。在 ECMAScript 中，这意味着必须暴露一个属性作为“默认迭代器”，而
+且这个属性必须使用特殊的 Symbol.iterator 作为键。这个默认迭代器属性必须引用一个迭代器工厂
+函数，调用这个工厂函数必须返回一个新迭代器。
+很多内置类型都实现了 Iterable 接口：
+ 字符串
+ 数组
+ 映射
+ 集合
+ arguments 对象
+ NodeList 等 DOM 集合类型
+
+let num = 1;
+let obj = {};
+// 这两种类型没有实现迭代器工厂函数
+console.log(num[Symbol.iterator]); // undefined
+console.log(obj[Symbol.iterator]); // undefined
+
+let str = 'abc';
+let arr = ['a', 'b', 'c'];
+let map = new Map().set('a', 1).set('b', 2).set('c', 3);
+let set = new Set().add('a').add('b').add('c');
+let els = document.querySelectorAll('div');
+// 这些类型都实现了迭代器工厂函数
+console.log(str[Symbol.iterator]); // f values() { [native code] }
+console.log(arr[Symbol.iterator]); // f values() { [native code] }
+console.log(map[Symbol.iterator]); // f values() { [native code] }
+console.log(set[Symbol.iterator]); // f values() { [native code] }
+console.log(els[Symbol.iterator]); // f values() { [native code] }
+
+// 调用这个工厂函数会生成一个迭代器
+console.log(str[Symbol.iterator]()); // StringIterator {}
+console.log(arr[Symbol.iterator]()); // ArrayIterator {}
+console.log(map[Symbol.iterator]()); // MapIterator {}
+console.log(set[Symbol.iterator]()); // SetIterator {}
+console.log(els[Symbol.iterator]()); // ArrayIterator {}
+
+迭代器是一种一次性使用的对象，用于迭代与其关联的可迭代对象。迭代器 API 使用 next()方法
+在可迭代对象中遍历数据。每次成功调用 next()，都会返回一个 IteratorResult 对象，其中包含迭
+代器返回的下一个值。若不调用 next()，则无法知道迭代器的当前位置。
+next()方法返回的迭代器对象 IteratorResult 包含两个属性：done 和 value。done 是一个布
+尔值，表示是否还可以再次调用 next()取得下一个值；value 包含可迭代对象的下一个值（done 为
+false），或者 undefined（done 为 true）。done: true 状态称为“耗尽”。
+
+自定义迭代器: 手写Symbol.interator属性 和next方法
+提前终止迭代器: 可选的 return()方法用于指定在迭代器提前关闭时执行的逻辑。
 
 
-
-
-
-
+生成器
 
 
  */
