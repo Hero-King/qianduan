@@ -175,9 +175,9 @@
             console.log("我是原型链加上的");
         }
         aa.alertMessage();
-        console.log(aa.__proto__ === Person.prototype, "原型")   // true
+        console.log(aa.__proto__ === Person.prototype, "原型") // true
         //我们知道 Person = new Function   
-        console.log(Person.__proto__ === Function.prototype)    // true
+        console.log(Person.__proto__ === Function.prototype) // true
 
         // 静态方法定义和调用
         Person.static = () => console.log("Person static method");
@@ -194,7 +194,7 @@
             let objNew = endObj || {};
             for (let i in obj) {
                 if (obj.hasOwnProperty(i)) {
-                    if (typeof obj[i] === "object") {   // [] {}
+                    if (typeof obj[i] === "object") { // [] {}
                         objNew[i] = obj[i].constructor === Array ? [] : {};
                         deepClone(obj[i], objNew[i])
                     } else {
@@ -220,8 +220,37 @@
         let clone2 = JSON.parse(JSON.stringify(objTemp))
         clone2["age"].age = "age"
         console.log(objTemp)
-
+        // json不能处理undefined类型!!
+        console.log(JSON.stringify({
+            string: "string",
+            int: "int",
+            "null": null,
+            "boolean": true,
+            arr: ["1", "2"]
+        }))
+        console.log("json不能处理undefined", JSON.stringify({
+            "undefined": undefined
+        }))
+        //         有时候，对象需要在 JSON.stringify()之上自定义 JSON 序列化。此时，可以在要序列化的对象
+        // 中添加 toJSON()方法，序列化时会基于这个方法返回适当的 JSON 表示。事实上，原生 Date 对象就
+        // 有一个 toJSON()方法，能够自动将 JavaScript 的 Date 对象转换为 ISO 8601 日期字符串（本质上与在
+        // Date 对象上调用 toISOString()方法一样）。
         // 感觉也可以
+        let book = {
+            title: "Professional JavaScript",
+            authors: [
+                "Nicholas C. Zakas",
+                "Matt Frisbie"
+            ],
+            edition: 4,
+            year: 2017,
+            toJSON: function () {
+                return this.title;
+            }
+        };
+        let jsonText = JSON.stringify(book);
+        console.log(null === undefined) // false
+
         function deepClone3(obj) {
             if (obj === null) {
                 return "null";
@@ -243,10 +272,10 @@
         }
 
         // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
-        console.log(undefined == null)  // true
-        console.log(undefined === null)  // false
+        console.log(undefined == null) // true
+        console.log(undefined === null) // false
         console.log(0.1 + 0.2) // 0.300000000004
-        console.log((0.1 * 100 + 0.2 * 100) / 100)  // 0.3
+        console.log((0.1 * 100 + 0.2 * 100) / 100) // 0.3
 
         // 包装对像
         //  let str = "123"
@@ -255,19 +284,19 @@
 
         // +法 如果是一般数据类型就处理   如果包含一个引用数据类型 需要先对引用数据调用 valueOf() 如果返回
         // 普通类型 相加即可  不是的话继续调用toString()方法  然后返回值相加
-        console.log([] + []);   // "" 
-        console.log("" + []);   // ""
-        console.log("" + {});   // "[object Object]"
-        console.log({} + {});   // "[object Object][object Object]"
-        console.log(+ "") // 0
+        console.log([] + []); // "" 
+        console.log("" + []); // ""
+        console.log("" + {}); // "[object Object]"
+        console.log({} + {}); // "[object Object][object Object]"
+        console.log(+"") // 0
 
 
         // 返回的是本地时间， 如果是抢购等  时间需要用后台的  本地时间是可以改变的
         console.log(new Date())
 
         let url = "https://cn.bing.com/search?q=伟大的&sp=4";
-        console.log("encodeUrl", encodeURI(url));   // 会把中文ascall编码
-        console.log("encodeURIComponent", encodeURIComponent(url));      // 会把协议等字符也编码
+        console.log("encodeUrl", encodeURI(url)); // 会把中文ascall编码
+        console.log("encodeURIComponent", encodeURIComponent(url)); // 会把协议等字符也编码
 
         // DOM树构建过程
         /**
@@ -294,9 +323,9 @@
             }
         }
         const bibaoitem = bibao()
-        bibaoitem()     //0
-        bibaoitem()     //1
-        bibaoitem()     //2
+        bibaoitem() //0
+        bibaoitem() //1
+        bibaoitem() //2
 
         // this    局部函数的this是window 
         var mythis = {
@@ -307,13 +336,13 @@
             getget: function () {
                 var that = this;
                 var bb = function () {
-                    console.log(this)   // windows
+                    console.log(this) // windows
                 }
                 bb()
-                console.log(that, "保存下来的that就是调用函数的对象了")  //mythis对象
+                console.log(that, "保存下来的that就是调用函数的对象了") //mythis对象
             }
         }
-        mythis.getage()     //12
+        mythis.getage() //12
         mythis.getget()
 
         Function.prototype.mybind = function (obj) {
@@ -322,6 +351,49 @@
                 self.apply(obj)
             }
         }
+
+        // Object对象
+        let objt = {}
+        Object.defineProperty(objt, "age", {
+            value: 22,
+            enumerable: false, //设置不可枚举 for in 循环不出来
+            writable: true, //设置属性可以修改,
+            configurable: false //设置属性可否被删除
+        })
+        console.log(objt.age)
+
+        // Object.assign   
+        //         这个方法接收一个目标对象和一个
+        // 或多个源对象作为参数，然后将每个源对象中可枚举（Object.propertyIsEnumerable()返回 true）
+        // 和自有（Object.hasOwnProperty()返回 true）属性复制到目标对象。以字符串和符号为键的属性
+        // 会被复制。对每个符合条件的属性，这个方法会使用源对象上的[[Get]]取得属性的值，然后使用目标
+        // 对象上的[[Set]]设置属性的值。
+        dest = {};
+        src = {
+            id: 'src'
+        };
+        result = Object.assign(dest, src);
+        // Object.assign 修改目标对象
+        // 也会返回修改后的目标对象
+        console.log(dest === result); // true
+        console.log(dest !== src); // true
+        console.log(result); // { id: src }
+        console.log(dest); // { id: src } 
+
+        /**
+         * 多个源对象
+         */
+        dest = {};
+        result = Object.assign(dest, {
+            a: 'foo'
+        }, {
+            b: 'bar'
+        });
+        console.log(result); // { a: foo, b: bar }
+
+        // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
+        // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
+        // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 
     </script>
     <style>
         img {
