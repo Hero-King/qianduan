@@ -85,6 +85,36 @@ const 的行为与 let 基本相同，唯一一个重要的区别是用它声明
 ECMAScript 有 6 种简单数据类型（也称为原始类型）：Undefined、Null、Boolean、Number、
 String 和 Symbol。Symbol（符号）是 ECMAScript 6 新增的。还有一种复杂数据类型叫 Object（对
 象）。
+Symbol:  P69
+符号并不是为了提供私有属性的行为才增加的（尤其是因为
+Object API 提供了方法，可以更方便地发现符号属性）。相反，符号就是用来创建唯一记号，进而用作非
+字符串形式的对象属性。
+符号需要使用 Symbol()函数初始化。因为符号本身是原始类型，所以 typeof 操作符对符号返回
+symbol。
+let sym = Symbol();
+console.log(typeof sym); // symbol
+调用 Symbol()函数时，也可以传入一个字符串参数作为对符号的描述（description），将来可以通
+过这个字符串来调试代码。但是，这个字符串参数与符号定义或标识完全无关：
+let genericSymbol = Symbol();
+let otherGenericSymbol = Symbol();
+let fooSymbol = Symbol('foo');
+let otherFooSymbol = Symbol('foo');
+console.log(genericSymbol == otherGenericSymbol); // false
+
+Symbol()函数不能与 new 关键字一起作为构造函数使用  他是基本类型 为了避免创建符号包装对象，
+
+使用全局符号注册表: 
+如果运行时的不同部分需要共享和重用符号实例，那么可以用一个字符串作为键，在全局符号注册表中创建并重用符号。
+let fooGlobalSymbol = Symbol.for('foo');
+console.log(typeof fooGlobalSymbol); // symbol 
+Symbol.for()对每个字符串键都执行幂等操作。第一次使用某个字符串调用时，它会检查全局运
+行时注册表，发现不存在对应的符号，于是就会生成一个新符号实例并添加到注册表中。后续使用相同
+字符串的调用同样会检查注册表，发现存在与该字符串对应的符号，然后就会返回该符号实例。
+let fooGlobalSymbol = Symbol.for('foo'); // 创建新符号
+let otherFooGlobalSymbol = Symbol.for('foo'); // 重用已有符号
+console.log(fooGlobalSymbol === otherFooGlobalSymbol); // true
+还可以使用 Symbol.keyFor("foo")来查询全局注册表
+使用: 凡是可以使用字符串或数值作为属性的地方，都可以使用符号。
 
 数据转换: 直接调用 Number()  String()  不要new
 型使用 IEEE 754 格式表示整数和浮点值（在某些语言中也叫双精度值）。
@@ -215,6 +245,65 @@ false），或者 undefined（done 为 true）。done: true 状态称为“耗�
 
 
 生成器
+生成器的形式是一个函数，函数名称前面加一个星号（*）表示它是一个生成器。
+// 生成器函数声明
+function* generatorFn() {}
+// 生成器函数表达式
+let generatorFn = function* () {}
+// 作为对象字面量方法的生成器函数
+let foo = {
+ * generatorFn() {}
+}
+// 作为类实例方法的生成器函数
+class Foo {
+ * generatorFn() {}
+}
+// 作为类静态方法的生成器函数
+class Bar {
+ static * generatorFn() {}
+} 
+标识生成器函数的星号不受两侧空格的影响：
+// 等价的生成器函数：
+function* generatorFnA() {}
+function *generatorFnB() {}
+function * generatorFnC() {} 
+调用生成器函数会产生一个生成器对象。生成器对象一开始处于暂停执行（suspended）的状态。与
+迭代器相似，生成器对象也实现了 Iterator 接口，因此具有 next()方法。调用这个方法会让生成器
+开始或恢复执行。
+生成器对象实现了 Iterable 接口，它们默认的迭代器是自引用的
+next()方法的返回值类似于迭代器，有一个 done 属性和一个 value 属性。函数体为空的生成器
+函数中间不会停留，调用一次 next()就会让生成器到达 done: true 状态。
+
+yield 关键字可以让生成器停止和开始执行，也是生成器最有用的地方。生成器函数在遇到 yield
+关键字之前会正常执行。遇到这个关键字后，执行会停止，函数作用域的状态会被保留。停止执行的生
+成器函数只能通过在生成器对象上调用 next()方法来恢复执行：
+
+function* generatorFn() {
+ yield 'foo';
+ yield 'bar';
+ return 'baz';
+}
+let generatorObject = generatorFn();
+console.log(generatorObject.next()); // { done: false, value: 'foo' }
+console.log(generatorObject.next()); // { done: false, value: 'bar' }
+console.log(generatorObject.next()); // { done: true, value: 'baz' } 
+
+yield 关键字只能在生成器函数内部使用，用在其他地方会抛出错误。
+yield 关键字必须直接位于生成器函数定义中，出现在嵌套的非生成器函数中会抛出语法错误：
+// 有效
+function* validGeneratorFn() {
+ yield;
+}
+// 无效
+function* invalidGeneratorFnA() {
+ function a() {
+ yield;
+ }
+} 
+
+除了可以作为函数的中间返回语句使用，yield 关键字还可以作为函数的中间参数使用。上一次让
+生成器函数暂停的 yield 关键字会接收到传给 next()方法的第一个值。
+
 
 
  */
