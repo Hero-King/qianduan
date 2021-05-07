@@ -2,6 +2,7 @@
  *  JS 原型  每一个构造函数都有一个属性叫 prototype  是一个对象,可以给他动态添加属性和方法  这些属性和方法对象可以
  * 直接调用
  *
+ * https://www.infoq.cn/article/CS9-WZQlNR5h05HHDo1b 浏览器工作原理
  * https://blog.csdn.net/u014465934/article/details/84836731
  * 得到： Function是顶层的构造器， Object是顶层的构造函数
  *          原型上： Function继承了Object
