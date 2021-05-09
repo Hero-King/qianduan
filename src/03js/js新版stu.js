@@ -178,3 +178,8 @@ e.clientX  e.clientY  。这两个属性表示事件发生时鼠标光标在视�
 鼠标事件不仅是在浏览器窗口中发生的，也是在整个屏幕上发生的。可以通过 event 对象的
 screenX 和 screenY 属性获取鼠标光标在屏幕上的坐标   针对的是显示器的xy坐标
 */
+
+function aa(params) {
+    console.log("js加载完成并执行了");
+}
+aa()

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器工作原理</title>
+    <script>
+        function first() {
+            console.log("first script")
+        }
+        first();
+    </script>
+    <link href="../App.css" type="text/css" rel="stylesheet"/>
+    <style>
+        li{
+            border: 1px solid red;
+        }
+    </style>
+    <script>
+        console.log("script标签");
+        window.onload= function onLoad(params) {
+            console.log("onlload")
+        }
+        function domContentLoaded(params) {
+            console.log("DOMContentLoaded")
+        }
+        window.addEventListener("DOMContentLoaded",domContentLoaded)
+        setTimeout(() => {
+            console.log("timeout 0")
+        }, 0);
+        Promise.resolve("resollve").then((result) => {
+            console.log(result)
+        }).then(() => {
+            setTimeout(() => {
+                console.log("timeout 1")
+            }, 0);
+            console.log("promise")
+        })
+    </script>
+    <script src="./js新版stu.js" ></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/underscore.js/1.13.0/underscore-esm-min.js"></script>
+</head>
+
+<body>
+
+    浏览器解析html 从head中预加载所有资源 但是按顺序执行的 解析完html 立即first();   等等待网络请求css完成  执行L20 script
+    里面有宏任务  微任务 js引擎执行
+    等待 src="./js新版stu.js" 资源下载完成 执行
+
+    资料
+    <ul>
+        <li><a href="https://www.cnblogs.com/cangqinglang/p/8963557.html" target="_black">浏览器多线程1</a> </li>
+        <li><a href="https://www.qiyuandi.com/zhanzhang/zonghe/15793.html" target="_black">浏览器多线程</a> </li>
+    </ul>
+    事件环： 渲染进程中js引擎（JS内核）线程(js引擎有多个线程，一个主线程，其它的后台配合主线程) 
+        主线程读取js代码并同步执行，主线程遇到异步任务，交给其他线程处理； 异步进程处理完毕（Ajax返回、DOM事件处罚、Timer到等），将相应的异步任务推入任务队列；
+        主线程执行完毕，查询任务队列，如果存在任务，则取出一个任务推入主线程处理（先进先出）；重复执行
+        一个循环执行完所有的微任务和一个宏任务， （可能需要更新就 执行更新渲染操作，在一帧内多次的DOM改变，浏览器只会批处理相应一次）
+    Task队列  每次只执行一个任务，添加的任务放在队列末尾
+    requestAnimation队列   动画回调会一直执行，知道队列中所有任务都完成，如果又有动画回调，会在下一帧执行
+    微任务队列  也是一直执行，知道任务队列为空，但是假如加入任务的速度比执行的快，就会一直执行，事件环会堵塞
+
+        我们知道了GUI渲染线程 和 js线程是互斥的  那怎么确保js大工作量的情况下 保证浏览器的fps??
+        帧： https://www.jianshu.com/p/a32b890c29b1
+        <a href="https://www.jianshu.com/p/a32b890c29b1">帧</a>
+    <img src="demo/1.jpg" width="100px" />
+</body>
+
+</html>
