@@ -9,7 +9,7 @@
         // next() 方法的返回值类似于迭代器， 有一个 done 属性和一个 value 属性。 函数体为空的生成器
         // 函数中间不会停留， 调用一次 next() 就会让生成器到达 done: true 状态。
         (function () {
-            function* generatorFn() {}
+            function* generatorFn() { }
             let generatorObject = generatorFn();
             console.log(generatorObject); // generatorFn {<suspended>}
             console.log(generatorObject.next()); // { done: true, value: undefined } 
@@ -83,7 +83,7 @@
             // 2 
 
             function* generatorFn() {
-                yield*[1, 2, 3];
+                yield* [1, 2, 3];
             }
             // 等价与 generatorFn：
             // function* generatorFn() {

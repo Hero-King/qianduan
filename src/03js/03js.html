@@ -358,9 +358,15 @@
             value: 22,
             enumerable: false, //设置不可枚举 for in 循环不出来
             writable: true, //设置属性可以修改,
-            configurable: false //设置属性可否被删除
+            configurable: false, //设置属性可否被删除,
         })
-        console.log(objt.age)
+        console.log(objt.age);
+        Object.defineProperty(objt, "agebak", {
+            get() {
+                return this.age + "   "
+            }
+        })
+        console.log(objt);
 
         // Object.assign   
         //         这个方法接收一个目标对象和一个
@@ -391,6 +397,20 @@
         });
         console.log(result); // { a: foo, b: bar }
 
+        //要创建 Person 的实例，应使用 new 操作符。以这种方式调用构造函数会执行如下操作。
+        // (1) 在内存中创建一个新对象。
+        // (2) 这个新对象内部的[[Prototype]]特性被赋值为构造函数的 prototype 属性。
+        // (3) 构造函数内部的 this 被赋值为这个新对象（即 this 指向新对象）。
+        // (4) 执行构造函数内部的代码（给新对象添加属性）。
+        // (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
+
+        // 创建一个私有属性，只能通过某个方法访问
+        function AA() {
+            const name = "wang";
+            this.getName = function () { return name }
+        }
+        const aa1 = new AA()
+        console.log(aa1.name, aa1.getName())   // undefined wang
         // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
         // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
         // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 

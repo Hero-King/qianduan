@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+
+<body>
+    <script>
+        // promise的构造函数是同步执行！！
+        // ECMAScript 6 新增的引用类型 Promise，可以通过 new 操作符来实例化。创建新期约时需要传入执行器（executor）函数
+        // 作为参数（后面马上会介绍），下面的例子使用了一个空函数对象来应付一下解释器：
+        let p = new Promise((resolve, reject) => {
+            console.log("promise函数")      //第一个输出  同步的！！
+            setTimeout(() => {
+                resolve()
+            }, 10)
+            console.log("promise函数同步的")    //在run之前输出
+        });
+        setTimeout(console.log, 0, p); // Promise <pending>
+
+        console.log("run");
+        (function aa() {
+            let p1 = new Promise((resolve, reject) => resolve(11));
+            let p2 = Promise.resolve(12);
+            let p13 = Promise.resolve(13);
+            p1.then(v => console.log(v))
+            p2.then(v => {
+                console.log(v)
+                setTimeout(() => {
+                    console.log("promise then timeout")
+                }, 0);
+                p13.then(v => console.log(v))
+            })
+            console.log("running")
+
+            // Promise then 这个 then()方法接收最多两个参数：onResolved 处理程序和 onRejected 处理程序。处理程序的返回值会通过Promise.resolve()包装来生成新期约。
+            // 如果没有显式的返回语句，则 Promise.resolve()会包装默认的返回值 undefined。
+        })();
+
+        /**
+         * 
+         * running
+promise.html:23 11
+promise.html:25 12
+promise.html:29 13
+Promise {<pending>}
+promise.html:27 promise then timeout
+         */
+
+        //  这个静态方法能够包装任何非期约值，包括错误对象，并将其转换为解决的期约。因此，也可能导致不符合预期的行为：
+        (function () {
+            let p = Promise.resolve(new Error('foo'));
+            setTimeout(console.log, 0, p);
+            // Promise <resolved>: Error: foo
+        })();
+
+
+        // 异步函数
+        // async 关键字用于声明异步函数。这个关键字可以用在函数声明、函数表达式、箭头函数和方法上,异步函数没有return语句时候和普通函数一样
+        // 异步函数如果使用 return 关键字返回了值（如果没有 return 则会返回 undefined），这个值会被 Promise.resolve()包装成一个期约对象。
+        // 注意观察输出，深入理解宏任务 微任务
+        (function () {
+            async function foo() {
+                console.log(1);
+                // 当然，直接返回一个期约对象也是一样的： return Promise.resolve(3);
+                return 3;
+            }
+            // 给返回的期约添加一个解决处理程序
+            foo().then(console.log);
+            console.log(2);
+            // 1`
+            // 2
+            // 3
+
+            // 使用 await关键字可以暂停异步函数代码的执行，等待期约解决。
+            // 要完全理解 await 关键字，必须知道它并非只是等待一个值可用那么简单。JavaScript 运行时在碰
+            // 到 await 关键字时，会记录在哪里暂停执行。等到 await 右边的值可用了，JavaScript 运行时会向消息
+            // 队列中推送一个任务，这个任务会恢复异步函数的执行。
+            // 即使 await 后面跟着一个立即可用的值，函数的其余部分也会被异步求值。
+        })();
+    </script>
+</body>
+
+</html>

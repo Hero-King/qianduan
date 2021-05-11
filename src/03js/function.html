@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.mycall = function (obj, ...args) {
+            const wrapperObj = obj || window;
+            console.log(this)
+            wrapperObj.func = this;
+            const res = wrapperObj.func(...args)
+            delete wrapperObj.func;
+            return res
+        }
+
+        const objT = {
+            name: "wang",
+            sayArgs() {
+                console.log(...arguments, this.name);
+                return 10
+            }
+        }
+        objT.sayArgs(12, 23, 345)     // 12 23 345
+        objT.sayArgs.call(null, 1, 2, 3, 4)     // 1 2 3 4
+        let testObj = {
+            name: "test",
+        }
+        console.log(testObj);
+        objT.sayArgs.mycall(testObj, 1, 2, 3, 4)     // 1 2 3 4
+        console.log(testObj);
+
+        Function.prototype.mybind = function (obj) {
+            const self = this;
+            return function () {
+                self.call(obj)
+            }
+        }
+    </script>
+</body>
+
+</html>
