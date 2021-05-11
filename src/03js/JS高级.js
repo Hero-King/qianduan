@@ -75,12 +75,13 @@ deffer 脚本会被延迟到整个页面都解析完毕后再运行。 相当于
 XHTML 将 HTML 作为 XML的应用重新包装的结果。
 
 
-let var const
-var是函数作用域,没有块作用域的概念   var会声明提前
- let 声明的变量不会在作用域中被提升。
- 与 var 关键字不同，使用 let 在全局作用域中声明的变量不会成为 window 对象的属性（var 声
-明的变量则会）。 但是不能重复声明
+let var const区别
+var是函数作用域,没有块作用域的概念 
+var会声明提前,let const 不会,所以只能先定义在使用,定义之前阶段不能使用变量,称为""暂时性死区";let 声明的变量不会在作用域中被提升。
+let 与 var 关键字不同，使用 let 在全局作用域中声明的变量不会成为 window 对象的属性（var 声
+明的变量则会）。 但是不能重复声明,var可以重复申明
 const 的行为与 let 基本相同，唯一一个重要的区别是用它声明变量时必须同时初始化变量，
+优先使用const let次之
 
 数据类型:
 ECMAScript 有 6 种简单数据类型（也称为原始类型）：Undefined、Null、Boolean、Number、

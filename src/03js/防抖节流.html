@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #root {
+            height: 1000px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root">
+        在平时开发的过程中，会有很多场景会频繁触发事件，比如说搜索框的实时发请求，
+        疯狂点轮播图换图，onmousemove,resize,onscroll等等，有些时候，我们并不能或者不想频繁触发事件，咋办呢？
+        我们频繁触发滚轮事件,resize事件,回调函数会频繁触发,如果函数中操作DOM就会引起回流
+        <img src="./img/scroll事件频繁触发.jpg" />
+        <h2>
+            没有操作DOM时候就已经很耗性能了
+        </h2>
+        <img src="./img/scroll事件频繁性能.jpg" />
+        防抖: 事件相应函数在一段时间后才执行，如果在这段事件内再次调用，则重新计算执行时间；当预定的时间内没有再次调用该函数，则执行dosomething函数
+        能够解决一部分问题,比如疯狂点击的问题,只会在延迟时间大于指定时间才会执行一次
+        节流: 如果你持续触发事件，每隔一段时间，只执行一次事件
+    </div>
+    <script>
+        function handleScroll(e) {
+            console.log(e)
+        }
+        // window.addEventListener("scroll", handleScroll)
+
+        //防抖的函数
+        function debounce(func, wait, immediate) {
+            let timeout;
+            return function () {
+                //这里利用了闭包
+                clearTimeout(timeout);
+
+                if (immediate) {
+                    //立即执行
+                    let callNow = !timeout;
+                    //如果是第一次点的话，timeout是没有值的
+
+                    timeout = setTimeout(function () {
+                        timeout = null;
+                    }, wait);
+
+
+                } else {
+                    //不会立即执行
+                    timeout = setTimeout(func(), wait);
+                }
+            }
+        }
+
+        // 节流
+        function throttle(func, wait) {
+            let timeout;
+            return function () {
+                if (!timeout) {
+                    timeout = setTimeout(function () {
+                        func();
+                        timeout = null;
+                    }, wait);
+                }
+            }
+        }
+
+        window.onscroll = debounce(handleScroll, 300);
+        //这个true是为了一开始立即执行
+    </script>
+</body>
+
+</html>
