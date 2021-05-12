@@ -83,6 +83,114 @@ promise.html:27 promise then timeout
         })();
 
         // 手写promise
+        const valueSymbol = Symbol.for("value")
+        function MyPromise(exector) {
+            const self = this;
+            // self[valueSymbol] = null   所有可以是用字符串或者数字的地方都可以使用symbol
+            self.value = null;
+            self.state = "pending";
+            self.reason = null;
+            self.onFulfilledCallback = []
+            self.onRejectCallback = []
+
+            function resolve(value) {
+                if (self.state == "pending") {
+                    // self[valueSymbol] = value
+                    self.value = value;
+                    self.state = "fulfilled";
+                    self.onFulfilledCallback.forEach(i => i(value))
+                }
+            }
+
+            function reject(reason) {
+                if (self.state == "pending") {
+                    self.state = "rejected";
+                    self.reason = reason;
+                    self.onRejectCallback.forEach(i => i(value))
+                }
+            }
+
+            try {
+                exector(resolve, reject)
+            } catch (error) {
+                reject(error)
+            }
+        }
+
+        MyPromise.prototype.then = function (onresolved, onrejected) {
+            const self = this;
+            onresolved = typeof onresolved == "function" ? onresolved : function (data) { return data }
+            onrejected = typeof onrejected == "function" ? onrejected : function (err) { throw err }
+
+            if (self.state == "fulfilled") {
+                // console.log(self[valueSymbol], "symbol")
+                return new MyPromise((resolve, reject) => {
+                    try {
+                        const x = onresolved(self.value);
+                        if (x instanceof MyPromise) {
+                            x.then(resolve, reject)
+                        } else {
+                            resolve(x)
+                        }
+                    } catch (error) {
+                        reject(error)
+                    }
+                })
+            }
+
+            if (self.state == "rejected") {
+                return new MyPromise((resolve, reject) => {
+                    try {
+                        const x = onrejected(self.value);
+                        if (x instanceof MyPromise) {
+                            x.then(resolve, reject)
+                        } else {
+                            resolve(x)
+                        }
+                    } catch (error) {
+                        reject(error)
+                    }
+                })
+
+            }
+
+            if (self.state == "pending") {
+                return new MyPromise((resolve, reject) => {
+                    self.onFulfilledCallback.push(() => {
+                        let x = onresolved(self.value)
+                        if (x instanceof Promise) {
+                            x.then(resolve, reject)
+                        } else {
+                            resolve(x)
+                        }
+                    });
+                    self.onRejectedCallback.push(() => {
+                        let x = onRejected(self.reason)
+                        if (x instanceof Promise) {
+                            x.then(resolve, reject)
+                        } else {
+                            resolve(x)
+                        }
+                    })
+                })
+            }
+        }
+
+        // Test
+        console.log("test-----------")
+        const P1 = new MyPromise((resolve, reject) => {
+            resolve("121")
+        })
+        P1.then(function (value) {
+            console.log(value, "----")
+            return new MyPromise((res, rej) => {
+                res("1111111")
+            })
+        }).then(value => { console.log(value) })
+        // P1.then(1212)
+        console.log(P1)
+
+
     </script>
 </body>
 
