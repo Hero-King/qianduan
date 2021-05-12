@@ -313,7 +313,7 @@
          *                              repaint 重绘  元素属性发生改变且不影响布局时候（背景图片  透明度  字体样式），产生重绘。相当于不刷新页面动态更新
          * 回流一定会重绘， 但是重绘不一定会回流（重排）   所以我们尽量去减少重拍：   直接改变元素的classname   设置display: none 在设置display block 而不是创建节点
          *  需要多次重拍的元素使用position absolute 或者fixed   创建dom节点时候 创建完一次性加入dom
-        */
+         */
 
         // 闭包
         function bibao() {
@@ -407,10 +407,12 @@
         // 创建一个私有属性，只能通过某个方法访问
         function AA() {
             const name = "wang";
-            this.getName = function () { return name }
+            this.getName = function () {
+                return name
+            }
         }
         const aa1 = new AA()
-        console.log(aa1.name, aa1.getName())   // undefined wang
+        console.log(aa1.name, aa1.getName()) // undefined wang
         // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
         // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
         // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 
@@ -422,14 +424,16 @@
     </style>
 </body>
 
-<img src="https://img-blog.csdnimg.cn/img_convert/c27677c78368a4e8d45d0d89aaadbffd.png" id="img1"
+浏览器渲染过程: <img src="https://img-blog.csdnimg.cn/img_convert/c27677c78368a4e8d45d0d89aaadbffd.png" id="img1"
     alt="c27677c78368a4e8d45d0d89aaadbffd.png">
-<img src="https://images1.pianshen.com/28/85/85579830a1049af8e7dda9890b6451ec.png" />
+
+原型链: <img src="https://images1.pianshen.com/28/85/85579830a1049af8e7dda9890b6451ec.png" onload="console.log('img loaded')" />
 
 <script>
     function timeoutLog(str) {
         console.log(str)
     }
+
     function log(str) {
         console.log(str)
     }
@@ -438,7 +442,7 @@
         console.log("click");
         log("log函数");
         // img1.style.border = "2px solid red";    // Schedule Style Recalculation
-        img1.style.fontSize = "20px";    // Schedule Style Recalculation
+        img1.style.fontSize = "20px"; // Schedule Style Recalculation
         setTimeout(() => {
             timeoutLog("timeoutlog")
         }, 0);
