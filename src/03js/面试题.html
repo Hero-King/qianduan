@@ -53,7 +53,16 @@
         })();
 
         // 用闭包写个单例模式
-       
+        const AA = (function () {
+            var instance;
+            return function (name) {
+                if (!instance) {
+                    instance = this
+                }
+                return instance
+            }
+        })();
+        console.log(new AA() == new AA())   // true
     </script>
 </head>
 
