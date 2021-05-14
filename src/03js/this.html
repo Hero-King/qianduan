@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class C {
+            aa() {
+                console.log(this)
+            }
+            // aa函数在原型上,  共享   bb方法在实例上
+            bb = () => {
+                console.log(this)
+            }
+        }
+        //类中的方法默认开启了局部的严格模式，this不在转换为包装对象,所传即所得
+
+
+
+        const c = new C()
+        c.aa(); // C 实例
+        c.bb() // C 实例
+        f = c.aa;
+        console.log(f)
+        f(); // undefined
+        b = c.bb
+        b() // C 实例
+    </script>
+    <script>
+        "use strict";           // 非严格模式              严格模式
+        console.log(" use strict")
+        function f1() {
+            console.log(this); // window           // undefined
+            function f2() {
+                console.log(this) // window           // undefined
+            }
+            f2()
+        }
+        f1();
+        console.log(this);   // window
+        // 严格模式下的全局作用域的 this -> window
+        // 没有明确的指定函数中的this的函数中 this 等于undefined
+        // 事件处理函数中,this指向触发事件的目标对象
+    </script>
+</body>
+
+</html>
