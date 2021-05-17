@@ -5,9 +5,9 @@
 参看资料： 
 https://blog.csdn.net/mus123/article/details/106499506   https://www.bilibili.com/video/BV1ek4y1r7GT?from=search&seid=6774208587243450087
 #### 代学习
-html5 标签   食视频  图片
+html5 标签   视频  图片
 事件循环
 响应式布局
 
-威信小程序
+微信小程序
 学习vue
