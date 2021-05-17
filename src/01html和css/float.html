@@ -5,41 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .parent div {
-            height: 200px;
-            width: 200px;
-            border: 1px solid red;
-            float: left;
-        }
-
-        .clearfix:after {
-            content: ".";
-            display: block;
-            height: 0;
-            clear: both;
-            /* visibility: hidden; */
-        }
-    </style>
 </head>
 
 <body>
-    <div class="parent clearfix">
-        <div class="left">left</div>
-        <div class="right">right</div>
+    <style type="text/css">
+        .div1 {
+            background: #000080;
+            border: 1px solid red;
+        }
 
-        bodybodybodybodybodyContent
+        .div2 {
+            background: #800080;
+            border: 1px solid red;
+            height: 100px;
+            margin-top: 10px
+        }
 
-        清除浮动主要为了解决父级元素因为子级浮动引起内部高度为0 的问题。
+        .left {
+            float: left;
+            width: 20%;
+            height: 200px;
+            background: #DDD
+        }
 
-        <hr />
-        清除浮动:
-        1. 父级添加overflow属性方法
-        2. 使用after伪元素清除浮动
+        .right {
+            float: right;
+            width: 30%;
+            height: 80px;
+            background: #DDD
+        }
 
+        /*清除浮动代码*/
+        .clearfloat:after {
+            display: block;
+            clear: both;
+            content: "";
+            visibility: hidden;
+            height: 0
+        }
+
+        .clearfloat {
+            zoom: 1
+        }
+    </style>
+    <div class="div1 clearfloat">
+        <div class="left">Left</div>
+        <div class="right">Right</div>
     </div>
-    <div>11111111</div>
+    <div class="div2">
+        div2
+    </div>
 
+    CSS 笔记里面也有总结好的清除浮动方案:
+    1.伪元素:after 设置clear: both
+    2.父元素设置overflow属性
+    3.追加一个元素在浮动的元素后面 设置clear:both
+    4.给父元素一个高度即可
+    <a
+        href="https://www.cnblogs.com/nxl0908/p/7245460.html#:~:text=%E5%87%A0%E7%A7%8D%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E6%96%B9%E6%B3%95%201%20%E3%80%81%E7%88%B6%E7%BA%A7div%E5%AE%9A%E4%B9%89%E4%BC%AA%E7%B1%BB%EF%BC%9Aafter%E5%92%8Czoom%202%20%E5%9C%A8%E7%BB%93%E5%B0%BE%E5%A4%84%E6%B7%BB%E5%8A%A0%E7%A9%BAdiv%E6%A0%87%E7%AD%BEclear%3Aboth%203%20%E7%88%B6%E7%BA%A7div%E5%AE%9A%E4%B9%89height%204,5%20%E7%88%B6%E7%BA%A7div%E5%AE%9A%E4%B9%89overflow%3Aauto%206%20%E7%88%B6%E7%BA%A7div%E4%B9%9F%E4%B8%80%E8%B5%B7%E6%B5%AE%E5%8A%A8%207%20%E7%88%B6%E7%BA%A7div%E5%AE%9A%E4%B9%89display%3Atable%208%20%E3%80%81%E7%BB%93%E5%B0%BE%E5%A4%84%E5%8A%A0br%E6%A0%87%E7%AD%BEclear%3Aboth">
+        清除浮动的方式</a>
 
 </body>
 
