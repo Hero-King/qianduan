@@ -63,11 +63,50 @@
             }
         })();
         console.log(new AA() == new AA())   // true
+
+        // 在JS引擎中，通过标识符查找标识符的值，会从当前作用域向上查找，直到作用域找到第一个匹配的标识符位置。就是JS的作用域链。
     </script>
 </head>
 
 <body>
+    <div class="test1" style="width:200px; height: 200px"></div>
+    <script>
+            // 创建10个`<a>`标签，点击的时候弹出来对应的序号
+            (function () {
+                const test1 = document.getElementsByClassName("test1")[0]
+                let domarr = [];
+                let innerHtml = ""
+                for (let i = 0; i < 10; i++) {
+                    innerHtml += `<a data-index=${i}>${i}</a>`;
+                };
+                test1.innerHTML = innerHtml;
+                test1.onclick = function (e) {
+                    e.preventDefaut();
+                    // e.currentTarget  代表当前事件绑定在哪
+                    console.log(e.target.dataset.index)
+                }
+            })();
 
+        // 学习document.queryseector
+        (function () {
+            // querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。
+            console.log(document.querySelector(".test1") === document.getElementsByClassName("test1")[0])  // true
+            // document.querySelectorAll()	document.querySelectorAll() 是 HTML5中引入的新方法，返回文档中匹配的CSS选择器的所有元素节点列表
+            const test1 = document.querySelector(".test1");
+            // 全屏展示： HTML5规范允许用户自定义网页上**任一元素**全屏显示。
+            // requestFullscreen()   //让元素开启全屏显示    
+            // document.fullScreen 检测当前是否处于全屏状态
+            // 全屏的伪类 :full-screen .box {}
+            test1.onclick = function (e) {
+                if (document.fullscreen) {
+                    console.log(document.fullscreenElement)
+                    this.backgroundcolor = "red";
+                }else{
+                    this.requestFullscreen()
+                }
+            }
+        })();
+    </script>
 </body>
 
 </html>
