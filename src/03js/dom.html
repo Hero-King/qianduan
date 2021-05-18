@@ -207,6 +207,48 @@
         }
     }
     // 使用节点的方式  让P标签换背景色
+    /**
+
+    Node: 每个节点都有一个 childNodes 属性，其中包含一个 NodeList 的实例。
+        parentNode previousSibling   nextSibling lastChild  firstChild;
+        操纵节点: appendChild  insertBefore特定的位置  replaceChild  removeChild
+        let returnedNode = someNode.appendChild(newNode);
+        alert(returnedNode == newNode); // true
+        alert(someNode.lastChild == newNode); // true
+
+        如果把文档中已经存在的节点传给 appendChild()，则这个节点会从之前的位置被转移到新位置。
+        即使 DOM 树通过各种关系指针维系，一个节点也不会在文档中同时出现在两个或更多个地方。因此，
+        如果调用 appendChild()传入父元素的第一个子节点，则这个节点会成为父元素的最后一个子节点，
+        如下所示：
+        // 假设 someNode 有多个子节点
+        let returnedNode = someNode.appendChild(someNode.firstChild);
+        alert(returnedNode == someNode.firstChild); // false
+        alert(returnedNode == someNode.lastChild); // true
+        
+        // 作为最后一个子节点插入
+        returnedNode = someNode.insertBefore(newNode, null);
+        alert(newNode == someNode.lastChild); // true
+        // 作为新的第一个子节点插入
+        returnedNode = someNode.insertBefore(newNode, someNode.firstChild);
+        alert(returnedNode == newNode); // true
+        alert(newNode == someNode.firstChild); // true
+        // 插入最后一个子节点前面
+        returnedNode = someNode.insertBefore(newNode, someNode.lastChild);
+        alert(newNode == someNode.childNodes[someNode.childNodes.length - 2]); // true
+
+        // 替换第一个子节点
+        let returnedNode = someNode.replaceChild(newNode, someNode.firstChild);
+        // 替换最后一个子节点
+        returnedNode = someNode.replaceChild(newNode, someNode.lastChild);
+
+        Element
+        getElementById getAttribute()、setAttribute()和 removeAttribute() 
+        Text 类型
+        document.createTextNode()
+        let textNode = document.createTextNode("<strong>Hello</strong> world!");
+
+        html5 新增了classList属性 方便用户操作class    提供了add(value) contains(value)，remove(value)，toggle(value)，
+     */
 </script>
 
 <body>
