@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        .left{
+            background-color: red;
+        }
+        .main{
+            background-color: pink;
+        }
+        .right{
+            background-color: blue;
+        }
+        .section1{
+            height: 200px;
+            width: 100%;
+        }
+        .section1 .left{
+            float: left;
+            width: 200px;
+            height: 100%;
+            
+        }
+        .section1 .main{
+            height: 100%;
+            margin: 0 200px;
+            
+        }
+        
+        .section1 .right{
+            float: right;
+            width: 200px;
+            height: 100%;
+            
+        }
+
+        .section2{
+            width: 100%;
+            height: 200px;
+            position: relative;
+        }
+        .section2 .left{
+            position: absolute;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background-color: red;
+        }
+        .section2 .main{
+            height: 100%;
+            position: absolute;
+            left: 200px;
+            right: 200px;
+            /* margin: 0 200px; */
+        }
+        
+        .section2 .right{
+            position: absolute;
+            right: 0;
+            width: 200px;
+            height: 100%;
+        }
+
+        .section3{
+            width: 100%;
+            height: 200px;
+            display: flex;
+        }
+        .section3 .left,.section3 .right{
+            flex: 0 1 200px;
+        }
+        .section3 .main{
+            flex: 1;
+        }
+
+        .section4{
+            width: 100%;
+            height: 200px;
+            padding: 0 200px;
+        }
+        .section4 .left{
+            float: left;
+            position: relative;
+            left: -200px;
+            margin-left: -100%;
+            width: 200px;
+            height: 100%;
+        }
+        .section4 .right{
+            position: relative;
+            right: -200px;
+            float: left;
+            width: 200px;
+            margin-left: -200px;
+            height: 100%;
+        }
+        .section4 .main{
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- float方式 : 这种方法虽然简单，但是中间部分最后加载，内容多时影响用户体验-->
+    <section class="section1">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="main">main</div>
+    </section>
+
+    <h3>定位实现 </h3>
+    <!-- 定位实现 -->
+    <section class="section2">
+        <div class="main">main</div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </section>
+    
+    <h3>flex实现</h3>
+    <section class="section3">
+        <div class="left"></div>
+        <div class="main">main</div>
+        <div class="right"></div>
+    </section>
+
+    <h3>圣杯布局: 是左、中、右三栏都通过float进行浮动，然后通过负值margin进行调整。</h3>
+    <section class="section4">
+        <div class="main">main</div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </section>
+
+</body>
+
+</html>

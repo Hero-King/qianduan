@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo,useImperativeHandle } = React;
+
+        // imperative 重要的 紧急的
+        // API useImperativeHandle(ref, createHandle, [deps])  
+        // useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值。在大多数情况下，应当避免使用 ref 这样的命令式代码。useImperativeHandle 应当与 forwardRef 一起使用;
+
+
+
+        const MyInput = React.forwardRef(function (props, ref) {
+            console.log(props);  //ref需要转发  下面的方式是获取不到的
+            return <input ref={ref} />
+        });
+
+        const ManyInput = React.forwardRef(function (props, ref) {
+            const [inputValue, setinputValue] = useState({})
+            useImperativeHandle(ref, () => ({
+                getValues: () => inputValue
+            }));
+            return <div>
+                <input onChange={e => setinputValue({...inputValue,["1"]: e.target.value})}/>
+                <input onChange={e => setinputValue({...inputValue,["2"]: e.target.value})}/>
+                <input onChange={e => setinputValue({...inputValue,["3"]: e.target.value})}/>
+            </div>
+        })
+
+
+        function Counter(props) {
+            const [count, setcount] = useState(0);
+            // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
+            const [count2, setcount2] = useState(() => getInitCount2());
+            const ref = useRef();
+            const manyInputRef = useRef()
+
+            function getInitCount2() {
+                console.log("getInitCount2")
+                return 100
+            }
+            return <div>
+                count: {count}       count2: {count2}
+                <MyInput ref={ref} />
+                <button onClick={e => console.log(ref.current.value)}>获取数据</button>
+                <button onClick={e => ref.current.focus()}>获取焦点</button>
+                <button onClick={e => setcount(count + 1)}>增加</button>
+
+                <button onClick={e => setcount2(precount => precount + 1)}>函数式增加</button>
+
+                <ManyInput ref={manyInputRef} />
+                <button onClick={e => console.log(manyInputRef.current.getValues())}>获取多个input数据</button>
+                <button onClick={e => console.log(manyInputRef.current)}>返回useImperativeHandle 返回的对象</button>
+
+            </div>
+        }
+
+        // function Myinput(props) {
+        //     console.log(props);  //ref需要转发  下面的方式是获取不到的
+        //     return <input ref={props.ref}/>
+        // }
+
+        function MyinputR(props) {
+            console.log(props);  //ref需要转发  下面的方式是获取不到的
+            return <input ref={props.ref} />
+        }
+
+        class App extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    bool: false
+                }
+            }
+            render() {
+                const { bool } = this.state;
+                return <div>
+                    <Counter bool={bool} />
+                    bool: {bool.toString()} <button onClick={e => this.setState({ bool: !bool })}>更改App 组件的状态</button>
+                </div>
+            }
+        }
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

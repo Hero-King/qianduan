@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo } = React;
+
+        // API  const refContainer = useRef(initialValue);
+        // useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数（initialValue）。返回的 ref 对象在组件的整个生命周期内保持不变。!!!  
+        // useRef() 比 ref 属性更有用。它可以很方便地保存任何可变值，其类似于在 class 中使用实例字段的方式。就是class中 constructor(){this.ele = XXX} 的这种实例字段
+        // useRef 会在每次渲染时返回同一个 ref 对象。当 ref 对象内容发生变化时，useRef 并不会通知你。变更 .current 属性不会引发组件重新渲染。
+        function Counter(props) {
+            const [count, setcount] = useState(0);
+            // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
+            const [count2, setcount2] = useState(() => getInitCount2());
+            const intervalRef = useRef();
+            const eleRef = useRef(document.createElement("div"));
+            useEffect(() => {
+                const id = setInterval(() => {
+                    // ...
+                });
+                intervalRef.current = id;
+                return () => {
+                    clearInterval(intervalRef.current);
+                };
+            });
+
+            useEffect(() => {
+                eleRef.current.id = "modal";
+                document.body.appendChild(eleRef.current);
+                return () => {
+                    document.body.removeChild(eleRef.current)
+                };
+            }, [])
+
+            function getInitCount2() {
+                console.log("getInitCount2")
+                return 100
+            }
+
+            // 如何获取上一轮的数据
+            const prevValue = useRef();
+            useEffect(() => {
+                prevValue.current = count;
+
+            },[count])
+
+            return <div>
+                count: {count}       count2: {count2}  上一轮Count的值: {prevValue.current}
+                <button onClick={e => setcount(count + 1)}>增加</button>
+
+                <button onClick={e => setcount2(precount => precount + 1)}>函数式增加</button>
+
+                <button >modal</button>
+                {
+                    ReactDOM.createPortal(<div>11111111111</div>, eleRef.current)
+                }
+            </div>
+        }
+        class App extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    bool: false
+                }
+            }
+            render() {
+                const { bool } = this.state;
+                return <div>
+                    {bool && <Counter bool={bool} />}
+                    bool: {bool.toString()} <button onClick={e => this.setState({ bool: !bool })}>更改App 组件的状态</button>
+                </div>
+            }
+        }
+        ReactDOM.render(<App />, document.getElementById("root"));
+
+
+    </script>
+</body>
+
+</html>

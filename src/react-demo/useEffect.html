@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo } = React;
+
+        /*
+
+        在函数组件主体内（这里指在 React 渲染阶段）改变 DOM、添加订阅、设置定时器、记录日志以及执行其他包含副作用的操作都是不被允许的，因为这可能会产生莫名其妙的 bug 并破坏 UI 的一致性。
+
+        使用 useEffect 完成副作用操作。赋值给 useEffect 的函数会在组件渲染到屏幕之后执行。你可以把 effect 看作从 React 的纯函数式世界通往命令式世界的逃生通道。
+        */
+
+
+        function Counter(props) {
+            const [count, setcount] = useState(0);
+            // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
+            const [count2, setcount2] = useState(() => getInitCount2())
+
+            function getInitCount2() {
+                console.log("getInitCount2")
+                return 100
+            }
+
+            // 与 componentDidMount、componentDidUpdate 不同的是，在浏览器完成布局与绘制之后，传给 useEffect 的函数会延迟调用。这使得它适用于许多常见的副作用场景，比如设置订阅和事件处理等情况，因此不应在函数中执行阻塞浏览器更新屏幕的操作。  然而，并非所有 effect 都可以被延迟执行。例如，在浏览器执行下一次绘制前，用户可见的 DOM 变更就必须同步执行，这样用户才不会感觉到视觉上的不一致。（概念上类似于被动监听事件和主动监听事件的区别。）React 为此提供了一个额外的 useLayoutEffect Hook 来处理这类 effect。它和 useEffect 的结构相同，区别只是调用时机不同。
+
+
+            // 仅在组件挂载和卸载时执行 可以传递一个空数组（[]）
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    console.log("time interval ")
+                }, 1000 * 1);
+                return () => {
+                    clearInterval(timer);
+                    console.log("组件卸载");
+                };
+            }, [])
+
+            // 没有数组  代表挂载, 状态变化执行
+            useEffect(() => {
+                console.log("组件刷新")
+                return () => {
+
+                };
+            })
+            return <div>
+                count: {count}       count2: {count2}
+                <button onClick={e => setcount(count + 1)}>增加</button>
+
+                <button onClick={e => setcount2(precount => precount + 1)}>函数式增加</button>
+
+
+            </div>
+        }
+        class App extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    bool: false
+                }
+            }
+            render() {
+                const { bool } = this.state;
+                return <div>
+                    <Counter bool={bool} />
+                    bool: {bool.toString()} <button onClick={e => this.setState({ bool: !bool })}>更改App 组件的状态</button>
+                </div>
+            }
+        }
+        ReactDOM.render(<App />, document.getElementById("root"));
+
+        // window.addEventListener("beforeunload", (event) => {
+        //     let message = "I'm really going to miss you if you go.";
+        //     event.returnValue = message;
+        //     debugger
+        //     return message;
+        // });
+
+        window.addEventListener("unload", (event) => {
+            console.log(unload);
+        });
+    </script>
+</body>
+
+</html>
