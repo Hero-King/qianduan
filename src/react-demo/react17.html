@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo } = React;
+
+        const style = { border: "1px solid red" }
+        // 1.定义我们的JSX
+        const virtualdom = (
+            <div style={style}>
+                A
+                <div key="B1" style={style}>B1</div>
+                <div key="B2" style={style}>B2</div>
+            </div>)
+
+        ReactDOM.render(virtualdom, document.getElementById("root"))
+    </script>
+</body>
+
+</html>

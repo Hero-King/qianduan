@@ -1,5 +1,5 @@
 // diff 的作用是计算两颗虚拟dom数的差异， 得到patch对象  在使用patch方法更新到真实的dom数上
-// dom-diff 看这个  不要看diff.js
+// dom-diff 看这个  不要看diff.js  这是就版本的源码,16以后使用了fiber 解决性能问题
 // 不写了  直接看这个https://blog.csdn.net/qq_36380426/article/details/104832238
 // 用的深度优先遍历  全局index
 import Reac, { createElement } from 'react'
