@@ -74,7 +74,7 @@ React是用于构建用户界面的js库
 里面重写了shouldcomponentUpdate 
 浅比较了oldstate  newstate   oldprops newprops 如果相同 就返回false 不更新组建
 
-React渲染流程：
+### React渲染流程：
 设计理念： 跨平台（虚拟DOM），快速响应（异步可中断+ 增量更新）
 性能瓶颈： 浏览器刷新率是60Hz 大概16.6ms执行一次，然而js线程和渲染线程是互斥的，js线程执行时候超过16.6ms的话就会出现掉帧
 React解决措施是；利用空闲时间更新，不影响渲染进程进行渲染，把一个耗时间任务拆分成一个个小任务(fiber)
@@ -93,3 +93,9 @@ var handle = window.requestIdleCallback(callback[, options])
 与setTimeout相比，requestAnimationFrame最大的优势是由系统来决定回调函数的执行时机。具体一点讲，系统每次绘制之前会主动调用 rAF 中的回调函数,如果屏幕刷新率是60Hz,那么回调函数就每16.7ms被执行一次，如果刷新率是75Hz，那么这个时间间隔就变成了1000/75=13.3ms，换句话说就是，requestAnimationFrame的步伐跟着系统的刷新步伐走。它能保证回调函数在屏幕每一次的刷新间隔中只被执行一次，这样就不会引起丢帧现象，也不会导致动画出现卡顿的问题。
 
 react 渲染原理 https://zhuanlan.zhihu.com/p/45091185
+
+#### Fiber
+我们可以通过某些调度策略合理的分配CPU，从而提高用户的响应速度
+通过Fiber架构，让自己的调和过程变成可中断的，适时让出CPU的控制权，可以让浏览器及时响应用户的交互
+
+Fiber是一个执行单元，每次执行完一个执行单元，React会检查现在还剩余多少时间，如果没有就将控制权让出
