@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body::selection {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>新增的选择器</h3>
+    伪类选择器
+    :first-child :选取属于其父元素的首个子元素的指定选择器
+    :last-child :选取属于其父元素的最后一个子元素的指定选择器
+    :nth-child(n) ： 匹配属于其父元素的第 N 个子元素，不论元素的类型
+    :nth-last-child(n) ：选择器匹配属于其元素的第 N 个子元素的每个元素，不论元素的类型，从最后一个子元素开始计数。 n 可以是数字、关键词或公式
+
+    <!-- :target目标伪类选择器 :选择器可用于选取当前活动的目标元素   比如点击之后跳转到的锚点就是target-->
+    :target {
+    color: red;
+    font-size: 30px;
+    }
+
+    E::first-letter文本的第一个单词或字（如中文、日文、韩文等）
+    E::first-line 文本第一行；
+    E::selection 可改变选中文本的样式；
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>CommonJS</h2>
+    <p>
+        CommonJS 规范概述了同步声明依赖的模块定义。这个规范主要用于在服务器端实现模块化代码组
+        织，但也可用于定义在浏览器中使用的模块依赖。CommonJS 模块语法不能在浏览器中直接运行。
+        CommonJS 模块定义需要使用 require()指定依赖，而使用 exports 对象定义自己的公共 API。
+        下面的代码展示了简单的模块定义：
+        var moduleB = require('./moduleB');
+        module.exports = {
+        stuff: moduleB.doStuff();
+        };
+
+        <em>无论一个模块在 require()中被引用多少次，模块永远是单例。
+            console.log('moduleA');
+            var a1 = require('./moduleA');
+            var a2 = require('./moduleA');
+            console.log(a1 === a2); // true
+        </em>
+    </p>
+
+    <h2>
+        AMD
+    </h2>
+    <p>
+        CommonJS 以服务器端为目标环境，能够一次性把所有模块都加载到内存，而异步模块定义（AMD，
+        Asynchronous Module Definition）的模块定义系统则以浏览器为目标执行环境，这需要考虑网络延迟的
+        问题。AMD 的一般策略是让模块声明自己的依赖，而运行在浏览器中的模块系统会按需获取依赖，并
+        在依赖加载完成后立即执行依赖它们的模块。
+    </p>
+
+    <h2>ES6模块</h2>
+    <p>
+        。带有 type="module"属性的 script标签会告诉浏览器相关代码应该作为模块执行，而不是作为传统的脚本执行。模块可以嵌入在网页中，
+        也可以作为外部文件引入：
+        <!-- <script type="module"> -->
+        <!-- import './moduleA.js'  -->
+        <!-- // 模块代码 -->
+        <!-- </script> -->
+        <!-- <script type="module" src="path/to/myModule.js"></script> -->
+
+        嵌入的模块定义代码不能使用 import 加载到其他模块。只有通过外部文件加载的模块才可以使用
+        import 加载。因此，嵌入模块只适合作为入口模块。
+</body>
+
+</html>
