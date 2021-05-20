@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        div{
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+        }
+        span.margin{
+            margin: 10px;      
+            /* 行内元素margin 的top 和bottom并没有作用 */
+        }
+        span.padding{
+            /* 行内元素padding 的top 和bottom并没有作用 */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <span class="margin">span</span>
+        <span class="padding">span</span>
+    </div>
+</body>
+</html>
