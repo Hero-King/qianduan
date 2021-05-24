@@ -101,11 +101,51 @@
                 if (document.fullscreen) {
                     console.log(document.fullscreenElement)
                     this.backgroundcolor = "red";
-                }else{
+                } else {
                     this.requestFullscreen()
                 }
             }
         })();
+
+        const { log } = console;
+        log(1 == true, "1 == true"); //  true   true转换成数字是1 
+        log(2 == true, "2 == true"); // false   会把布尔类型的值转换为数字类型 true=1 false=0
+        log([] == false, "[] == false");    // true
+        log([] == ![], "[] == ![]")         // true
+        if ([]) { log("if([])输出了") }
+        (function (log) {
+            var a;
+            log(typeof a); // “undefined”
+            // log(b); // 报错  不会自动提升
+            b = 10;
+            log(typeof b);//”number”
+        })(log);
+
+        // 排序
+        const numberArray = [3, 6, 2, 4, 1, 5];
+        log(numberArray.sort((a, b) => a - b)); // 升序 在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
+        log(numberArray.sort());     // 默认升序
+
+        // 注意 if 条件的真假判定，记住以下是 false 的情况：空字符串、false、undefined、null、0
+
+        // 用 js 实现随机选取 10–100 之间的 10 个数字，存入一个数组，并排序。
+        ; (function () {
+            function getRandom(startInt, endInt) {
+                return Math.random() * (endInt - startInt) + startInt;
+            }
+
+            function getRandomBi(istart, iend) {
+                var iChoice = istart - iend + 1;
+                return Math.floor(Math.random() * iChoice + istart);
+            };
+            let array = [];
+            for (let index = 0; index < 10; index++) {
+                array.push(getRandom(10, 100))
+            }
+            array.sort();
+            console.log(array)
+        })();
+
     </script>
 </body>
 
