@@ -13,7 +13,9 @@
 
 <body>
     <div id="root"></div>
-    <div>FrankFang GitHub这个人</div>
+    <div>FrankFang GitHub这个人
+        我们可以看到只要是 更新了全局状态， 所有连接到的组件都会执行一次，这样并不合适  ->使用selector
+    </div>
 
     <script type="text/babel">
         // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
@@ -23,20 +25,35 @@
         function App(props) {
             return <context.Provider value={substore}>
                 <CountH />
+                <OtherCount />
             </context.Provider>
         }
 
         function Count({ state, dispatch, ...props }) {
+            const user = state.user;
+            console.log("Count render" + Math.random())
             return <div>
-                Count: {state.count}
+                User: userName {user.name} age: {user.age}
                 <button onClick={e => dispatch({ type: "increment" })}> + </button>
             </div>
         }
 
+        function _OtherCount({ state, dispatch, ...props }) {
+            const user = state.otheruser;
+            console.log("_OtherCount render" + Math.random())
+            return <div>
+                otherUser: userName {user.name} age: {user.age}
+                <button onClick={e => dispatch({ type: "otherincrement" })}> + </button>
+            </div>
+        }
+        const OtherCount = connect(_OtherCount)
+
         const reducers = function (state, action) {
             switch (action.type) {
                 case "increment":
-                    return { count: state.count + 1 }
+                    return { ...state, user: { name: "wang", age: state.user.age + 1 } }
+                case "otherincrement":
+                    return { ...state, otheruser: { name: "otheruser", age: state.otheruser.age + 1 } }
 
                 default:
                     return state;
@@ -48,7 +65,7 @@
                 const { state, setstate } = useContext(context);
                 const [update, setupdate] = useState();
                 useEffect(() => {
-                    substore.subscribe(() => {setupdate({})})
+                    substore.subscribe(() => { setupdate({}) })
                 }, [])
                 const dispatch = (action) => {
                     setstate(reducers(state, action));
@@ -60,14 +77,13 @@
         const CountH = connect(Count)
 
 
-
-        // 必须处理的问题： 这样每个高阶组件里面都维护了一个自己的usestate钩子，某一个组件dispatch更改全局数据的时候,其他组件并不会刷洗, 我们只有采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
-        // 再store里面提供发布订阅模式
-
-        // 这样只有connect连接到全局状态的组件才会更新   
+        // 在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
 
         const substore = {
-            state: { count: 1 },
+            state: {
+                user: { name: "wang", age: 1 },
+                otheruser: { name: "otheruser", age: 1 }
+            },
             setstate(newstate) {
                 substore.state = newstate;
                 substore.subscribes.forEach(i => i(newstate))
@@ -75,11 +91,11 @@
             subscribes: [],
             subscribe(fn) {
                 substore.subscribes.push(fn);
-                
+
                 // 取消订阅
                 return () => {
                     const index = substore.subscribes.indexOf(fn);
-                    substore.subscribes.splice(index,1)
+                    substore.subscribes.splice(index, 1)
                 }
             }
 

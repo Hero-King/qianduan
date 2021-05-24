@@ -1,0 +1,136 @@
+<!-- 待学习 redux react-redux等 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div>FrankFang GitHub这个人</div>
+
+    <script type="text/babel">
+        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+        const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
+
+        const context = React.createContext();
+        function App(props) {
+            return <context.Provider value={substore}>
+                <CountH />
+                <OtherCount />
+            </context.Provider>
+        }
+
+        function changed(oldData, newData) {
+            let changed = false;
+            for(let key in oldData){
+                if (oldData.hasOwnProperty(key) && oldData[key] !== newData[key]) {
+                    changed = true
+                }
+            }
+            return changed;
+        }
+
+        // (mapStateToProps,mapDispatchToProps){}
+        // selector 就是mapStateToProps   功能： 1.方便使用state中的对象，减少获取数据的对象.对象.  2.实现精准渲染，组件只在自己依赖的数据变化的时候渲染  
+        // connect为啥设置成两个参数，返回一个高阶组件呢? 
+        //  方便我们的封装，我们可以把connect(XXX1,XXX2)的返回值保存下来，多处使用，封装了对state的某一个属性的读写能力
+        const connect = (mapStateToProps, mapDispatchToProps) => (WrapperComponent) => {
+            return (props) => {
+                const { state, setstate } = useContext(context);
+                const [update, setupdate] = useState();
+                const data = mapStateToProps ? mapStateToProps(state) : { state }
+                useEffect(() => {
+                    // 如果selector前后的数据没有变化，就不重新渲染 这里实现精准渲染
+                    const unsubscribe = substore.subscribe(() => {
+                        const newData = mapStateToProps ? mapStateToProps(substore.state) : { state: substore.state }
+                        if(changed(data, newData)){
+                            setupdate({})
+                        }
+                    });
+                    return unsubscribe
+                }, [])
+
+                const dispatch = (action) => {
+                    setstate(reducers(state, action));
+                    // setupdate({})
+                }
+                return <WrapperComponent state={state} dispatch={dispatch} {...props} {...data} />
+            }
+        }
+
+        function Count({ state, dispatch, ...props }) {
+            const user = state.user;
+            console.log("Count render" + Math.random())
+            return <div>
+                User: userName {user.name} age: {user.age}
+                <button onClick={e => dispatch({ type: "increment" })}> + </button>
+            </div>
+        }
+
+        function _OtherCount({ state, dispatch, ...props }) {
+            const user = props.otheruser;
+            console.log("_OtherCount render" + Math.random())
+            return <div>
+                otherUser: userName {user.name} age: {user.age}
+                <button onClick={e => dispatch({ type: "otherincrement" })}> + </button>
+            </div>
+        }
+        const OtherCount = connect(state => ({ otheruser: state.otheruser }), null)(_OtherCount)
+
+        const CountH = connect(state => ({user: state.user}))(Count)
+
+        const reducers = function (state, action) {
+            switch (action.type) {
+                case "increment":
+                    return { ...state, user: { name: "wang", age: state.user.age + 1 } }
+                case "otherincrement":
+                    return { ...state, otheruser: { name: "otheruser", age: state.otheruser.age + 1 } }
+
+                default:
+                    return state;
+            }
+        }
+
+
+
+
+
+        // 在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
+
+        const substore = {
+            state: {
+                user: { name: "wang", age: 1 },
+                otheruser: { name: "otheruser", age: 1 }
+            },
+            setstate(newstate) {
+                substore.state = newstate;
+                substore.subscribes.forEach(i => i(newstate))
+            },
+            subscribes: [],
+            subscribe(fn) {
+                substore.subscribes.push(fn);
+
+                // 取消订阅
+                return () => {
+                    const index = substore.subscribes.indexOf(fn);
+                    substore.subscribes.splice(index, 1)
+                }
+            }
+
+        }
+
+
+
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+
+</html>
