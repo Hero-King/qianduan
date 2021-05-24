@@ -1,0 +1,83 @@
+<!-- 待学习 redux react-redux等 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div>FrankFang GitHub这个人</div>
+
+    <script type="text/babel">
+        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+        const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
+
+        const context = React.createContext();
+        function App(props) {
+            const [state, setstate] = useState({ count: 0 });
+            const contextValue = { state, setstate }
+            return <context.Provider value={contextValue}>
+                <Count />
+                <Count1 />
+                <Wrapper />
+            </context.Provider>
+        }
+
+        function Count(props) {
+            const { state, setstate } = useContext(context)
+            return <div>
+                Count: {state.count}
+                <button onClick={e => setstate({ count: state.count + 1 })}> + </button>
+            </div>
+        }
+
+        const reducers = function (state, action) {
+            switch (action.type) {
+                case "increment":
+                    return { count: state.count + 1 }
+
+                default:
+                    return state;
+            }
+        }
+
+        function Count1(props) {
+            const { state, setstate } = useContext(context)
+            return <div>
+                Count: {state.count}
+                <button onClick={e => setstate(reducers(state, { type: "increment" }))}> + </button>
+            </div>
+        }
+
+        function Wrapper() {
+            const { state, setstate } = useContext(context);
+            function dispatch(action) {
+                setstate(reducers(state, action))
+            }
+            return <Count2 state={state} dispatch={dispatch}></Count2>
+        }
+
+        function Count2({ state, dispatch }) {
+            return <div>
+                Count: {state.count}
+                <button onClick={e => dispatch({ type: "increment" })}> + </button>
+            </div>
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+
+        // reducer 的由来是： 可以查看上面onClick事件处理程序有点复杂， 而且setstate一旦出现错误，整个页面将崩溃， 出现了reducer  --> Count1
+        // dispatch 由来 原因同上，我们更新一次state数据很麻烦  --Count2
+        // 但是每次使用都得创建一个Wrapper组件，  书写高阶组件解决问题
+        
+    </script>
+</body>
+
+</html>
