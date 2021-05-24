@@ -1,1 +1,83 @@
 <!-- 待学习 redux react-redux等 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+        const { useRef, useEffect, useState, useMemo, useReducer } = React;
+        const reduxContext = React.createContext();
+
+
+        const initialState = { count: 0 };
+
+        function reducer(state, action) {
+            switch (action.type) {
+                case 'increment':
+                    return { count: state.count + 1 };
+                case 'decrement':
+                    return { count: state.count - 1 };
+                default:
+                    throw new Error();
+            }
+        }
+
+        // function Counter() {
+        //     const [state, dispatch] = useReducer(reducer, initialState);
+        //     return (
+        //         <div>
+        //             Count: {state.count}
+        //             <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+        //             <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+        //         </div>
+        //     );
+        // }
+
+        // dispatch 方法存放到context里面去 避免层层传递
+        function DeepChild(props) {
+            const context = React.useContext(reduxContext);
+            console.log("render")
+            return <button onClick={() => context({ type: 'increment' })}>deepChild +</button>
+        }
+
+        function Child(props) {
+            return <div>
+                <button onClick={() => props.dispatch({ type: 'increment' })}>+</button>
+                <DeepChild/>
+            </div>
+        }
+
+        function Counter() {
+            const [state, dispatch] = useReducer(reducer, initialState);
+            return (
+                <div>
+                    <reduxContext.Provider value={dispatch}>
+                        Count: {state.count}
+                        <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+                        <Child dispatch={dispatch} />
+                    </reduxContext.Provider>
+                </div>
+            );
+        }
+
+
+
+        ReactDOM.render(<Counter />, document.getElementById("root"));
+
+
+
+    </script>
+</body>
+
+</html>
