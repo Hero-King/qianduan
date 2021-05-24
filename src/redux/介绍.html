@@ -75,7 +75,17 @@
 
         // reducer 的由来是： 可以查看上面onClick事件处理程序有点复杂， 而且setstate一旦出现错误，整个页面将崩溃， 出现了reducer  --> Count1
         // dispatch 由来 原因同上，我们更新一次state数据很麻烦  --Count2
-        // 但是每次使用都得创建一个Wrapper组件，  书写高阶组件解决问题
+        // 但是每次使用都得创建一个Wrapper组件，  书写高阶组件解决问题  现在触发一次setstate 会将整个组件数重新执行一次，并不合适
+        // setstate抽离成单独的store 然后再高阶组件里面创建useState 进行获取新的state 强制更新组件  -》 这样只有connect连接到全局状态的组件才会更新
+        const store = {
+            state: { count: 1},
+            setstate:(newState){
+                this.state = newState;
+            }
+        }
+
+        // 在优化： 这样每个高阶组件里面都维护了一个自己的usestate钩子， 我们采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
+        // 再store里面提供发布订阅模式
         
     </script>
 </body>
