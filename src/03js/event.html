@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            /* border: 1px solid red; */
+
+        }
+
+        div {
+            width: 200px;
+            height: 20px;
+        }
+
+        #root {
+            width: 100%;
+            height: 300px;
+            border: 1px solid red;
+        }
+
+        .mouseover {
+            height: 200px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root">
+        <div class="mouseover">mouse over
+            <div>子盒子子盒子子盒子子盒子子盒子子盒子子盒子</div>
+        </div>
+    </div>
+    <input type="text" value="请输入搜索内容" id="txt" />
+    <script>
+        function my$(id) {
+            return document.getElementById(id);
+        }
+        const querys = function (selector) {
+            return document.querySelector(selector)
+        }
+
+        const mouseover = document.querySelector(".mouseover");
+        mouseover.addEventListener("mouseover", function (params) {
+            console.log("mouseover");
+        })
+
+        mouseover.addEventListener("mouseenter", function (params) {
+            console.log("mouseenter");
+        });
+
+        // mouseover在鼠标移动到盒子上面时候触发, 移动到其子盒子时候也触发; 有一个重复触发,冒泡过程
+        // mouseenter在鼠标移动到子盒子上面不会触发
+
+        //注册获取焦点的事件
+        my$("txt").onfocus = function () {
+            //判断文本框的内容是不是默认的内容
+            if (this.value == "请输入搜索内容") {
+                this.value = "";//清空文本框
+                this.style.color = "black";
+            }
+        };
+
+        //注册失去焦点的事件
+        my$("txt").onblur = function () {
+            //    if (this.value == "") {
+            //      this.value = "请输入搜索内容";
+            //      this.style.color = "gray";
+            //    }
+
+            if (this.value.length == 0) {
+                this.value = "请输入搜索内容";
+                this.style.color = "gray";
+            }
+
+        };
+    </script>
+</body>
+
+</html>
