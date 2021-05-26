@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #root{
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+
 </head>
 <body>
+    <div id="root"></div>
     屏幕尺寸 是屏幕对角线的长度是
 
     长度单位主要是相对长度(px em pt(点)) 和  绝对长度（cm,in（英寸））
@@ -16,7 +25,8 @@
     
     <p>
         cSS像素： CSS进行布局时候的长度单位，默认情况下与PC的屏幕像素保持一致，
-        我们可以通过浏览器缩放改变他们的比例关系
+        我们可以通过浏览器缩放改变他们的比例关系,
+        css的px是相对单位，window.devicePixelRatio定义 设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 / 独立像素。
     </p>
 
     <H2>视口 viewpoint 用来约束网站最顶层html标签的大小</H2>
