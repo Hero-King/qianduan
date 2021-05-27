@@ -60,12 +60,18 @@
                             let { path, component: Component, exact } = this.props;
                             let { pathname } = state.location;
 
+                            const props = {
+                                location: state.location,
+                                history: state.history,
+                                match: {}
+                            }
+
                             // 使用正则判断是否应该渲染组件: 源码使用的是path-to-regexp  
-                            // 我们知道前缀匹配上就可以渲染  在这里自己先试用startwith简单实现下
+                            // 我们知道前缀匹配上就可以渲染  在这里自己先试用startwith简单实现下  url中去参数也是使用的上面的模块
                             if (exact) {
-                                return pathname == path ? <Component /> : null
+                                return pathname == path ? <Component {...props} /> : null
                             } else if (pathname.startsWith(path)) {
-                                return <Component />
+                                return <Component {...props} />
                             }
 
 
@@ -73,6 +79,18 @@
                         }
                     }
                 </context.Consumer>
+            }
+        }
+
+        function withRouter(WrapperComponent) {
+            return (props) => {
+                const state = React.useContext(context);
+                const extraprops = {
+                    location: state.location,
+                    history: state.history,
+                    match: {}
+                }
+                return <WrapperComponent {...extraprops}  {...props} />
             }
         }
 
@@ -118,11 +136,26 @@
             }
         }
 
+
+
         class Home extends React.Component {
             render() {
-                return <div>home</div>
+                console.log(this.props, "Home组件props")
+                return <div>
+                    <ul>
+                        <li><Link to="/home/1">用户1</Link></li>
+                        <li><Link to="/home/2">用户2</Link></li>
+                        <li><Link to="/home/3">用户3</Link></li>
+                    </ul>
+                </div>
             }
         }
+
+        function _Test(props) {
+            console.log(props, "test组件props")
+            return <div>Test</div>
+        }
+        const Test = withRouter(_Test)
 
         const root = <HashRouter>
             <div>
@@ -130,16 +163,19 @@
                     <Link to="/home">to home</Link>
                 </div>
 
-                <div style={{border: "1px solid red"}}>
+                <div style={{ border: "1px solid red" }}>
                     <Switch>
-                        <Route path="/home/12" component={Home} />
+                        <Route path="/home/1212" component={Home} />
                         <Route path="/home" exact={true} component={Home} />
                         <Redirect to="/404" />
                     </Switch>
+                    <Test aa="aa" />
                 </div>
             </div>
         </HashRouter>
         // <Redirect />
+
+
         ReactDOM.render(root, document.querySelector("#root"));
 
 
@@ -149,6 +185,12 @@
 
         // console.log(foo); // 42
         // console.log(bar); // true 
+
+        function _inherits(subClass, superClass) {
+            subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });
+            if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+        }
+
     </script>
 </body>
 
