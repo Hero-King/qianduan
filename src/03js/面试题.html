@@ -146,6 +146,18 @@
             console.log(array)
         })();
 
+        ; (
+            function (params) {
+                // 不改变原始的数组的方法: map filter concat slice
+                let x = 10
+                let foo = () => {
+                    // console.log(x,"xxxx");  // error
+                    let x = 20;
+                    console.log(x, "xxxx");  // 20
+                    x++;
+                }
+                foo()
+            })()
     </script>
 </body>
 
