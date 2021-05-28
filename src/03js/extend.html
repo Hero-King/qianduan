@@ -24,7 +24,7 @@
                 this.colors = ["red", "blue", "green"];
             }
 
-            function SubType() {}
+            function SubType() { }
             // 继承 SuperType
             SubType.prototype = new SuperType();
             let instance1 = new SubType();
@@ -60,6 +60,98 @@
 
         // 3.组合继承 综合了原型链和盗用构造函数，将两者的优点集中了起来。 使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性。
         // 组合继承弥补了原型链和盗用构造函数的不足，是 JavaScript 中使用最多的继承模式。而且组合继承也保留了 instanceof 操作符和 isPrototypeOf()方法识别合成对象的能力。
+        ; (function () {
+            function SuperType(name) {
+                this.name = name;
+                this.colors = ["red", "blue", "green"];
+            }
+            SuperType.prototype.sayName = function () {
+                console.log(this.name);
+            };
+            function SubType(name, age) {
+                // 继承属性
+                SuperType.call(this, name);
+                this.age = age;
+            }
+            // 继承方法
+            SubType.prototype = new SuperType();
+            SubType.prototype.sayAge = function () {
+                console.log(this.age);
+            };
+            let instance1 = new SubType("Nicholas", 29);
+            instance1.colors.push("black");
+            console.log(instance1.colors); // "red,blue,green,black"
+            instance1.sayName(); // "Nicholas";
+            instance1.sayAge(); // 29
+            let instance2 = new SubType("Greg", 27);
+            console.log(instance2.colors); // "red,blue,green"
+            instance2.sayName(); // "Greg";
+            instance2.sayAge(); // 27 
+        })()
+
+        // 4.原型式继承  这个 object()函数会创建一个临时构造函数，将传入的对象赋值给这个构造函数的原型，然后返回这个临时类型的一个实例。
+        function object(o) {
+            function F() { }
+            F.prototype = o;
+            return new F();
+        }
+
+        let person = {
+            name: "Nicholas",
+            friends: ["Shelby", "Court", "Van"]
+        };
+        let anotherPerson = object(person);
+        anotherPerson.name = "Greg";
+        anotherPerson.friends.push("Rob");
+        let yetAnotherPerson = object(person);
+        yetAnotherPerson.name = "Linda";
+        yetAnotherPerson.friends.push("Barbie");
+        console.log(person.friends); // "Shelby,Court,Van,Rob,Barbie"
+
+        // ECMAScript 5 通过增加 Object.create()方法将原型式继承的概念规范化了。接受两个参数: 作为新对象原型的对象，以及给新对象定义额外属性的对象（第二个可选）。在只有一个参数时:Object.create()与这里的 object()方法效果相同：
+        // Object.create()的第二个参数与 Object.defineProperties()的第二个参数一样  
+        // 原型式继承非常适合不需要单独创建构造函数，但仍然需要在对象间共享信息的场合。但要记住，属性中包含的引用值始终会在相关对象间共享，跟使用原型模式是一样的。
+        let person11 = {
+            name: "Nicholas",
+            friends: ["Shelby", "Court", "Van"]
+        };
+        let anotherPerson11 = Object.create(person11, {
+            name: {
+                value: "Greg"
+            }
+        });
+        console.log(anotherPerson11.name); // "Greg"
+
+        // 5.寄生继承  创建一个要继承的类的实例对象,在对象上拓展方法 然后返回这个对象
+
+        // 6.寄生组合继承 组合继承其实也存在效率问题 最主要的效率问题就是父类构造函数始终会被调用两次：一次在是创建子类原型时调用，另一次是在子类构造函数中调用。
+
+        // 寄生式组合继承通过盗用构造函数继承属性，但使用混合式原型链继承方法。基本思路是不通过调用父类构造函数给子类原型赋值，而是取得父类原型的一个副本。说到底就是使用寄生式继承来继承父类原型，然后将返回的新对象赋值给子类原型。寄生式组合继承的基本模式如下所示：
+
+
+        (function () {
+            function inheritPrototype(subType, superType) {
+                let prototype = object(superType.prototype); // 创建对象
+                prototype.constructor = subType; // 增强对象
+                subType.prototype = prototype; // 赋值对象
+            }
+
+            function SuperType(name) {
+                this.name = name;
+                this.colors = ["red", "blue", "green"];
+            }
+            SuperType.prototype.sayName = function () {
+                console.log(this.name);
+            };
+            function SubType(name, age) {
+                SuperType.call(this, name);
+                this.age = age;
+            }
+            inheritPrototype(SubType, SuperType);
+            SubType.prototype.sayAge = function () {
+                console.log(this.age);
+            };
+        })();
 
     </script>
 </head>

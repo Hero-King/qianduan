@@ -22,6 +22,13 @@
 
     </p>
 
+    <h2>阅读前端源码小技巧</h2>
+    <div>
+        就比如react-router包来看,有cjs(commonjs模块规范) es() umd(通用模块规范) esm(es module规范);
+        方便自己查看的肯定是esm里面的代码  其他文件夹下面的都是通过webpack等打包工具生成
+
+
+    </div>
 
 
     <script>
@@ -46,6 +53,10 @@
             console.log(e)
         })
 
+        console.log(void 0);
+        // void 关键字: void 运算符 对给定的表达式进行求值，然后返回 undefined。
+        // void expression
+        // void 运算符通常只用于获取 undefined的原始值，一般使用void(0)（等同于void 0）。在上述情况中，也可以使用全局变量undefined 来代替（假定其仍是默认值）。
     </script>
 </body>
 
