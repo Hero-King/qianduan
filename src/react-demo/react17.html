@@ -26,9 +26,56 @@
                 A
                 <div key="B1" style={style}>B1</div>
                 <div key="B2" style={style}>B2</div>
-            </div>)
+            </div>);
 
-        ReactDOM.render(virtualdom, document.getElementById("root"))
+        class App extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    count: props.count,
+                }
+            }
+            render() {
+                return <div>
+                    <Count count={this.state.count} />
+                    <button onClick={e => this.setState({ count: this.state.count + 1 })}> + </button >
+                </div>
+            }
+        }
+
+        class Count extends React.Component {
+
+            constructor(props) {
+                super(props);
+                this.state = {
+                    count: 100,
+                }
+            }
+
+            static getDerivedStateFromProps(nextProps, preState) {
+                console.log("getDerivedStateFromProps");
+                console.log(nextProps, preState);       // {count: 0} {count: 100}
+                return nextProps;
+            }
+
+            componentDidMount() {
+                console.log("didmount")
+
+            }
+
+            // shouldComponentUpdate() {
+            //     return true;
+            // }
+
+            render() {
+                return <div >
+                    count : {this.state.count}
+                </div>
+            }
+        }
+
+
+        ReactDOM.render(<App count={0} />, document.getElementById("root"))
     </script>
 </body>
 
