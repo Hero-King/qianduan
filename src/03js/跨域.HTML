@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    同源策略限制了一下行为： Cookie、LocalStorage 和 IndexDB 无法读取 DOM 和 JS 对象无法获取 Ajax请求发送不出去
+
+    1、普通跨域请求：只需服务器端设置Access-Control-Allow-Origin
+
+    2、带cookie跨域请求：前后端都需要进行设置
+
+
+    服务端设置:
+    // 允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
+    response.setHeader("Access-Control-Allow-Origin", "http://www.domain1.com");
+
+    // 允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
+    response.setHeader("Access-Control-Allow-Credentials", "true");
+
+    // 提示OPTIONS预检时，后端需要设置的两个常用自定义头
+    response.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
+    ————————————————
+</body>
+
+</html>

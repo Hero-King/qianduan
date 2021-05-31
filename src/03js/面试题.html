@@ -217,14 +217,14 @@
 
             const callback = (prevalue, curvalue, curIndex, arr) => {
                 if (Array.isArray(curvalue)) {
-                    curvalue.reduce(callback,prevalue);
-                }else{
+                    curvalue.reduce(callback, prevalue);
+                } else {
                     prevalue.push(curvalue);
                 }
                 return prevalue
             }
             const reduceArr = arr.reduce(callback, [])
-            log(reduceArr,"reduceArr")
+            log(reduceArr, "reduceArr")
 
             // Array.prototype.flatMap()方法会在打平数组之前执行一次映射操作。在功能上，arr.flatMap(f)与 arr.map(f).flat()等价；但 arr.flatMap()更高效，因为浏览器只需要执行一次遍历。
             const arrT = [[1], [3], [5]];
@@ -237,8 +237,8 @@
         // 类数组转数组   类数组是具有length属性 但是没有数组原型上面的方法 常见的有arguments dom查询 时候的返回值
         const myul = document.getElementById("myul");
         const child = myul.children;
-        console.log(child.length ,Array.isArray(child) )  // 5  false
-        log(Array.from(child),"Array.from(child)");
+        console.log(child.length, Array.isArray(child))  // 5  false
+        log(Array.from(child), "Array.from(child)");
         log(Array.prototype.slice.call(child), "(Array.prototype.slice.call(child)")
         log([...child]);
 
@@ -255,6 +255,38 @@
                 }
                 foo()
             })()
+
+
+        // new 的时候干了什么
+        /*
+        
+        (1) 在内存中创建一个新对象。
+        (2) 这个新对象内部的[[Prototype]]特性被赋值为构造函数的 prototype 属性。
+        (3) 构造函数内部的 this 被赋值为这个新对象（即 this 指向新对象）。
+        (4) 执行构造函数内部的代码（给新对象添加属性）。
+        (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
+
+        */
+
+        // return 关键词用于终止函数,函数返回值,不能用于for循环中,但是能放在函数内的for循环 用于终止函数
+        // for (let i = 0; i < 10; i++) {
+        //     console.log(i)
+        //     if (i == 5) {
+        //         return i        // 报错
+        //     }
+
+        // }
+
+        function add(params) {
+            for (let i = 0; i < 10; i++) {
+                console.log(i)
+                if (i == 5) {
+                    return i        // 报错
+                }
+
+            }
+        }
+        add()
     </script>
 </body>
 
