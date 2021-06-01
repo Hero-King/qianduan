@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+</head>
+
+<body>
+
+
+    <script type="text/babel">
+        // 中间件就是拓展一些方法
+
+        const store = {
+            state: {
+                name: 1
+            },
+            dispatch(action) {
+                store.state.name = action.name
+            }
+        }
+
+        store.dispatch({ name: "store dispatch name" });
+        console.log(store.state);
+
+        function log(store) {
+            const next = store.dispatch;
+            return (action) => {
+                console.log("dispatch pre",store.state)
+                const result = next(action);
+                console.log("dispatch done",result)
+            }
+        }
+
+        function applyMiddleWare(store, middleware) {
+            middleware.forEach(middle => {
+                store.dispatch = middle(store)
+            });
+        
+        }
+
+        applyMiddleWare(store,[log])
+        store.dispatch({ name: "store middleware" });
+        console.log(store.state);
+
+
+    </script>
+</body>
+
+</html>

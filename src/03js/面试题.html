@@ -73,11 +73,11 @@
     <div class="test1" style="width:200px; height: 200px"></div>
     <div id="jsonp"></div>
     <ul id="myul">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
     </ul>
     <script>
             // 创建10个`<a>`标签，点击的时候弹出来对应的序号
@@ -287,6 +287,47 @@
             }
         }
         add()
+        // 使用{}  代替自调用函数
+        {
+            // 不改变原始的数组的方法: map filter concat slice
+            let x = 10
+            let foo = () => {
+                // console.log(x,"xxxx");  // error
+                let x = 20;
+                console.log(x, "xxxx");  // 20
+                x++;
+            }
+            foo()
+        }
+
+        {
+            // 点击li打印对应的下标
+            const uldom = document.getElementById("myul");
+            // uldom.addEventListener("click", function (e) {
+            //     const lilist = uldom.children;
+            //     for (let i = 0; i < lilist.length; i++) {
+            //         const li = lilist[i];
+            //         if (li == e.target) {
+            //             console.log(i)
+            //         }
+
+            //     }
+            // })
+        }
+
+        {
+            const lilist = document.querySelectorAll("#myul li");
+            for (var i = 0; i < lilist.length; i++) {
+                const li = lilist[i];
+                li.addEventListener("click",(function (index) {
+                    return function(e){console.log(index)}
+                })(i))
+                
+            }
+        }
+
+
+
     </script>
 </body>
 
