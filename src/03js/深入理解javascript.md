@@ -2,6 +2,8 @@
 参考链接： 汤姆大叔 https://www.cnblogs.com/TomXu/archive/2011/12/28/2286877.html
 W3C https://www.w3cschool.cn/deep_learn_javascript/deep_learn_javascript-1sry284r.html
 
+
+
 ### 编写高质量JavaScript代码的基本要点
 - 避免使用全局变量
 - 合理使用 hasOwnProperty
@@ -81,3 +83,22 @@ year = parseInt(year, 10);
 (function () { /* code */ } ()); // 推荐使用这个
 (function () { /* code */ })(); // 但是这个也是可以用的
 ```
+
+### 原型链
+原型对象也是普通的对象，并且也有可能有自己的原型，如果一个原型对象的原型不为null的话，我们就称之为原型链（prototype chain）。
+### 执行上下文栈
+在ECMASscript中的代码有三种类型：global, function和eval。
+
+每一种代码的执行都需要依赖自身的上下文。当然global的上下文可能涵盖了很多的function和eval的实例。函数的每一次调用，都会进入函数执行中的上下文,并且来计算函数中变量等的值。eval函数的每一次执行，也会进入eval执行中的上下文，判断应该从何处获取变量的值。
+
+注意，一个function可能产生无限的上下文环境，因为一个函数的调用（甚至递归）都产生了一个新的上下文环境。
+
+一个执行上下文可以激活另一个上下文，就好比一个函数调用了另一个函数(或者全局的上下文调用了一个全局函数)，然后一层一层调用下去。逻辑上来说，这种实现方式是栈，我们可以称之为**上下文堆栈**。
+### 执行上下文(Execution Context)
+一个执行的上下文可以抽象的理解为object。每一个执行的上下文都有一系列的属性（我们称为上下文状态），他们用来追踪关联代码的执行进度。主要有这三个属性 (变量对象(variable object)，this指针(this value)，作用域链(scope chain) ),除了这3个所需要的属性,执行上下文根据具体实现还可以具有任意额外属性。
+
+- 变量对象 变量对象(variable object) 是与执行上下文相关的 数据作用域(scope of data) 。
+它是与上下文关联的特殊对象，用于存储被定义在上下文中的 变量(variables) 和 函数声明(function declarations) 。函数表达式[function expression]是不包含在VO[variable object]里面的
+- 作用域链 是一个对象列表(list of objects) ，用以检索上下文代码中出现的 标识符(identifiers)标示符[Identifiers]可以理解为变量名称、函数声明和普通参数。 。作用域链的原理和原型链很类似，如果这个变量在自己的作用域中没有，那么它会寻找父级的，直到最顶层。
+### 闭包
+是一系列代码块（在ECMAScript中是函数），并且静态保存所有父级的作用域。通过这些保存的作用域来搜寻到函数中的自由变量。

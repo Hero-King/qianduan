@@ -82,7 +82,7 @@ promise.html:27 promise then timeout
             // 即使 await 后面跟着一个立即可用的值，函数的其余部分也会被异步求值。
         })();
 
-        // 手写promise
+        // 手写promise   整体还是使用发布订阅的设计模式
         const valueSymbol = Symbol.for("value")
         function MyPromise(exector) {
             const self = this;
@@ -154,6 +154,7 @@ promise.html:27 promise then timeout
 
             }
 
+            // 处理Promise里面如果是异步的情况
             if (self.state == "pending") {
                 return new MyPromise((resolve, reject) => {
                     self.onFulfilledCallback.push(() => {
@@ -174,6 +175,24 @@ promise.html:27 promise then timeout
                     })
                 })
             }
+        }
+
+        MyPromise.prototype.all = function (promiseArr) {
+            let result = [];
+            let count = 0;
+            return new Promise((resolve, reject) => {
+                promiseArr.forEach((promiseItem, index) => {
+                    promiseItem.then(value => {
+                        result[index] = value;
+                        count++;
+                        if (conut === promiseArr.length) {
+                            resolve(reslut)
+                        }
+                    })
+                }).catch(e => {
+                    reject(e)
+                })
+            })
         }
 
         // Test
