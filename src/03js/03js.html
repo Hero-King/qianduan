@@ -471,18 +471,26 @@
         object1.property1 = 77;     // throws an error in strict mode
         console.log(object1.property1);  // expected output: 42
 
-        const object2 = {name: 1,age: 2}
+        const object2 = { name: 1, age: 2 }
         for (const key in object2) {
             if (Object.hasOwnProperty.call(object2, key)) {
                 const element = object2[key];
                 console.log(element)
             }
         }
-        Object.defineProperty(object2,"name",{enumerable: false})
+        Object.defineProperty(object2, "name", { enumerable: false })
         for (const key in object2) {
             console.log(key)
         }
-        
+
+
+        {
+            // splice 和slice区别
+            let arr = [1, 2, 3, 4];
+            console.log(arr.slice(1), arr)  // [2,3,4]  [1,2,3,4]
+            let arrT = [1, 2, 3, 4]
+            console.log(arrT.splice(1, 1), arrT) //[2]   [1,3,4]
+        }
     </script>
 
 </body>
