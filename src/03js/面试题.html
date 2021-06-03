@@ -333,11 +333,49 @@
             var f = new F();
             obj.proto.c = 3;
             obj.proto = { a: -1, b: -2 };
-            alert(f.a);//1
-            alert(f.c);//3
+            log(f.a);//1
+            log(f.c);//3
             delete F.prototype['a'];
-            alert(f.a);//undefined
-            alert(obj.proto.a);//-1
+            log(f.a);//undefined
+            log(obj.proto.a);//-1
+        }
+
+        {
+
+            //手写数组filter
+            [1, 2, 3].filter(i => i > 2)        //filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+            Array.prototype.myFilter = function (callback) {
+                if (this == undefined) {
+                    throw new TypeError("this is null or undefined")
+                }
+                if (typeof callback !== "function") {
+                    throw new TypeError("calback is not a function")
+                }
+                let result = []
+                for (const v of this) {
+                    if (callback(v)) {
+                        result.push(v)
+                    }
+                }
+                return result
+            }
+            console.log([1, 2, 3, 7, 6, 4].myFilter(i => i > 4), "myfilter");   // [7,6]
+
+            Array.prototype.myMap = function (callback) {
+                if (this == undefined) {
+                    throw new TypeError("this is null or undefined")
+                }
+                if (typeof callback !== "function") {
+                    throw new TypeError("calback is not a function")
+                }
+                let result = []
+                for (const v of this) {
+                    result.push(callback(v))
+
+                }
+                return result
+            }
+
         }
 
 
