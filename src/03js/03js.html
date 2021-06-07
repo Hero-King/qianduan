@@ -502,7 +502,7 @@
                 for (let i = 0; i < nums.length; i++) {
                     let left = i + 1;
                     let right = nums.length - 1;
-                    if(nums[i] > 0) break;
+                    if (nums[i] > 0) break;
                     if (i > 0 && nums[i] == nums[i - 1]) {
                         continue
                     }
@@ -525,6 +525,38 @@
             };
             let nums = [-1, 0, 1, 2, -1, -4];
             console.log(threeSum(nums), "threeSum")
+        }
+
+        {
+            // 解构赋值
+            var { foo, bar } = { foo: "aaa", bar: "bbb" };
+            // foo // "aaa"
+            // bar // "bbb"
+
+            // 如果变量名与属性名不一致，必须写成下面这样。
+            var { foo: baz } = { foo: 'aaa', bar: 'bbb' };
+            // baz // "aaa"
+            // foo ReferenceError: foo is not defined
+
+            let obj = { first: 'hello', last: 'world' };
+            let { first: f, last: l } = obj;
+            //f // 'hello'
+            //l // 'world'
+
+            var node = {
+                loc: {
+                    start: {
+                        line: 1,
+                        column: 5
+                    }
+                }
+            };
+
+            var { loc: { start: { line } } } = node;
+            // line // 1
+            // loc  // error: loc is undefined
+            // start // error: start is undefined
+            // 上面代码中，只有line是变量，loc和start都是模式，不会被赋值。
         }
     </script>
 
