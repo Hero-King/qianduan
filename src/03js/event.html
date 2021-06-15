@@ -26,6 +26,19 @@
             height: 200px;
             border: 1px solid red;
         }
+        #event{
+            height: 1000px;
+            margin: 20px;
+            width: 800px;
+            background-color: #ccc;
+            box-sizing: border-box;
+            border: 100px solid red;
+            padding: 50px;
+            overflow: auto;
+        }
+        .h2000{
+            height: 2000px;
+        }
     </style>
 </head>
 
@@ -35,7 +48,38 @@
             <div>子盒子子盒子子盒子子盒子子盒子子盒子子盒子</div>
         </div>
     </div>
+
+    <div id="event">
+        <div style="height: 100px; background-color: pink;">content</div>
+        <div class="h2000"></div>
+    </div>
     <input type="text" value="请输入搜索内容" id="txt" />
+
+    <script>
+        const ele = document.getElementById("event")
+        ele.addEventListener("click",e => {
+            console.log(e)
+            console.log("e.clientX",e.clientX)
+            console.log("e.clientY",e.clientY)  // 举例书签栏的绝对坐标
+            console.log("e.pageX",e.pageX)  // 
+            console.log("e.pageY",e.pageY)  // 举例body元素的距离
+
+            // 盒子大小相关属性
+            console.log('盒子大小相关属性')
+            console.log(ele.offsetHeight)
+            console.log(ele.offsetTop)  // 元素上边框外侧距离包含元素上边框内侧的像素数。
+
+            console.log(ele.clientHeight)   // 内容区高度 content + padding
+
+            console.log(ele.scrollHeight);  // ，没有滚动条出现时，元素内容的总高度。
+            console.log(ele.scrollTop)  // 具有滚动属性的盒子  滚动之后,内容区顶部隐藏的像素数，设置这个属性可以改变元素的滚动位置 
+            // 默认情况下 html不需要设置overflow 属性就可以有滚动scrollTop
+
+            // 浏览器在每个元素上都暴露了 getBoundingClientRect()方法，返回一个 DOMRect 对象，包含6 个属性：left、top、right、bottom、height 和 width。这些属性给出了元素在页面中相对于视口的位置。
+            console.log(ele.getBoundingClientRect())        // 返回了元素大小及相对视口的位置
+        })
+    </script>
+
     <script>
         function my$(id) {
             return document.getElementById(id);
