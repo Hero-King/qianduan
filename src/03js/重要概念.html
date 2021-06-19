@@ -29,6 +29,20 @@
     csrf 挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。(用户登录某个网站,同时访问恶意网站,恶意网站请求跳转正常网站发送请求,这时候就会自动带上正常网站的cookie 执行一些非法操作[使用token验证/refer字段设置只响应同源网站]) : https://www.cnblogs.com/itsuibi/p/10752868.html
 
 
+
+    options请求
+    它用于获取当前URL所支持的方法。若请求成功，则它会在HTTP头中包含一个名为“Allow”的头，值是所支持的方法，如“GET, POST”。
+
+
+    缓存策略：强缓存&协商缓存: https://zhuanlan.zhihu.com/p/111190645
+
+    HTTP2.0详解
+    https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Connection_management_in_HTTP_1.x
+    二进制分帧: HTTP2.0中所有加强性能的核心是二进制传输，在HTTP1.x中，我们是通过文本的方式传输数据。基于文本的方式传输数据存在很多缺陷，文本的表现形式有多样性，因此要做到健壮性考虑的场景必然有很多，但是二进制则不同，只有0和1的组合，因此选择了二进制传输，实现方便且健壮。
+    在HTTP2.0中引入了新的编码机制，所有传输的数据都会被分割，并采用二进制格式编码。为了保证HTTP不受影响，那就需要在应用层（HTTP2.0）和传输层（TCP or UDP）之间增加一个二进制分帧层。在二进制分帧层上，HTTP2.0会将所有传输的信息分为更小的消息和帧，并采用二进制格式编码，其中HTTP1.x的首部信息会被封装到Headers帧，而Request Body则封装到Data帧。
+
+
+    Web Worker为Web内容在后台线程中运行脚本提供了一种简单的方法。线程可以执行任务而不干扰用户界面。此外，他们可以使用XMLHttpRequest执行 I/O  (尽管responseXML和channel属性总是为空)。一旦创建， 一个worker 可以将消息发送到创建它的JavaScript代码, 通过将消息发布到该代码指定的事件处理程序（反之亦然）
     <script>
 
 

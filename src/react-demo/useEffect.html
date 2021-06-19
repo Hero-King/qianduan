@@ -29,6 +29,7 @@
 
         function Counter(props) {
             const [count, setcount] = useState(0);
+            const [count3, setcount3] = useState(0)
             // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
             const [count2, setcount2] = useState(() => getInitCount2())
 
@@ -43,8 +44,9 @@
             // 仅在组件挂载和卸载时执行 可以传递一个空数组（[]）
             useEffect(() => {
                 const timer = setInterval(() => {
-                    console.log("time interval ")
-                }, 1000 * 1);
+                    console.log("time interval ");
+                    setcount3(count3 => count3 + 1)
+                }, 3000 * 1);
                 return () => {
                     clearInterval(timer);
                     console.log("组件卸载");
@@ -55,7 +57,7 @@
             useEffect(() => {
                 console.log("组件刷新")
                 return () => {
-
+                    console.log("Count组件即将刷新")
                 };
             })
             return <div>
@@ -64,7 +66,9 @@
 
                 <button onClick={e => setcount2(precount => precount + 1)}>函数式增加</button>
 
-
+                <br />
+                count3: {count3}
+                <button>异步增加</button>
             </div>
         }
         class App extends React.Component {

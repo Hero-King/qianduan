@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <style>
+        body {
+            height: 2000px;
+        }
+    </style>
+
+    <script>
+        function unmount() {
+            console.log("unmount")
+            ReactDOM.unmountComponentAtNode(rootContainer)
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <button onclick="unmount()">卸载组件</button>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo, useCallback } = React;
+        const rootContainer = document.getElementById("root")
+
+        /*
+        合成事件与原生事件的区别
+        1. 写法不同，合适事件是驼峰写法，而原生事件是全部小写
+        2. 执行时机不同，合适事件全部委托到document上，而原生事件绑定到DOM元素本身
+        3. 合成事件中可以是任何类型，比如this.handleClick这个函数，而原生事件中只能是字符串
+        */
+
+        function Count(props) {
+            const [count, setcount] = useState(0);
+            console.log("count 组件 render")
+            return <div>
+                Count: {count}
+                <button onClick={e => setcount(count + 1)}>Count1</button>
+                <button onClick={e => setcount(count => count + 1)}>Count2</button>
+            </div>
+        }
+
+
+
+
+        ReactDOM.render(<Count />, document.getElementById("root"));
+
+        // 防抖函数
+        function debounce(fun, timeout = 500) {
+            let timer;
+            return function (e) {
+                timer && clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fun()
+                }, timeout)
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
