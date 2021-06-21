@@ -23,9 +23,9 @@
 
         console.log("run");
         (function aa() {
-            let p1 = new Promise((resolve, reject) => resolve(11));
-            let p2 = Promise.resolve(12);
-            let p13 = Promise.resolve(13);
+            let p1 = new Promise((resolve, reject) => resolve(1111));
+            let p2 = Promise.resolve(1222);
+            let p13 = Promise.resolve(1333);
             p1.then(v => console.log(v))
             p2.then(v => {
                 console.log(v)
@@ -81,6 +81,84 @@ promise.html:27 promise then timeout
             // 队列中推送一个任务，这个任务会恢复异步函数的执行。
             // 即使 await 后面跟着一个立即可用的值，函数的其余部分也会被异步求值。
         })();
+
+
+        (function () {
+            console.log(1, "------");
+            setTimeout(() => {
+                console.log(2)
+            }, 0);
+
+            async function fun2() {
+                console.log(0)
+            }
+            async function fun() {
+                console.log(4)
+                await fun2();
+                console.log(5)
+            };
+            async function fun33() {
+                console.log(9)
+                return 11
+            }
+            new Promise((resolve, reject) => {
+                console.log(8);
+                let result = 20;
+                fun33().then(i => resolve(i))
+
+            }).then(i => {
+                console.log(i, 13)
+            })
+            Promise.resolve(10).then(i => {
+                console.log(i);
+                setTimeout(() => {
+                    console.log(7)
+                }, 0);
+            })
+            fun()
+            console.log(33);
+
+            // 注意11 13   2 的顺序  只要还有微任务  就不会开始新的宏任务
+            // 1 8 9 4 0 33 10 5 11,13 2 7
+        })();
+
+        {
+            console.log('1');
+
+            setTimeout(function () {
+                console.log('2');
+               
+                new Promise(function (resolve) {
+                    console.log('4');
+                    resolve();
+                }).then(function () {
+                    console.log('5');
+                    Promise.resolve(0).then(i => {
+                        console.log(i)
+                    })
+                })
+            })
+            
+            new Promise(function (resolve) {
+                console.log('7');
+                resolve();
+            }).then(function () {
+                console.log('8')
+            })
+
+            setTimeout(function () {
+                console.log('9');
+               
+                new Promise(function (resolve) {
+                    console.log('11');
+                    resolve();
+                }).then(function () {
+                    console.log('12')
+                })
+            })
+            // 执行完所有的微任务,才会执行一个宏任务
+            // 1 7 8 2 4 5 0 9 11 12
+        }
 
         // 手写promise   整体还是使用发布订阅的设计模式
         const valueSymbol = Symbol.for("value")

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+
+    <!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script> -->
+    <!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script> -->
+
+    <script src="../lib/16.8/react.development.js"></script>
+    <script src="../lib/16.8/react-dom.development.js"></script>
+    <style>
+        body {
+            height: 2000px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script type="text/babel">
+        const { useRef, useEffect, useState, useMemo, useCallback } = React;
+        const rootContainer = document.getElementById("root")
+
+        /*
+        synthetic event 整个流程
+        https://www.cnblogs.com/forcheng/p/13187388.html
+        合成事件与原生事件的区别
+        1. 写法不同，合适事件是驼峰写法，而原生事件是全部小写
+        2. 执行时机不同，合适事件全部委托到document上，而原生事件绑定到DOM元素本身
+        3. 合成事件中可以是任何类型，比如this.handleClick这个函数，而原生事件中只能是字符串
+        */
+
+        window.addEventListener("click", e => {
+            console.log("window click! ")
+        })
+
+        document.addEventListener("click", e => {
+            console.log("document click! ")
+        })
+
+        document.documentElement.addEventListener("click", e => {
+            console.log(e.target, e.currentTarget)
+            console.log("document documentElement click! ")
+        })
+
+        document.body.addEventListener("click", e => {
+            console.log("document body click! ")
+        })
+
+        function Count(props) {
+            useEffect(() => {
+                const count2 = document.getElementById("count2");
+                const count3 = document.getElementById("count3");
+                function onClick(e) {
+                    console.log("count2 原生事件执行了")
+                }
+                count2.addEventListener("click", onClick)
+                count3.addEventListener("click", function (e) {
+                    console.log("count3 原生事件执行了");
+                    // 阻止冒泡,导致react委托在document上面的事件不能执行
+                    console.log(e.cancelBubble)
+                    e.stopPropagation();
+                    console.log(e.cancelBubble)
+                })
+
+            }, [])
+
+            // <button id="count2" onClick={e => console.log("Count2 react click")}>Count2</button>
+            // <button id="count3" onClick={e => console.log("Count3 cllick")}>Count3</button>
+
+            // 没有使用react给页面元素绑定过事件  所有document上面没有react注册的事件  -->使用chrome控制台查看event listener
+            // count3 事件: count3 原生事件执行了
+            /*
+            count2 事件: 
+            count2 原生事件执行了
+            document body click! 
+            document documentElement click! 
+            document click! 
+            window click!
+            */
+            // return <div>
+            //     <button id="count1" >Count1</button>
+            //     <button id="count2" >Count2</button>
+            //     <button id="count3" >Count3</button>
+            // </div>
+
+            // react 虚拟dom有元素绑定事件   会给document添加事件委托 dispatchDiscreteEvent 
+            /**
+             * count1 事件还是正常冒泡
+             * count2 事件  
+             *      执行事件处理阶段: 绑定在真实DOM元素的事件   输出: count2 原生事件执行了
+             *      执行冒泡阶段: 
+             *          document body click! 
+                        document documentElement click! 
+                        document click! 
+                        Count2 react click     注意这里
+                        window click! 
+             * count3 事件
+                    阻止冒泡了: count3 原生事件执行了
+            */
+            return <div>
+                <button id="count1" >Count1</button>
+                <button id="count2" onClick={e => console.log("Count2 react click")}>Count2</button>
+                <button id="count3" onClick={e => console.log("Count3 cllick")}>Count3</button>
+                <MyDiv />
+            </div>
+        }
+
+        class MyDiv extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    count: 0
+                }
+            }
+
+            handleClick = e => {
+                console.log(e);
+                debugger
+                this.setState({ count: this.state.count + 1 })
+            }
+
+            render() {
+                return <div onClick={this.handleClick}>mydiv组件{this.state.count}</div>
+            }
+        }
+
+        ReactDOM.render(<Count />, document.getElementById("root"));
+
+    </script>
+</body>
+
+</html>

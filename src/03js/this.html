@@ -10,6 +10,10 @@
 <body>
     <script>
         class C {
+            constructor(props) {
+                console.log("C 构造函数执行, props: ",props);
+                this.message = props || "default message";
+            }
             aa() {
                 console.log(this)
             }
@@ -17,9 +21,19 @@
             bb = () => {
                 console.log(this)
             }
+
+            static message = "message"
         }
         //类中的方法默认开启了局部的严格模式，this不在转换为包装对象,所传即所得
 
+        class D extends C {
+            constructor(props){
+                super("hhh");
+                this.type ="D"
+            }
+        }
+        let dd = new D()
+        console.log(dd)
 
 
         const c = new C()
