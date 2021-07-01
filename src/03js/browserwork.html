@@ -11,21 +11,21 @@
         }
         first();
     </script>
-    <link href="../App.css" type="text/css" rel="stylesheet"/>
+    <link href="../App.css" type="text/css" rel="stylesheet" />
     <style>
-        li{
+        li {
             border: 1px solid red;
         }
     </style>
     <script>
         console.log("script标签");
-        window.onload= function onLoad(params) {
+        window.onload = function onLoad(params) {
             console.log("onlload")
         }
         function domContentLoaded(params) {
             console.log("DOMContentLoaded")
         }
-        window.addEventListener("DOMContentLoaded",domContentLoaded)
+        window.addEventListener("DOMContentLoaded", domContentLoaded)
         setTimeout(() => {
             console.log("timeout 0")
         }, 0);
@@ -38,14 +38,14 @@
             console.log("promise")
         })
     </script>
-    <script src="./js新版stu.js" ></script>
+    <script src="./js新版stu.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/underscore.js/1.13.0/underscore-esm-min.js"></script>
 </head>
 
 <body>
 
-    浏览器解析html 从head中预加载所有资源 但是按顺序执行的 解析完html 立即first();   等等待网络请求css完成  执行L20 script
-    里面有宏任务  微任务 js引擎执行
+    浏览器解析html 从head中预加载所有资源 但是按顺序执行的 解析完html 立即first(); 等等待网络请求css完成 执行L20 script
+    里面有宏任务 微任务 js引擎执行
     等待 src="./js新版stu.js" 资源下载完成 执行
 
     资料
@@ -53,20 +53,124 @@
         <li><a href="https://www.cnblogs.com/cangqinglang/p/8963557.html" target="_black">浏览器多线程1</a> </li>
         <li><a href="https://www.qiyuandi.com/zhanzhang/zonghe/15793.html" target="_black">浏览器多线程</a> </li>
     </ul>
-    事件环： 渲染进程中js引擎（JS内核）线程(js引擎有多个线程，一个主线程，其它的后台配合主线程) 
-        主线程读取js代码并同步执行，主线程遇到异步任务，交给其他线程处理； 异步进程处理完毕（Ajax返回、DOM事件处罚、Timer到等），将相应的异步任务推入任务队列；
-        主线程执行完毕，查询任务队列，如果存在任务，则取出一个任务推入主线程处理（先进先出）；重复执行
-        一个循环执行完所有的微任务和一个宏任务， （可能需要更新就 执行更新渲染操作，在一帧内多次的DOM改变，浏览器只会批处理相应一次）
-    Task队列  每次只执行一个任务，添加的任务放在队列末尾
-    requestAnimation队列   动画回调会一直执行，知道队列中所有任务都完成，如果又有动画回调，会在下一帧执行
-    微任务队列  也是一直执行，知道任务队列为空，但是假如加入任务的速度比执行的快，就会一直执行，事件环会堵塞
+    事件环： 渲染进程中js引擎（JS内核）线程(js引擎有多个线程，一个主线程，其它的后台配合主线程)
+    主线程读取js代码并同步执行，主线程遇到异步任务，交给其他线程处理； 异步进程处理完毕（Ajax返回、DOM事件处罚、Timer到等），将相应的异步任务推入任务队列；
+    主线程执行完毕，查询任务队列，如果存在任务，则取出一个任务推入主线程处理（先进先出）；重复执行
+    一个循环执行完所有的微任务和一个宏任务， （可能需要更新就 执行更新渲染操作，在一帧内多次的DOM改变，浏览器只会批处理相应一次）
+    Task队列 每次只执行一个任务，添加的任务放在队列末尾
+    requestAnimation队列 动画回调会一直执行，知道队列中所有任务都完成，如果又有动画回调，会在下一帧执行
+    微任务队列 也是一直执行，知道任务队列为空，但是假如加入任务的速度比执行的快，就会一直执行，事件环会堵塞
 
-        我们知道了GUI渲染线程 和 js线程是互斥的  那怎么确保js大工作量的情况下 保证浏览器的fps??
-        只能我们自己手动优化js的执行,浏览器每次都会去执行: 执行同步js 微任务 , 执行requestAnimationFrame 计算style layout布局 paint 在复合
-        如果整个操作在16.6ms以内,就不会肉眼卡顿 
-        帧： https://www.jianshu.com/p/a32b890c29b1
-        <a href="https://www.jianshu.com/p/a32b890c29b1">帧</a>
+    我们知道了GUI渲染线程 和 js线程是互斥的 那怎么确保js大工作量的情况下 保证浏览器的fps??
+    只能我们自己手动优化js的执行,浏览器每次都会去执行: 执行同步js 微任务 , 执行requestAnimationFrame 计算style layout布局 paint 在复合
+    如果整个操作在16.6ms以内,就不会肉眼卡顿
+    帧： https://www.jianshu.com/p/a32b890c29b1
+    <a href="https://www.jianshu.com/p/a32b890c29b1">帧</a>
     <img src="demo/1.jpg" width="100px" />
+
+    <script async>
+        // 设计模式代码
+
+        // 建造者模式   以前工厂模式创建出来的对象,追求的是创建出来的结果,别无他求;
+        // 建造者模式不仅仅得到创建的结果, 也参与了创建的过程,对于创建的细节也参与了干涉,创建的对象一般是复合对象
+        class StringAge {
+            constructor(props) {
+                this.stringage = props + ""
+                this.numage = props
+            }
+        }
+
+        class NameSplit {
+            constructor(name) {
+                let names = name.split(" ");
+                let result = {};
+                result.firstName = names[0];
+                if (names.length > 1) {
+                    result.lastName = names[1]
+                }
+                return result;
+            }
+        }
+
+        class Person {
+            constructor(props) {
+                this.name = new NameSplit(props.name)
+                this.age = new StringAge(props.age || 0)
+            }
+        }
+        console.log(new Person({ name: "wangjj hhh", age: 22 }))
+        // age: StringAge {stringage: "22", numage: 22} name: {firstName: "wangjj", lastName: "hhh"}
+
+
+        // 单例模式  这种模式经常为我们提供一个命名空间 比如jquery 或者定义静态变量
+        // 定义静态变量
+        console.log("--------------------单例模式------------")     //使用clgg快速生成
+        var Conf = (function () {
+            const _conf = {
+                Max: 100,
+                Min: 0
+            }
+            return {
+                get(name) {
+                    return _conf[name]
+                }
+            }
+        })();
+        console.log(Conf.get("Min"))
+
+        let person = {
+            name_: '',
+            get name() {
+                return this.name_;
+            },
+            set name(name) {
+                this.name_ = name;
+            },
+            sayName() {
+                console.log(`My name is ${this.name_}`);
+            }
+        };
+        person.name = 'Matt';
+        person.sayName();
+
+        let Conf1 = {
+            _name: "",
+            get name() {
+                return "name:" + this._name;
+            },
+            set name(name){
+                this._name = name + " set"
+            }
+        }
+        console.log(Conf1.name);
+
+        // 对于对象可以添加自己的私有成员和方法，然后使用闭包在其内部封装这些变量和函数声明。
+        var mySingle = function () {
+            var privateVariable = "i am private Variable";
+            var print = function () {
+                console.log(this.privateVariable);
+            }
+            return {
+                publicVariable: privateVariable,
+                publicMethod(){
+                    print()
+                }
+            }
+        }
+        let instance = mySingle();
+        console.log(instance.publicVariable);
+        
+
+        // 外观模式
+        console.log("------------------外观模式------------");
+        // 为一组复杂的子系统接口提供一个更高级的统一接口,通过这个接口是的对子系统接口的访问更加容易
+        // 举例: 添加事件时候的兼容多平台的函数  
+
+
+        console.log('---------------',"适配器模式",'--------------------');
+        
+
+    </script>
 </body>
 
 </html>
