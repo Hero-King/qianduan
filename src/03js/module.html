@@ -50,9 +50,39 @@
         嵌入的模块定义代码不能使用 import 加载到其他模块。只有通过外部文件加载的模块才可以使用
         import 加载。因此，嵌入模块只适合作为入口模块。
     </p>
+
+    <div id="ImageContainer"></div>
+
     <script>
         console.log(document.cookie);
 
+    </script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/psd.js/3.2.0/psd.js"></script>
+    <!-- <script src="https://github.com/laoshu133/psd.js/blob/v3.1.0/dist/psd.js"></script> -->
+    <script>
+        var PSD = require('psd');
+        var psdInstance;
+        // Load from URL
+        // PSD.fromURL("../文字解析.psd").then(function (psd) {
+        PSD.fromURL("../文字解析1.psd").then(function (psd) {
+            psdInstance = psd;
+            let node = psd.tree().descendants()[1];
+            console.log(node.get('typeTool').export(), "node.get('typeTool').export()")
+            var typeTool = node.get('typeTool');
+            var runArray = typeTool.engineData.EngineDict.StyleRun.RunLengthArray;
+            var styleArray = typeTool.engineData.EngineDict.StyleRun.RunArray;
+            console.log("runArray:",runArray)
+            console.log(psd.tree().export())
+            document.getElementById('ImageContainer').appendChild(psd.image.toPng());
+        });
+
+        // Load from event, e.g. drag & drop
+        function onDrop(evt) {
+            PSD.fromEvent(evt).then(function (psd) {
+                console.log(psd.tree().export());
+            });
+        }
     </script>
 </body>
 

@@ -14,14 +14,14 @@
         @keyframes rollup {
             to {
                 opacity: 0;
-                visibility: hidden;
-                display: none;
                 transform: translateY(-200px);
             }
         }
 
         .float-span {
+            position: absolute;
             animation: rollup 2s linear;
+            animation-fill-mode: forwards;
         }
     </style>
 </head>
@@ -42,28 +42,56 @@
         document.body.onclick = function (e) {
             console.log(e)
         }
-        document.body.addEventListener("click", function (e) {
-            let max = 300;
-            let movepath = 0
-            const span = document.createElement("span");
-            span.style.position = "absolute";
-            // span.className = "float-span";
-            span.textContent = "哈哈哈";
-            span.style.left = e.pageX + "px";
-            span.style.top = e.pageY + "px";
-            const pagey = e.pageY
-            const inter = setInterval(() => {
-                span.style.top = pagey - (movepath += 2) + "px";
-                span.style.opacity = 1 - 1 / max * movepath;
-                span.style.border = `1px solid ${color16()}`;
-                span.style.color = color16()
-                if (movepath >= max) {
-                    clearInterval(inter);
-                    span.remove()
+
+        function method1() {
+            document.body.addEventListener("click", function (e) {
+                let max = 300;
+                let movepath = 0
+                const span = document.createElement("span");
+                span.style.position = "absolute";
+                span.textContent = "哈哈哈";
+                span.style.left = e.pageX + "px";
+                span.style.top = e.pageY + "px";
+                const pagey = e.pageY
+                const inter = setInterval(() => {
+                    span.style.top = pagey - (movepath += 2) + "px";
+                    span.style.opacity = 1 - 1 / max * movepath;
+                    span.style.border = `1px solid ${color16()}`;
+                    span.style.color = color16()
+                    if (movepath >= max) {
+                        clearInterval(inter);
+                        span.remove()
+                    }
+                }, 10);
+                document.body.appendChild(span);
+            });
+
+        }
+        // method1()
+
+        // 使用原生js监听动画结束事件
+        function method2() {
+
+            const { body } = document;
+            body.addEventListener("animationend", function (e) {
+                console.log(e)
+                if (e.animationName === "rollup") {
+                    e.target.remove();
                 }
-            }, 10);
-            document.body.appendChild(span);
-        })
+            })
+
+            document.body.addEventListener("click", function (e) {
+                const span = document.createElement("span");
+                span.textContent = "哈哈哈";
+                span.style.left = e.pageX + "px";
+                span.style.top = e.pageY + "px";
+                span.classList.add("float-span");
+                document.body.appendChild(span);
+            })
+        }
+        method2()
+
+
     </script>
 </body>
 
