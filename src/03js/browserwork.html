@@ -138,7 +138,7 @@
             get name() {
                 return "name:" + this._name;
             },
-            set name(name){
+            set name(name) {
                 this._name = name + " set"
             }
         }
@@ -152,14 +152,40 @@
             }
             return {
                 publicVariable: privateVariable,
-                publicMethod(){
+                publicMethod() {
                     print()
                 }
             }
         }
         let instance = mySingle();
         console.log(instance.publicVariable);
-        
+
+
+        // 使用闭包实现 单例模式
+        var Singleton = (function () {
+            var instantiated;
+            function init() {
+                /*这里定义单例代码*/
+                return {
+                    publicMethod: function () {
+                        console.log('hello world');
+                    },
+                    publicProperty: 'test'
+                };
+            }
+
+            return {
+                getInstance: function () {
+                    if (!instantiated) {
+                        instantiated = init();
+                    }
+                    return instantiated;
+                }
+            };
+        })();
+
+        /*调用公有的方法来获取实例:*/
+        Singleton.getInstance().publicMethod();
 
         // 外观模式
         console.log("------------------外观模式------------");
@@ -167,9 +193,91 @@
         // 举例: 添加事件时候的兼容多平台的函数  兼容不同客户端组织冒泡的代码
 
 
-        console.log('---------------',"适配器模式",'--------------------');
-        
+        console.log('---------------', "适配器模式", '--------------------');
+        // 将一个类(对象)的接口(方法或者属性)转化为另一个接口,以满足用户的需求,使得类(对象)之间接口的不兼容性得到解决
+        // 比如我们生活中的水管的三通(本来的横向水管只能横着流水  使用三通可以让他满足我们竖着流水的需求)  三角插头转两角插头的转换器
+        // 案例: 设配异类框架(我们自己的框架实现不了的功能/比较复杂的功能使用jquery等实现)
+        // 函数参数,数据设配器,对函数参数,后台返回的数据转换一下 方便我们的使用
 
+        console.log('---------------', "装饰者模式", '--------------------');
+        // 在不改变原有对象的基础上,通过对其进行包装拓展(添加属性或者方法)使得原有对象可以满足用户的更复杂需求   redux 中间件数组就是使用装饰者模式
+
+        console.log('---------------', "观察者模式", '--------------------');
+        // 定义一种依赖关系,解决主体对象和观察者之间的功能的耦合
+
+        // 版本一
+        function Observer() {
+            this.fns = [];
+        }
+        Observer.prototype = {
+            subscribe: function (fn) {
+                this.fns.push(fn);
+            },
+            unsubscribe: function (fn) {
+                this.fns = this.fns.filter(
+                    function (el) {
+                        if (el !== fn) {
+                            return el;
+                        }
+                    }
+                );
+            },
+            update: function (o, thisObj) {
+                var scope = thisObj || window;
+                this.fns.forEach(
+                    function (el) {
+                        el.call(scope, o);
+                    }
+                );
+            }
+        };
+
+        //测试
+        var o = new Observer;
+        var f1 = function (data) {
+            console.log('Robbin: ' + data + ', 赶紧干活了！');
+        };
+
+        var f2 = function (data) {
+            console.log('Randall: ' + data + ', 找他加点工资去！');
+        };
+
+        o.subscribe(f1);
+        o.subscribe(f2);
+
+        o.update("Tom回来了！")
+
+        //退订f1
+        o.unsubscribe(f1);
+        //再来验证
+        o.update("Tom回来了！");
+
+        console.log('---------------', "策略模式", '--------------------');
+        // 策略模式: 将定义的一组算法封装起来,使其相互之间可以替换,封装的算法具有一定的独立性,不会随着客户端变化而变化,在策略对象内部保存的是相互独立的一些算法
+        var PriceStrategy = (function () {
+            // 内部算法对象
+            var strategy = {
+                // 满一百 减三十
+                return30: function (price) {
+                    return price + parseInt(price / 100) * 30
+                },
+                return50: function(price){
+                    return price + parseInt(price / 100) * 50
+                },
+                percent90: function(price){
+                    // 处理小数问题
+                    return price * 100 * 90 / 10000
+                },
+                percent50: function(price){
+                    // 处理小数问题
+                    return price * 100 * 50 / 10000
+                }
+            }
+            return function(algorithm, price){
+                return strategy[algorithm](price)
+            }
+        })()
+        console.log(PriceStrategy("percent50",200))
     </script>
 </body>
 
