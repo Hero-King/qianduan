@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滚动新闻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #news1 {
+            margin: 20px;
+            height: 100px;
+            width: 200px;
+            border: 1px solid black;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #news1 ul {
+            animation: rowup 8s linear;
+            list-style: none;
+            animation-delay: 1s;
+            /* animation-direction: alternate; */
+            animation-iteration-count: infinite;
+            /* animation-fill-mode: forwards; */
+            /* animation-fill-mode: both; */
+        }
+
+        #news1 li {
+            height: 20px;
+            line-height: 20px;
+            text-decoration: underline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #news1 li:hover {
+            color: cornflowerblue;
+            animation-play-state: paused;
+        }
+
+        #news1 ul:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes rowup {
+            60% {
+                transform: translateY(calc(-100% + 100px));
+            }
+
+            70% {
+                transform: translateY(calc(-100% + 100px));
+            }
+
+            80% {
+                transform: translate(0);
+            }
+        }
+
+        #images1 {
+            width: 500px;
+            overflow: hidden;
+            margin: 20px;
+        }
+        section{
+            height: 200px;
+            display: flex;
+            animation-name: rollup;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+        }
+
+        #images1 div {
+            flex: none;
+            width: 500px;
+            height: 200px;
+            background-color: darkblue;
+            color: white;
+            font-size: 30px;
+            line-height: 200px;
+            text-align: center;
+        }
+        @keyframes rollup {
+            from{
+                transform: translateX(0);
+            }
+            20%{
+                transform: translateX(0);
+            }
+            25%{
+                transform: translateX(-500px);
+            }
+            45%{
+                transform: translateX(-500px);
+            }
+            50%{
+                transform: translateX(-1000px);
+            }
+            70%{
+                transform: translateX(-1000px);
+            }
+            75%{
+                transform: translateX(-1500px);
+            }
+            95%{
+                transform: translateX(-1500px);
+            }
+            100%{
+                transform: translateX(-2000px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="news1">
+        <ul>
+            <li>111重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>222重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>333重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>444重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>555重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>666重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>777重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>888重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>999重大新闻!号外号外,中国中产党成立100周年</li>
+            <li>000重大新闻!号外号外,中国中产党成立100周年</li>
+        </ul>
+    </div>
+
+    <div id="images1">
+        <section>
+            <div>1111</div>
+            <div>2222</div>
+            <div>3333</div>
+            <div>4444</div>
+            <div>1111</div>
+        </section>
+    </div>
+</body>
+
+</html>
