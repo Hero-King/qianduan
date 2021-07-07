@@ -9,14 +9,28 @@
         body {
             height: 200vh;
         }
+
+        @keyframes leftSideIn {
+            to {
+                transform: translateX(-100%);
+                opacity: 1;
+            }
+        }
+
+        .adv {
+            animation-name: leftSideIn;
+            animation-fill-mode: forwards;
+            animation-duration: 1s;
+            opacity: .5;
+        }
     </style>
 </head>
 
 <body>
     <ul>
         <li><a href="this.html" target="this.html">target= this.html</a></li>
-        <li></li>
-        <li></li>
+        <li><a href="this.html" target="baidu">href</a> </li>
+        <li><a href="this.html" target="_parent">href=this.html target=_parent</a></li>
         <li></li>
     </ul>
 
@@ -57,6 +71,9 @@
         当前窗口或标签页不是由window.open方法创建的
         当前标签页所在的窗口包含有多个标签页
     </div>
+
+    <hr />
+    <iframe name="baidu" src="http://www.baidu.com"></iframe>
     <script>
         window.name = "window.html"
         console.log('---------------', "window === document.defaultView", '--------------------', window === document.defaultView);
@@ -98,6 +115,21 @@
         window.addEventListener("message", function (e) {
             console.log(e.data)
         })
+
+        console.log('---------------', "window.frames[0].top === window", '--------------------');
+        console.log(window.frames[0].top === window);   // true
+        console.log(window.frames[0].parent === window);   // true
+
+        function createAdv(url, width, height) {
+            let advdiv = document.createElement("div");
+            advdiv.style = `position: fixed;bottom:0;right:${-width}px;width:${width}px; height:${height}px;background-color: red`
+            document.body.appendChild(advdiv);
+            setTimeout(() => {
+                advdiv.classList.add("adv")
+            }, 1000 * 2);
+        }
+
+        createAdv(null, 200, 200)
     </script>
 </body>
 
