@@ -11,7 +11,7 @@
     <script>
         class C {
             constructor(props) {
-                console.log("C 构造函数执行, props: ",props);
+                console.log("C 构造函数执行, props: ", props);
                 this.message = props || "default message";
             }
             aa() {
@@ -27,9 +27,9 @@
         //类中的方法默认开启了局部的严格模式，this不在转换为包装对象,所传即所得
 
         class D extends C {
-            constructor(props){
+            constructor(props) {
                 super("hhh");
-                this.type ="D"
+                this.type = "D"
             }
         }
         let dd = new D()
@@ -60,6 +60,12 @@
         // 严格模式下的全局作用域的 this -> window
         // 没有明确的指定函数中的this的函数中 this 等于undefined
         // 事件处理函数中,this指向触发事件的目标对象
+
+        window.addEventListener("message", function (e) {
+            console.log('---------------', "e", '--------------------');
+            console.log(e);
+            window.opener.postMessage("孩子发消息","*")
+        })
     </script>
 </body>
 

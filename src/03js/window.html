@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>window</title>
+    <style>
+        body {
+            height: 200vh;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li><a href="this.html" target="this.html">target= this.html</a></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <button>postMessage</button>
+    <div id="app">
+
+
+        window 对象表示一个包含DOM文档的窗口，其 document 属性指向窗口中载入的 DOM文档 。使用 document.defaultView 属性
+        可以获取指定文档所在窗口。
+
+        在有标签页功能的浏览器中，每个标签都拥有自己的 window 对象；也就是说，同一个窗口的标签页之间不会共享一个 window 对象。有一些方法，如 window.resizeTo 和 window.resizeBy
+        之类的方法会作用于整个窗口而不是 window 对象所属的那个标签。一般而言，如果一样东西无法恰当地作用于标签，那么它就会作用于窗口。
+
+        窗口关系
+        top 对象始终指向最上层（最外层）窗口，即浏览器窗口本身。而 parent 对象则始终指向当前窗
+        口的父窗口。如果当前窗口是最上层窗口，则 parent 等于 top（都等于 window）。最上层的 window
+        如果不是通过 window.open()打开的，那么其 name 属性就不会包含值，本章后面会讨论。
+        还有一个 self 对象，它是终极 window 属性，始终会指向 window。实际上，self 和 window 就
+        是同一个对象。之所以还要暴露 self，就是为了和 top、parent 保持一致。
+        这些属性都是 window 对象的属性，因此访问 window.parent、window.top 和 window.self
+        都可以。这意味着可以把访问多个窗口的 window 对象串联起来，比如 window.parent.parent。
+
+        Window.closed 只读 这个属性指示当前窗口是否关闭
+        Window.devicePixelRatio 只读 返回当前显示器的物理像素和设备独立像素的比例。
+        Window.frameElement 只读 返回嵌入窗口的元素，如果未嵌入窗口，则返回null。
+        Window.frames 只读 返回当前窗口中所有子窗体的数组
+        Window.fullScreen 此属性表示窗口是否以全屏显示
+        Window.history 只读 返回一个对 history 对象的引用。
+        Window.innerHeight 只读 获得浏览器窗口的内容区域的高度，包含水平滚动条(如果有的话)。
+        Window.innerWidth 只读 获得浏览器窗口的内容区域的宽度，包含垂直滚动条(如果有的话)。
+        Window.name 获取/设置窗口的名称。 窗口的名字主要用于为超链接和表单设置目标（targets）。
+        Window.opener 返回对打开当前窗口的那个窗口的引用。
+        Window.parent 只读 返回当前窗口或子窗口的父窗口的引用。
+        Window.self 只读 Returns an object reference to the window object itself.
+
+        window.moveTo(x, y) 将当前窗口移动到指定的坐标位置。 本函数按照指定的绝对位置移动当前窗口，而window.moveBy函数按照与当前位置相对的距离移动当前窗口。
+        如果符合下列情况,则普通网页中的JavaScript无法通过调用该函数来移动浏览器窗口
+        当前窗口或标签页不是由window.open方法创建的
+        当前标签页所在的窗口包含有多个标签页
+    </div>
+    <script>
+        window.name = "window.html"
+        console.log('---------------', "window === document.defaultView", '--------------------', window === document.defaultView);
+        console.log("设置sessionStorage");
+        sessionStorage.setItem("name", "wangjj")
+        var newHtml;
+        document.getElementById("app").onclick = function (e) {
+            // Window 接口的 open() 方法，是用指定的名称将指定的资源加载到浏览器上下文（窗口 window ，内嵌框架 iframe 或者标签 tab ）。如果没有指定名称，则一个新的窗口会被打开并且指定的资源会被加载进这个窗口的浏览器上下文中。
+            // let windowObjectReference = window.open(strUrl, strWindowName, [strWindowFeatures]);
+            // strWindowName
+            // 新窗口的名称。该字符串可以用来作为超链接 <a> 或表单 <form> 元素的目标属性值。字符串中不能含有空白字符。注意：strWindowName 并不是新窗口的标题。
+
+            // 如果已经存在以 strWindowName 为名称的窗口，则不再打开一个新窗口，而是把 strUrl 加载到这个窗口中。在这种情况下，方法的返回值是这个已经打开的窗口，并忽略参数 strWindowFeatures 。strUrl设为空字符串时，可以在不改变窗口地址的情况下获得一个已经打开的同名窗口的引用。如果要在每次调用 window.open()时都打开一个新窗口，则要把参数 strWindowName 设置为 _blank。
+            newHtml = window.open("./this.html", "this.html");
+            console.log(newHtml);
+            // newHtml 挂载了this.html的很多方法 可以直接调用  newHtml.name就是this.html
+            console.log(newHtml.parent === window)  // false newHtml.parent指向新标签页的自己window
+            console.log(newHtml.opener === window)  // true
+            console.log(newHtml.sessionStorage.getItem("name")) // wangjj  说明通过win.open打开的标签页是可以继承父窗口的sessionstorage
+            console.log(newHtml.document.title) // Document 没有跨域情况下能够获取子窗口的dom结构
+
+            console.log('---------------', "postMessage", '--------------------');
+            // newHtml.alert("哈哈哈哈");
+        }
+
+
+        // postMessage跨域的精髓就是不管你俩是否跨域，只要你俩能跟一个window扯上关系，那就能传消息，收到消息就可以处理下一步事物        比如我开头的场景，因为iframe的window和我的页面的window不是一个window，所以iframe保存完发消息要用window.parent.postMessage发送，而我的页面直接用window.addEventListener接收，接收到保存成功的消息后，将返回的id保存。
+        // 两个同域的window如果不是同一个window也是不能收发消息的，
+        // 原文链接：https://blog.csdn.net/lianzhang861/article/details/100031166
+
+        let buttons = document.getElementsByTagName("button");
+        buttons[0].addEventListener("click", function (e) {
+            console.log('---------------', "开始发送消息", '--------------------');
+
+            // 想让谁接受消息 就拿到那个window对象,使用window对象的postMessage方法发送消息
+            newHtml.postMessage("发消息给孩子了", "*")
+            // window.postMessage("我被点击了", "*")        // 这个消息发送出去会被自己接受 因为是使用的当前窗口window发送的
+        })
+        window.addEventListener("message", function (e) {
+            console.log(e.data)
+        })
+    </script>
+</body>
+
+</html>

@@ -142,7 +142,99 @@
             }
             return result
         }
-        console.log(toArr(treeData))
+        console.log(toArr(treeData));
+
+
+        // 完全二叉树的存储到数组中
+        let tree = [{
+            value: "A",
+            children: [{
+                value: "B",
+                children: []
+            }, {
+                value: "C",
+                children: []
+            }]
+        }]
+
+        function savetree(treeData) {
+            let queue = treeData, result = [];
+            while (queue.length > 0) {
+                let item = queue.shift();
+                result.push(item.value);
+                if (item.children) {
+                    queue.push(...item.children)
+                }
+            }
+            return result
+        }
+        console.log(savetree(tree));
+
+        function Node(value, leftNode, rightNode) {
+            this.value = value;
+            this.leftNode = leftNode || null;
+            this.rightNode = rightNode || null;
+        }
+
+        // 先续遍历二叉树
+        function PreOrderTraverse(tree) {
+            if (tree) {
+                console.log(tree.value);
+                PreOrderTraverse(tree.leftNode);
+                PreOrderTraverse(tree.rightNode)
+            }
+        }
+
+        {
+            // 数组转完全二叉树 
+            const arrT = ["A", "B", "C", "D", "E", "F"];
+            function arrToTree(arr) {
+                let nodeList = [new Node("Null")]
+                arr.forEach(i => nodeList.push(new Node(i)));
+                for (let i = 1; i < nodeList.length / 2; i++) {
+                    if (nodeList[i * 2]) {
+                        nodeList[i].leftNode = nodeList[i * 2]
+                    }
+                    if (nodeList[i * 2 + 1]) {
+                        nodeList[i].rightNode = nodeList[i * 2 + 1]
+                    }
+                }
+                return nodeList[1];
+            }
+            const nodeTree = arrToTree(arrT)
+            console.log(nodeTree);
+
+            PreOrderTraverse(nodeTree);
+        }
+
+        {
+            // 数组转非完全二叉树
+            const arrT = ["A", "B", "C", "#", "E", "#", "G"];
+            function arrToTree(arr) {
+                let nodeList = [new Node("Null")]
+                arr.forEach(i => nodeList.push(new Node(i)));
+                for (let i = 1; i < nodeList.length / 2; i++) {
+                    if (nodeList[i] == "#") continue
+                    if (nodeList[i * 2] && nodeList[i * 2].value !== "#") {
+                        nodeList[i].leftNode = nodeList[i * 2]
+                    }
+                    if (nodeList[i * 2 + 1] && nodeList[i * 2 + 1].value !== "#") {
+                        nodeList[i].rightNode = nodeList[i * 2 + 1]
+                    }
+                }
+                return nodeList[1];
+            }
+            const nodeTree = arrToTree(arrT)
+            console.log(nodeTree);
+            PreOrderTraverse(nodeTree);
+        }
+
+        {
+            // 二叉树的建立 输入前序遍历结果 依次输入 ["A","B","#","D","#","#","C","#","#"]; 
+            // 其实建立二叉树也是利用递归的原理,只不过在原来打印节点的地方改成了生成节点,给几点赋值的操作而已
+            
+        }
+
 
     </script>
 </body>
