@@ -221,6 +221,8 @@ Object.prototype.toString.call({a:1}) // "[object Object]"
 Object.prototype.toString.call([1,2]) // "[object Array]"
 Object.prototype.toString.call(new Date) // "[object Date]"
 Object.prototype.toString.call(function(){}) // "[object Function]"
+Object.prototype.toString.call(new Error()) // "[object Error]"
+Object.prototype.toString.call(new Map()) // "[object Map]"
 
 // 方法三、obj instanceof Object ，可以左边放你要判断的内容，右边放类型来进行JS类型判断，只能用来判断复杂数据类型,
 // 因为instanceof 是用于检测构造函数（右边）的 prototype 属性是否出现在某个实例对象（左边）的原型链上。
