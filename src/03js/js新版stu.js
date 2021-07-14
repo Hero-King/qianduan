@@ -182,4 +182,47 @@ screenX 和 screenY 属性获取鼠标光标在屏幕上的坐标   针对的是
 function aa(params) {
     console.log("js加载完成并执行了");
 }
-aa()
+aa();
+
+/**
+ *
+简单总结就是，for in遍历的是数组的索引（即键名），而for of遍历的是数组元素值。
+
+for-in总是得到对象的key或数组、字符串的下标。
+
+for-of总是得到对象的value或数组、字符串的值，另外还可以用于遍历Map和Set。
+ */
+
+/**
+ *类型判断
+1、typeof 2、object.property.toString.call 3、instance of。
+基本数据类型除了null外都返回对应类型的字符串。 而复杂数据类型里，除了函数返回了"function"其他均返回“object”
+null返回“object”
+ typeof 1 // "number"
+typeof 'a'  // "string"
+typeof true  // "boolean"
+typeof undefined // "undefined"
+typeof Symbol() // "symbol"
+typeof 42n // "bigint"
+
+2. object.property.toString.call方法 ,他返回"[object, 类型]",注意返回的格式及大小写, 前面是小写，后面是首字母大写。
+
+ *
+ */
+Object.prototype.toString.call(999) // "[object Number]"
+Object.prototype.toString.call('') // "[object String]"
+Object.prototype.toString.call(Symbol()) // "[object Symbol]"
+Object.prototype.toString.call(42n) // "[object BigInt]"
+Object.prototype.toString.call(null) // "[object Null]"
+Object.prototype.toString.call(undefined) // "[object Undefined]"
+Object.prototype.toString.call(true) // "[object Boolean]
+// 复杂数据类型也能返回相应的类型
+Object.prototype.toString.call({a:1}) // "[object Object]"
+Object.prototype.toString.call([1,2]) // "[object Array]"
+Object.prototype.toString.call(new Date) // "[object Date]"
+Object.prototype.toString.call(function(){}) // "[object Function]"
+Object.prototype.toString.call(new Error()) // "[object Error]"
+Object.prototype.toString.call(new Map()) // "[object Map]"
+
+// 方法三、obj instanceof Object ，可以左边放你要判断的内容，右边放类型来进行JS类型判断，只能用来判断复杂数据类型,
+// 因为instanceof 是用于检测构造函数（右边）的 prototype 属性是否出现在某个实例对象（左边）的原型链上。

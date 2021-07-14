@@ -40,6 +40,20 @@ div.mydiv {
 }
 
 /* 属性选择器E[att]   -- img[alt]  input[type="text"] a[href][title]*/
+/* 如果您希望把包含标题（title）的所有元素变为红色，可以写作： */
+*[title] {color:red;}
+/* 可以只对有 href 属性的锚（a 元素）应用样式： */
+a[href] {color:red;}
+/* 为了将同时有 href 和 title 属性的 HTML 超链接的文本设置为红色，可以这样写： */
+a[href][title] {color:red;}
+a[href="http://www.w3school.com.cn/"][title="W3School"] {color: red;}
+/* [attribute]	用于选取带有指定属性的元素。
+[attribute=value]	用于选取带有指定属性和值的元素。
+[attribute~=value]	用于选取属性值中包含指定词汇的元素。
+[attribute|=value]	用于选取带有以指定值开头的属性值的元素，该值必须是整个单词。
+[attribute^=value]	匹配属性值以指定值开头的每个元素。
+[attribute$=value]	匹配属性值以指定值结尾的每个元素。
+[attribute*=value]	匹配属性值中包含指定值的每个元素。 */
 
 /* 后代选择器--格式是父标签空格子标签（怎么定位到父标签要管吗？） */
 div p {
