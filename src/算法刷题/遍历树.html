@@ -1,242 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        let nodeList = [
-            { id: '1-1', children: [{ id: '1-2-1' }, { id: '1-2-2' }] },
-            { id: '2-1' },
-            { id: '3-1', children: [{ id: '3-2-1', children: [{ id: '3-3-1' }] }] }
+      let nodeList = [
+        { id: "1-1", children: [{ id: "1-2-1" }, { id: "1-2-2" }] },
+        { id: "2-1" },
+        { id: "3-1", children: [{ id: "3-2-1", children: [{ id: "3-3-1" }] }] },
+      ];
+
+      // 深度优先
+      function loop(arr) {
+        arr.forEach((node) => {
+          console.log(node.id);
+          if (node.children) {
+            loop(node.children);
+          }
+        });
+      }
+      loop(nodeList);
+
+      // 广度优先遍历
+      function gloop(arr) {
+        let nodes = arr;
+        while (nodes.length > 0) {
+          let item = nodes.shift();
+          console.log(item.id);
+          if (item.children) {
+            nodes.push(...item.children);
+          }
+        }
+      }
+      gloop(nodeList);
+
+      let dataArr = [
+        {
+          node_id: 1,
+          parent_id: 0,
+          name: "一级1.0.1",
+        },
+        {
+          node_id: 2,
+          parent_id: 0,
+          name: "一级1.0.2",
+        },
+        {
+          node_id: 3,
+          parent_id: 1,
+          name: "二级2.1.3",
+        },
+        {
+          node_id: 7,
+          parent_id: 1,
+          name: "二级2.1.7",
+        },
+        {
+          node_id: 6,
+          parent_id: 7,
+          name: "三级3.7.6",
+        },
+        {
+          node_id: 5,
+          parent_id: 7,
+          name: "三级3.7.5",
+        },
+      ];
+
+      // 一位数组转 树形结构
+      function genderTree(arr) {
+        let map = new Map();
+        arr.forEach((i) => {
+          map.set(i.node_id, i);
+        });
+        let result = [];
+        arr.forEach((i) => {
+          if (i.parent_id == 0) {
+            result.push(i);
+          } else {
+            let par = map.get(i.parent_id);
+            if (par.children) {
+              par.children.push(i);
+            } else {
+              par.children = [];
+              par.children.push(i);
+            }
+          }
+        });
+        return result;
+      }
+
+      console.log(genderTree(dataArr));
+
+      const treeData = [
+        {
+          name: 1,
+          children: [
+            {
+              name: 2,
+              children: [
+                {
+                  name: 4,
+                  children: [
+                    {
+                      name: 7,
+                      children: [
+                        {
+                          name: 8,
+                          children: [],
+                        },
+                        {
+                          name: 9,
+                          children: [],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 5,
+                  children: [],
+                },
+              ],
+            },
+            {
+              name: 3,
+              children: [
+                {
+                  name: 6,
+                  children: [],
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      // 树形结构转一位数组
+      function toArr(treeData) {
+        let result = [];
+        let queue = treeData;
+        while (queue.length > 0) {
+          const item = queue.shift();
+          if (item.children) {
+            item.children.forEach((i) => (i.pid = item.name));
+            queue.push(...item.children);
+            delete item["children"];
+          }
+          result.push(item);
+        }
+        return result;
+      }
+      console.log(toArr(treeData));
+
+      // 完全二叉树的存储到数组中
+      let tree = [
+        {
+          value: "A",
+          children: [
+            {
+              value: "B",
+              children: [],
+            },
+            {
+              value: "C",
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      function savetree(treeData) {
+        let queue = treeData,
+          result = [];
+        while (queue.length > 0) {
+          let item = queue.shift();
+          result.push(item.value);
+          if (item.children) {
+            queue.push(...item.children);
+          }
+        }
+        return result;
+      }
+      console.log(savetree(tree));
+
+      function Node(value, leftNode, rightNode) {
+        this.value = value;
+        this.leftNode = leftNode || null;
+        this.rightNode = rightNode || null;
+      }
+
+      // 先续遍历二叉树
+      function PreOrderTraverse(tree) {
+        if (tree) {
+          console.log(tree.value);
+          PreOrderTraverse(tree.leftNode);
+          PreOrderTraverse(tree.rightNode);
+        }
+      }
+
+      {
+        // 数组转完全二叉树
+        const arrT = ["A", "B", "C", "D", "E", "F"];
+        function arrToTree(arr) {
+          let nodeList = [new Node("Null")];
+          arr.forEach((i) => nodeList.push(new Node(i)));
+          for (let i = 1; i < nodeList.length / 2; i++) {
+            if (nodeList[i * 2]) {
+              nodeList[i].leftNode = nodeList[i * 2];
+            }
+            if (nodeList[i * 2 + 1]) {
+              nodeList[i].rightNode = nodeList[i * 2 + 1];
+            }
+          }
+          return nodeList[1];
+        }
+        const nodeTree = arrToTree(arrT);
+        console.log(nodeTree);
+
+        PreOrderTraverse(nodeTree);
+      }
+
+      {
+        // 数组转非完全二叉树
+        const arrT = ["A", "B", "C", "#", "E", "#", "G"];
+        function arrToTree(arr) {
+          let nodeList = [new Node("Null")];
+          arr.forEach((i) => nodeList.push(new Node(i)));
+          for (let i = 1; i < nodeList.length / 2; i++) {
+            if (nodeList[i] == "#") continue;
+            if (nodeList[i * 2] && nodeList[i * 2].value !== "#") {
+              nodeList[i].leftNode = nodeList[i * 2];
+            }
+            if (nodeList[i * 2 + 1] && nodeList[i * 2 + 1].value !== "#") {
+              nodeList[i].rightNode = nodeList[i * 2 + 1];
+            }
+          }
+          return nodeList[1];
+        }
+        const nodeTree = arrToTree(arrT);
+        console.log(nodeTree);
+        PreOrderTraverse(nodeTree);
+      }
+
+      {
+        // 二叉树的建立 输入前序遍历结果 依次输入 ["A","B","#","D","#","#","C","#","#"];
+        // 其实建立二叉树也是利用递归的原理,只不过在原来打印节点的地方改成了生成节点,给几点赋值的操作而已
+      }
+
+      {
+        //   一维数据 筛选关键字 生成树形结构
+        const list = [
+          {
+            title: "根目录",
+            id: 1,
+            parentId: 0,
+          },
+          {
+            title: "目录1",
+            id: 2,
+            parentId: 1,
+          },
+          {
+            title: "根目录2",
+            id: 3,
+            parentId: 1,
+          },
+          {
+            title: "子目录1-1",
+            id: 4,
+            parentId: 2,
+          },
+          {
+            title: "子目录1-2",
+            id: 5,
+            parentId: 2,
+          },
+          {
+            title: "子目录2-1",
+            id: 6,
+            parentId: 3,
+          },
+          {
+            title: "子目录2-2",
+            id: 7,
+            parentId: 3,
+          },
+        ];
+        let keyword = "目录";
+        const map = new Map();
+        let keywordNode = [];
+        list.forEach((i) => {
+          map.set(i.id, i);
+          if (keyword.length > 0 && i.title.includes(keyword)) {
+            i.title = `<span>${i.title}<span/>`;
+            keywordNode.push(i);
+          }
+        });
+
+        let result = [],
+          expandKeys = [];
+        alreadyIteratorIds = [];
+        while (keywordNode.length > 0) {
+          let item = keywordNode.shift();
+          let node = map.get(item.id);
+          let pid = item.parentId;
+
+          if (alreadyIteratorIds.includes(item.id)) {
+            continue;
+          }
+
+          if (pid !== 0) {
+            let parentNode = map.get(pid);
+            if (parentNode.children) {
+              parentNode.children.push(node);
+            } else {
+              parentNode.children = [node];
+            }
+            keywordNode.push(parentNode);
+          } else {
+            result.push(node);
+          }
+          pid > 0 && expandKeys.push(pid);
+          alreadyIteratorIds.push(item.id);
+        }
+        console.log(result, expandKeys);
+      }
+
+      {
+        //   treeData 筛选关键词 生成新的treeData
+        const treeData = [
+          {
+            title: "0-0",
+            key: "0-0",
+            children: [
+              {
+                title: "0-0-0",
+                key: "0-0-0",
+                children: [
+                  { title: "0-0-0-0", key: "0-0-0-0" },
+                  { title: "0-0-0-1", key: "0-0-0-1" },
+                  { title: "0-0-0-2", key: "0-0-0-2" },
+                ],
+              },
+              {
+                title: "0-0-1",
+                key: "0-0-1",
+                children: [
+                  { title: "0-0-1-0", key: "0-0-1-0" },
+                  { title: "0-0-1-1", key: "0-0-1-1" },
+                  { title: "0-0-1-2", key: "0-0-1-2" },
+                ],
+              },
+              {
+                title: "0-0-2",
+                key: "0-0-2",
+              },
+            ],
+          },
+          {
+            title: "0-1",
+            key: "0-1",
+            children: [
+              { title: "0-1-0-0", key: "0-1-0-0" },
+              { title: "0-1-0-1", key: "0-1-0-1" },
+              { title: "0-1-0-2", key: "0-1-0-2" },
+            ],
+          },
+          {
+            title: "0-2",
+            key: "0-2",
+          },
         ];
 
-        // 深度优先
-        function loop(arr) {
-            arr.forEach(node => {
-                console.log(node.id);
-                if (node.children) {
-                    loop(node.children)
-                }
-            });
-        }
-        loop(nodeList);
-
-        // 广度优先遍历
-        function gloop(arr) {
-            let nodes = arr;
-            while (nodes.length > 0) {
-                let item = nodes.shift();
-                console.log(item.id);
-                if (item.children) {
-                    nodes.push(...item.children)
-                }
+        // 使用深度优先遍历
+        //   删除原来数据
+        let searchValue = "0-2";
+        function loop(treeData) {
+          let result = [];
+          for (let index = 0; index < treeData.length; index++) {
+            const item = treeData[index];
+            let obj = {};
+            if(item.children){
+                obj.children = loop(item.children);
             }
-        }
-        gloop(nodeList);
-
-
-        let dataArr = [
-            {
-                "node_id": 1,
-                "parent_id": 0,
-                "name": '一级1.0.1'
-            },
-            {
-                "node_id": 2,
-                "parent_id": 0,
-                "name": '一级1.0.2'
-            },
-            {
-                "node_id": 3,
-                "parent_id": 1,
-                "name": '二级2.1.3'
-            },
-            {
-                "node_id": 7,
-                "parent_id": 1,
-                "name": '二级2.1.7'
-            },
-            {
-                "node_id": 6,
-                "parent_id": 7,
-                "name": '三级3.7.6'
-            },
-            {
-                "node_id": 5,
-                "parent_id": 7,
-                "name": '三级3.7.5'
-            },
-        ]
-
-        // 一位数组转 树形结构
-        function genderTree(arr) {
-            let map = new Map();
-            arr.forEach(i => {
-                map.set(i.node_id, i)
-            });
-            let result = [];
-            arr.forEach(i => {
-                if (i.parent_id == 0) {
-                    result.push(i)
-                } else {
-                    let par = map.get(i.parent_id);
-                    if (par.children) {
-                        par.children.push(i)
-                    } else {
-                        par.children = [];
-                        par.children.push(i)
-                    }
-                }
-            })
-            return result
-        }
-
-        console.log(genderTree(dataArr));
-
-        const treeData = [{
-            name: 1,
-            children: [{
-                name: 2,
-                children: [{
-                    name: 4,
-                    children: [{
-                        name: 7,
-                        children: [{
-                            name: 8,
-                            children: []
-                        }, {
-                            name: 9,
-                            children: []
-                        }]
-                    }],
-                }, {
-                    name: 5,
-                    children: [],
-                }]
-            }, {
-                name: 3,
-                children: [{
-                    name: 6,
-                    children: [],
-                }],
-            }],
-        }]
-
-        // 树形结构转一位数组
-        function toArr(treeData) {
-            let result = [];
-            let queue = treeData;
-            while (queue.length > 0) {
-                const item = queue.shift();
-                if (item.children) {
-                    item.children.forEach(i => i.pid = item.name)
-                    queue.push(...item.children);
-                    delete item["children"];
-                }
-                result.push(item)
+            if(item.title.includes(searchValue)){
+                obj.title = `<span>${item.title}</span>`;
+                obj.key = item.key;
+                result.push(obj)
+            }else if(obj.children && obj.children.length > 0){
+                obj.title = item.title
+                obj.key = item.key;
+                result.push(obj)
             }
-            return result
+          }
+          return result;
         }
-        console.log(toArr(treeData));
-
-
-        // 完全二叉树的存储到数组中
-        let tree = [{
-            value: "A",
-            children: [{
-                value: "B",
-                children: []
-            }, {
-                value: "C",
-                children: []
-            }]
-        }]
-
-        function savetree(treeData) {
-            let queue = treeData, result = [];
-            while (queue.length > 0) {
-                let item = queue.shift();
-                result.push(item.value);
-                if (item.children) {
-                    queue.push(...item.children)
-                }
-            }
-            return result
-        }
-        console.log(savetree(tree));
-
-        function Node(value, leftNode, rightNode) {
-            this.value = value;
-            this.leftNode = leftNode || null;
-            this.rightNode = rightNode || null;
-        }
-
-        // 先续遍历二叉树
-        function PreOrderTraverse(tree) {
-            if (tree) {
-                console.log(tree.value);
-                PreOrderTraverse(tree.leftNode);
-                PreOrderTraverse(tree.rightNode)
-            }
-        }
-
-        {
-            // 数组转完全二叉树 
-            const arrT = ["A", "B", "C", "D", "E", "F"];
-            function arrToTree(arr) {
-                let nodeList = [new Node("Null")]
-                arr.forEach(i => nodeList.push(new Node(i)));
-                for (let i = 1; i < nodeList.length / 2; i++) {
-                    if (nodeList[i * 2]) {
-                        nodeList[i].leftNode = nodeList[i * 2]
-                    }
-                    if (nodeList[i * 2 + 1]) {
-                        nodeList[i].rightNode = nodeList[i * 2 + 1]
-                    }
-                }
-                return nodeList[1];
-            }
-            const nodeTree = arrToTree(arrT)
-            console.log(nodeTree);
-
-            PreOrderTraverse(nodeTree);
-        }
-
-        {
-            // 数组转非完全二叉树
-            const arrT = ["A", "B", "C", "#", "E", "#", "G"];
-            function arrToTree(arr) {
-                let nodeList = [new Node("Null")]
-                arr.forEach(i => nodeList.push(new Node(i)));
-                for (let i = 1; i < nodeList.length / 2; i++) {
-                    if (nodeList[i] == "#") continue
-                    if (nodeList[i * 2] && nodeList[i * 2].value !== "#") {
-                        nodeList[i].leftNode = nodeList[i * 2]
-                    }
-                    if (nodeList[i * 2 + 1] && nodeList[i * 2 + 1].value !== "#") {
-                        nodeList[i].rightNode = nodeList[i * 2 + 1]
-                    }
-                }
-                return nodeList[1];
-            }
-            const nodeTree = arrToTree(arrT)
-            console.log(nodeTree);
-            PreOrderTraverse(nodeTree);
-        }
-
-        {
-            // 二叉树的建立 输入前序遍历结果 依次输入 ["A","B","#","D","#","#","C","#","#"]; 
-            // 其实建立二叉树也是利用递归的原理,只不过在原来打印节点的地方改成了生成节点,给几点赋值的操作而已
-            
-        }
-
-
+        console.log(loop(treeData))
+      }
     </script>
-</body>
-
+  </body>
 </html>
