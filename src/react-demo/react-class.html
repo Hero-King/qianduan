@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <div id="decorator"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo } = React;
+
+      const style = { border: "1px solid red" };
+      class App extends React.Component {
+        state = {
+          name: "wang",
+          count: 0,
+        };
+        render() {
+          return (
+            <div>
+              {this.state.name} + {this.state.count}
+              <button
+                onClick={(e) => this.setState({ count: this.state.count + 1 })}
+              >
+                {" "}
+                +{" "}
+              </button>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App count={0} />, document.getElementById("root"));
+
+      // ES7  装饰器模式 修饰器对类的行为的改变，是代码编译时发生的，而不是在运行时。这意味着，修饰器能在编译阶段运行代码。  
+      // 装饰器是一种函数，写成@ + 函数名。它可以放在类和类方法的定义前面。
+    //   本地运行不了 必须使用babel-decorator插件编译装饰器  学习请查看: https://es6.ruanyifeng.com/?search=%E8%A3%85%E9%A5%B0%E5%99%A8&x=0&y=0#docs/decorator
+
+      // 类的装饰
+      @testable
+      class MyTestableClass {
+        // ...
+      }
+
+      function testable(target) {
+        target.isTestable = true;
+      }
+
+      MyTestableClass.isTestable; // true
+    </script>
+  </body>
+</html>
