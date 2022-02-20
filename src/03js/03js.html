@@ -368,7 +368,7 @@
             value: 22,
             enumerable: false, //设置不可枚举 for in 循环不出来
             writable: true, //设置属性可以修改,
-            configurable: false, //设置属性可否被删除,
+            configurable: false, //设置属性可否被删除,以及除 value 和 writable 特性外的其他特性是否可以被修改。
         })
         console.log(objt.age);
         Object.defineProperty(objt, "agebak", {
@@ -377,6 +377,14 @@
             }
         })
         console.log(objt);
+        // Object.defineProperty(o, "a", { value : 1 });
+        // 等同于：
+        // Object.defineProperty(o, "a", {
+        //   value: 1,
+        //   writable: false,
+        //   configurable: false,
+        //   enumerable: false
+        // });
 
         // Object.assign   
         //         这个方法接收一个目标对象和一个
@@ -406,6 +414,28 @@
             b: 'bar'
         });
         console.log(result); // { a: foo, b: bar }
+
+        /**
+        Object.is(value1, value2);
+        如果满足以下条件则两个值相等:
+        都是 undefined
+        都是 null
+        都是 true 或 false
+        都是相同长度的字符串且相同字符按相同顺序排列
+        都是相同对象（意味着每个对象有同一个引用）
+        都是数字且
+        都是 +0
+        都是 -0
+        都是 NaN
+        或都是非零而且非 NaN 且为同一个值
+        
+        与== (en-US) 运算不同。  == 运算符在判断相等前对两边的变量(如果它们不是同一类型) 进行强制转换 (这种行为的结果会将 "" == false 判断为 true), 而 Object.is不会强制转换两边的值。
+
+        与=== (en-US) 运算也不相同。 === 运算符 (也包括 == 运算符) 将数字 -0 和 +0 视为相等 ，而将Number.NaN 与NaN视为不相等.
+        */
+
+
+
 
         //要创建 Person 的实例，应使用 new 操作符。以这种方式调用构造函数会执行如下操作。
         // (1) 在内存中创建一个新对象。
