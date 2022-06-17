@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分辨率</title>
+    <script>
+        console.log("1920屏幕比例： ", 1920 / 1080);
+        console.log("1600:900屏幕比例： ", 1600 / 900);
+        console.log("1280 / 720屏幕比例： ", 1280 / 720);
+        console.log("800 / 600屏幕比例： ", 800 / 600);
+    </script>
+    <style>
+        .head{
+            display: flex;
+            height: 480px;
+            background-image: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_match%2F0%2F11695386033%2F0.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648911498&t=2d51bb0209c14d9d57e8d426ccf67298');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .center{
+            width: 520px;
+            border: 1px solid red;
+            background-image: url('./demo/my/taobao.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .left,.right{
+            width: 400px;
+        }
+        .left-title{
+            height: 50px;
+            background-color: slategray;
+        }
+        .left-title::after{
+            position: relative;
+            width: 100%;
+            content: "  ";
+        }
+        .demo{
+            /* display: none; */
+            width: 720px;
+            height: 480px;
+            border: 1px solid red;
+            background-repeat: no-repeat;
+            background-image: url('./demo/my/taobao.jpg');
+            
+            /* 长边对齐 */
+            /* background-size: contain; */
+
+            /* 短边对齐 */
+            background-size: cover;
+
+            /* 背景图长400px 宽 auto */
+            /* background-size: 400px; */
+
+            background-size: 100% auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 测试 css background  -->
+    <div class="demo"></div>
+    <hr/>
+    <div class="head">
+        <div class="left">
+            <div class="left-title">111111111111</div>
+        </div>
+        <div class="center"></div>
+        <div class="right"></div>
+    </div>
+    <img src="./demo/my/taobao.jpg" alt="" srcset="">
+    图片大小： 520 * 280
+</body>
+</html>

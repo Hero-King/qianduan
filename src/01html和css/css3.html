@@ -14,11 +14,12 @@
             padding: 20px;
         }
 
-        /* :first-child 选择器用于选取属于其父元素的首个子元素的指定选择器。 */
+        /* p:first-child 选择器用于选取属于其父元素的首个子元素是P的元素。 */
         p:first-child {
             background-color: yellow;
         }
 
+        /* 匹配的是父元素下相同类型子元素中的第一个 */
         h3:first-of-type {
             background-color: aqua;
         }
@@ -52,6 +53,7 @@
     <p>:last-child :选取属于其父元素的最后一个子元素的指定选择器</p>
     <p>:nth-child(n) ： 匹配属于其父元素的第 N 个子元素，不论元素的类型</p>
     <p>:nth-last-child(n) ：选择器匹配属于其元素的第 N 个子元素的每个元素，不论元素的类型，从最后一个子元素开始计数。 n 可以是数字、关键词或公式</p>
+    <p>:first-of-type 匹配的是某父元素下相同类型子元素中的第一个</p>
 
     <!-- :target目标伪类选择器 :选择器可用于选取当前活动的目标元素   比如点击之后跳转到的锚点就是target-->
     :target {

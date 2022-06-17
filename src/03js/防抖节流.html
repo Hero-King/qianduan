@@ -29,14 +29,16 @@
     </div>
     <script>
         function handleScroll(e) {
-            console.log(e)
+            console.log(e, "非立即执行")
         }
         // window.addEventListener("scroll", handleScroll)
 
-        //防抖的函数
+        //防抖的函数 立即执行:事件触发了立即执行回调,在延迟时间内不在执行回调; 非立即执行: 延迟时间后在执行回调
         function debounce(func, wait, immediate) {
             let timeout;
             return function () {
+                const context = this;
+                const args = arguments
                 //这里利用了闭包
                 clearTimeout(timeout);
 
@@ -49,10 +51,15 @@
                         timeout = null;
                     }, wait);
 
+                    if (callNow) {
+                        func.apply(context, args)
+                    }
 
                 } else {
                     //不会立即执行
-                    timeout = setTimeout(func, wait);
+                    timeout = setTimeout(function () {
+                        func.apply(context, args)
+                    }, wait);
                 }
             }
         }
@@ -70,8 +77,12 @@
             }
         }
 
-        window.onscroll = debounce(handleScroll, 300);
-        //这个true是为了一开始立即执行
+        const delayHandleScroll = debounce(handleScroll, 300);
+        const immediateHandleScroll = debounce(function(e){
+            console.log(e,"立即执行");
+        }, 300,true);
+        window.addEventListener('scroll', delayHandleScroll)
+        window.addEventListener('scroll', immediateHandleScroll)
     </script>
 </body>
 

@@ -7,9 +7,12 @@
     <style>
         *{
             box-sizing: border-box;
+            padding: 0;
+            margin: 0;
         }
         div{
-            width: 300px;
+            width: 1000px;
+            padding: 100px;
             height: 300px;
             border: 1px solid red;
         }
@@ -18,7 +21,7 @@
             /* 行内元素margin 的top 和bottom并没有作用 */
         }
         span.padding{
-            /* 行内元素padding 的top 和bottom并没有作用 */
+            /* 行内元素的padding-top、padding-bottom从显示的效果上是增加的，但其实设置的是无效的。并不会对他周围的元素产生任何影响。 */
             padding: 20px;
         }
     </style>
@@ -26,6 +29,7 @@
 <body>
     <div>
         <span class="margin">span</span>
+        padding
         <span class="padding">span</span>
     </div>
 </body>

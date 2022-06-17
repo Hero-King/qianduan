@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES6可选链操作符</title>
+</head>
+
+<body>
+    <a href="https://es6.ruanyifeng.com/?search=??&x=0&y=0#docs/operator">ES6新增的操作符</a>
+    <script>
+        (function () {
+            const obj = {}
+            const name = obj && obj.name;
+            console.log(name);
+        })();
+
+        (function () {
+            const obj = { name: 'wang' }
+            const name = obj?.name;
+            console.log(name);
+
+            function say() {
+                console.log("say run");
+            }
+            let props = {
+                say
+            }
+            props?.say()
+        })();
+
+        (function () {
+            // 运算符左侧的值为null或undefined时 返回右边数据
+            const obj = { name: 'wang' }
+            const name = obj.id ?? 123456
+
+            // // 或赋值运算符
+            // x ||= y
+            // // 等同于
+            // x || (x = y)
+
+            // // 与赋值运算符
+            // x &&= y
+            // // 等同于
+            // x && (x = y)
+
+            // // Null 赋值运算符
+            // x ??= y
+            // // 等同于
+            // x ?? (x = y)
+
+
+            // 判断非空简写
+            // old
+            if (value !== null && value !== undefined && value !== '') {
+                //...
+            }
+            // new
+            if ((value ?? '') !== '') {
+                //...
+            }
+
+        })()
+
+    </script>
+</body>
+
+</html>

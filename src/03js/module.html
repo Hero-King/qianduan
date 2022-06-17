@@ -26,6 +26,10 @@
             console.log(a1 === a2); // true
         </em>
     </p>
+    <div>module.exports 初始值为一个空对象 {}
+        exports 是指向的 module.exports 的引用
+        require() 返回的是 module.exports 而不是 exports
+    </div>
 
     <h2>
         AMD
@@ -72,7 +76,7 @@
             var typeTool = node.get('typeTool');
             var runArray = typeTool.engineData.EngineDict.StyleRun.RunLengthArray;
             var styleArray = typeTool.engineData.EngineDict.StyleRun.RunArray;
-            console.log("runArray:",runArray)
+            console.log("runArray:", runArray)
             console.log(psd.tree().export())
             document.getElementById('ImageContainer').appendChild(psd.image.toPng());
         });

@@ -20,7 +20,7 @@
     <script>
         console.log("script标签");
         window.onload = function onLoad(params) {
-            console.log("onlload")
+            console.log("onload")
         }
         function domContentLoaded(params) {
             console.log("DOMContentLoaded")
@@ -29,7 +29,7 @@
         setTimeout(() => {
             console.log("timeout 0")
         }, 0);
-        Promise.resolve("resollve").then((result) => {
+        Promise.resolve("resolve").then((result) => {
             console.log(result)
         }).then(() => {
             setTimeout(() => {
@@ -219,52 +219,19 @@
         console.log('---------------', "观察者模式", '--------------------');
         // 定义一种依赖关系,解决主体对象和观察者之间的功能的耦合
 
-        // 版本一
-        function Observer() {
-            this.fns = [];
-        }
-        Observer.prototype = {
-            subscribe: function (fn) {
-                this.fns.push(fn);
-            },
-            unsubscribe: function (fn) {
-                this.fns = this.fns.filter(
-                    function (el) {
-                        if (el !== fn) {
-                            return el;
-                        }
-                    }
-                );
-            },
-            update: function (o, thisObj) {
-                var scope = thisObj || window;
-                this.fns.forEach(
-                    function (el) {
-                        el.call(scope, o);
-                    }
-                );
+        // 被观察者
+        class Observer {
+            constructor(props) {
+                this.sub = [];  // 里面保存观察者的实例
             }
-        };
 
-        //测试
-        var o = new Observer;
-        var f1 = function (data) {
-            console.log('Robbin: ' + data + ', 赶紧干活了！');
-        };
+            notify(data){
+                this.sub.forEach(i => {
+                    i.update(data)
+                })
+            }
+        }
 
-        var f2 = function (data) {
-            console.log('Randall: ' + data + ', 找他加点工资去！');
-        };
-
-        o.subscribe(f1);
-        o.subscribe(f2);
-
-        o.update("Tom回来了！")
-
-        //退订f1
-        o.unsubscribe(f1);
-        //再来验证
-        o.update("Tom回来了！");
 
         console.log('---------------', "策略模式", '--------------------');
         // 策略模式: 将定义的一组算法封装起来,使其相互之间可以替换,封装的算法具有一定的独立性,不会随着客户端变化而变化,在策略对象内部保存的是相互独立的一些算法
