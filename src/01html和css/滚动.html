@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .h400 {
+        height: 400px;
+        line-height: 400px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="h400">1</div>
+    <div class="h400" id="2">2</div>
+    <div class="h400" id="3">3</div>
+    <div class="h400">4</div>
+    <button id="scrollIntoView">scrollIntoView div2到视野</button>
+    <button id="scrollIntoView3">scrollIntoView div3到视野</button>
+
+    <script>
+      var scrollIntoViewBtn = document.getElementById("scrollIntoView");
+      scrollIntoViewBtn.addEventListener("click", function (e) {
+        const div2 = document.getElementById("2");
+        // div2.scrollIntoView(); // 等同于 element.scrollIntoView(true)
+        // div2.scrollIntoView(true); // element.scrollIntoView(alignToTop)  true 元素的顶端将和其所在滚动区的可视区域的顶端对齐
+        // div2.scrollIntoView(false); // element.scrollIntoView(alignToTop)  true 元素的底端将和其所在滚动区的可视区域的底端对齐
+
+        div2.scrollIntoView({ block: "center", behavior: "smooth" }); // Object 型参数
+        /**
+         * 
+         * 
+         *  behavior 可选
+            定义动画过渡效果， "auto"或 "smooth" 之一。默认为 "auto"。
+            block 可选
+            定义垂直方向的对齐， "start", "center", "end", 或 "nearest"之一。默认为 "start"。
+            inline 可选
+            定义水平方向的对齐， "start", "center", "end", 或 "nearest"之一。默认为 "nearest"。
+        */
+      });
+
+      //   scrollIntoView3
+      var scrollIntoView3Btn = document.getElementById("scrollIntoView3");
+      scrollIntoView3Btn.addEventListener("click", function (e) {
+        const div3 = document.getElementById("3");
+        // getBoundingClientRect
+        let { top } = div3.getBoundingClientRect();
+        window.scrollTo(0, document.scrollingElement.scrollTop + top);
+      });
+    </script>
+  </body>
+</html>

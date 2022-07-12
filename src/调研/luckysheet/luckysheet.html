@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuckySheet</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/css/pluginsCss.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/plugins.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/luckysheet/dist/css/luckysheet.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/luckysheet/dist/assets/iconfont/iconfont.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/luckysheet.umd.js"></script>
+
+    <!-- luckyexcel 导入导出 -->
+    <script src="https://cdn.jsdelivr.net/npm/luckyexcel@1.0.0/dist/luckyexcel.umd.js"></script>
+  </head>
+  <body>
+    <div
+      id="luckysheet"
+      style="
+        margin: 0px;
+        padding: 0px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 0px;
+      "
+    ></div>
+
+    <div
+      id="luckysheetNew"
+      style="
+        margin: 0px;
+        padding: 0px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 110vh;
+      "
+    ></div>
+
+    <div
+      id="importAndExport"
+      style="
+        margin: 0px;
+        padding: 0px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0px;
+        top: 210vh;
+      "
+    >
+      <h3>excel导入导出</h3>
+      参考 <a href="https://gitee.com/style1987/luckysheet-vue-importAndExport.git">luckysheet-vue-importAndExport项目</a>
+      <br>
+      <input type="file" name="excel" id="import" />
+
+      <button id="button">加载test.xlsx在线编辑</button>
+    </div>
+
+    <script>
+      const importEle = document.getElementById("import");
+      importEle.addEventListener("change", handleinput);
+      function handleinput(e) {
+        const files = e.target.files;
+
+        LuckyExcel.transformExcelToLucky(
+          files[0],
+          function (exportJson, luckysheetfile) {
+            // luckysheetfile 是对exportJson的序列化
+            console.log(exportJson, luckysheetfile, "----");
+
+            // After obtaining the converted table data, use luckysheet to initialize or update the existing luckysheet workbook
+            // Note: Luckysheet needs to introduce a dependency package and initialize the table container before it can be used
+            luckysheet.create({
+              container: "luckysheet", // luckysheet is the container id
+              data: exportJson.sheets,
+              title: exportJson.info.name,
+              userInfo: exportJson.info.name.creator,
+            });
+          },
+          function (err) {
+            logger.error("Import failed. Is your fail a valid xlsx?");
+          }
+        );
+      }
+    
+      const button = document.getElementById('button')
+      button.addEventListener('click',function (e) {
+
+        // 使用url远程地址 需要url支持跨域请求
+        // let url = "http://10.36.30.83:80/statics/2022/06/22/15394331249943552001111.xlsx"
+        // LuckyExcel.transformExcelToLuckyByUrl(url,"Test", function (exportJson, luckysheetfile) {
+        
+        LuckyExcel.transformExcelToLuckyByUrl('./test.xlsx',"Test", function (exportJson, luckysheetfile) {
+
+            // luckysheetfile 是对exportJson的序列化
+            console.log(exportJson, luckysheetfile, "----");
+            luckysheet.create({
+              container: "luckysheet", // luckysheet is the container id
+              data: exportJson.sheets,
+              title: exportJson.info.name,
+              userInfo: exportJson.info.name.creator,
+            });
+          })
+      })
+    
+    </script>
+
+    <script>
+      var newOptions = "";
+      var options = {
+        container: "luckysheet", //luckysheet为容器id
+        title: "表格",
+        lang: "zh",
+        showinfobar: true, // 是否显示顶部的信息栏
+        showsheetbar: true, // 是否显示底部sheet页按钮 false不显示 变成单sheet
+        myFolderUrl: "https://cn.bing.com/",
+        // gridKey: '' // 唯一key
+        // loadUrl: '', // 配置loadUrl接口地址，加载所有工作表的配置，并包含当前页单元格数据，与loadSheetUrl配合使用。参数为gridKey（表格主键）
+      };
+      var newOptions = sessionStorage.getItem("option");
+      var allSheets = sessionStorage.getItem("allSheets");
+      if (newOptions) {
+        luckysheet.create({
+          ...JSON.parse(newOptions),
+          title: "new",
+          container: "luckysheetNew",
+        });
+      } else if (allSheets) {
+        luckysheet.create({
+          title: "saveUseGetAllSheets",
+          container: "luckysheet",
+          data: JSON.parse(allSheets),
+        });
+      } else {
+        luckysheet.create(options);
+      }
+
+      // API
+
+      // 表格初始化时使用一维数组格式的 celldata，初始化完成后转化为二维数组格式的data作为存储更新使用，celldata不再使用。
+      // option.data => celldata 二维数组数据 转化成 {r, c, v}格式 一维数组
+      // luckysheet.transToCellData(data);
+
+      // celldata => data 生成表格所需二维数组
+      // luckysheet.transToData(celldata);s
+
+      console.log("sheetfiles", luckysheet.getluckysheetfile());
+
+      // 返回所有工作表配置，格式同工作表配置，得到的结果可用于表格初始化时作为options.data使用。
+      console.log("getAllSheets()", luckysheet.getAllSheets());
+
+      // 设置一行一列数据为11
+      setTimeout(() => {
+        luckysheet.setCellValue(0, 0, 11);
+
+        // TODO 数据存储
+        // [一] 如果想得到包括工作簿配置在内的所有工作簿数据，推荐使用 toJson，并且可以直接用于初始化Luckysheet。
+        saveUseToJson();
+
+        // [二] 使用getAllsheets 获取所有sheets配置信息; 传入到options.data中或使用 loadUrl配置加载地址
+        // saveUseGetAllSheets();
+      }, 1000);
+
+      function saveUseGetAllSheets() {
+        let allSheets = luckysheet.getAllSheets();
+        sessionStorage.setItem("allSheets", JSON.stringify(allSheets));
+      }
+
+      function saveUseToJson() {
+        newOptions = luckysheet.toJson();
+        sessionStorage.setItem("option", JSON.stringify(newOptions));
+      }
+    </script>
+  </body>
+</html>
