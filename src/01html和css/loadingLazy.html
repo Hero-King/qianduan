@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lazy Loading</title>
+    <style>
+      .content {
+        height: 200vh;
+      }
+      .test {
+        width: 100%;
+        border: 1px solid black;
+        /* 维持长宽比 */
+        aspect-ratio: 16/9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content"></div>
+    <img
+      class="lazy-img"
+      loading="lazy"
+      width="200"
+      height="100"
+      src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+    />
+    <!--  Lazy loading加载数量与屏幕高度有关，高度越小加载数量越少，但并不是线性关系。
+        Lazy loading加载数量与网速有关，网速越慢，加载数量越多，但并不是线性关系。
+        滚动即会触发图片懒加载，不会说滚动一屏后再去加载。
+        窗口resize尺寸变化也会触发图片懒加载，当屏幕高度从小变大的时候。
+        根据滚动位置不同，Lazy loading会忽略头尾的图片请求。
+    -->
+    <div class="test"></div>
+  </body>
+</html>

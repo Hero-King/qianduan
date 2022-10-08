@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="number" />
+    <input type="text" id="number_ipt" />
+    <script>
+      var input = document.getElementById("number_ipt");
+
+      input.onkeydown = function (e) {
+        var keyCode = e.keyCode;
+
+        if (!isNumber(keyCode)) return false;
+      };
+
+      // 仅能输入数字
+
+      function isNumber(keyCode) {
+        // 数字
+
+        if (keyCode >= 48 && keyCode <= 57) return true;
+
+        // 小数字键盘
+
+        if (keyCode >= 96 && keyCode <= 105) return true;
+
+        // Backspace, del, 左右方向键
+
+        if (keyCode == 8 || keyCode == 46 || keyCode == 37 || keyCode == 39) return true;
+
+        return false;
+      }
+    </script>
+  </body>
+</html>
