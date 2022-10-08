@@ -1,19 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文件下载总结</title>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+  <body>
+    <h3>使用a标签 download属性 必须同源文件才生效</h3>
+    <a href="./img/原型链.png" download="aaa"> 下载png文件 </a>
 
-<body>
-
-    <a href="./img/scroll事件频繁性能.jpg" download="w3logo">
-        <img border="0" src="./img/scroll事件频繁性能.jpg" alt="W3School">
+    <br />
+    <a
+      href="http://hero-king.gitee.io/asset/img/centos%E7%9B%AE%E5%BD%95%E6%A0%91.png"
+      download="centos.png"
+    >
+      下载Centos
+      目录树.png(如图片、文本文件、html文件这种可以被打开的文件，是无法被下载的直接在浏览器进行预览。)
     </a>
 
-    
-</body>
+    <br />
+    <a
+      href="http://ds.svolt.cn:7005/staticsSMP-test/statics/2022/08/04/9524fdd3-0233-494a-9f5c-62519eec98b6.xlsx"
+      download="centos"
+    >
+      下载excel文件(跨域文件 download属性失效)
+    </a>
 
+    <br />
+    <a href="/public/test.xlsx" download="centos">
+      下载excel文件(非跨域文件 download属性成功!!)
+    </a>
+
+    <h3>使用FileSaver才是王道</h3>
+    <!-- 
+
+      import axios from 'axios'
+	import { saveAs } from 'file-saver'
+	/**
+	 * @params {stream} fileStream 服务器返回的文件流
+	 * @params {string} saveFileName 下载的文件名称
+	 * @retuen {promise}
+	 */
+	 export const downloadFile = (fileStream, saveFileName) => {
+		return new Promise((resolve, reject) => {
+	 		const blob = new Blob([fileStream])
+	 		if (navigator.msSaveBlob) {			// 兼容IE
+	        	navigator.msSaveBlob(blob, saveFileName)
+	       	} else {
+	      		const url = window.URL.createObjectURL(blob)
+	       		saveAs(url, saveFileName)
+	       	}
+	     	resolve()
+	 	}) 
+	 }
+	 
+	// 使用（注意文件格式的后缀名）
+	const fileStream = await xxApi()  // 获取文件流
+	downloadFile(fileStream, 'file.pdf').then(res => {
+		// 下载成功后的操作
+		console.log('下载成功！')
+	})
+
+
+
+
+
+     -->
+  </body>
 </html>
