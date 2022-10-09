@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Progress Steps</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        height: 100vh;
+        overflow: hidden;
+        background-color: #1f1f1f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        width: 40%;
+      }
+      .flex {
+        display: flex;
+      }
+      .step-wrap {
+        margin-bottom: 30px;
+        position: relative;
+        justify-content: space-between;
+      }
+      .step-wrap::before {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        z-index: -2;
+        width: 100%;
+        background-color: #383838;
+        height: 4px;
+        transform: translateY(-50%);
+      }
+      .step-item-num {
+        width: 30px;
+        height: 30px;
+        color: white;
+        border-radius: 50%;
+        border: 3px solid #383838;
+        text-align: center;
+        background-color: #1f1f1f;
+        transition: all 0.5s ease;
+      }
+      .progress {
+        position: absolute;
+        z-index: -1;
+        top: 50%;
+        height: 4px;
+        transform: translateY(-50%);
+        background-color: #3498db;
+        transition: width 0.7s ease;
+      }
+      .button {
+        padding: 8px 20px;
+        margin: 10px;
+        border: 0;
+        cursor: pointer;
+        color: #fff;
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: #3498db;
+      }
+      button:focus {
+        outline: none;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        background-color: gray;
+      }
+      .active {
+        border-color: #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="step-wrap flex">
+        <div class="progress" id="progress" style="width: 0%"></div>
+
+        <span class="step-item-num active">1</span>
+
+        <span class="step-item-num">2</span>
+
+        <span class="step-item-num">3</span>
+        <span class="step-item-num">4</span>
+      </div>
+      <div class="btns" style="text-align: center">
+        <button class="button" id="pre" disabled>Pre</button>
+        <button class="button" id="next">Next</button>
+      </div>
+    </div>
+
+    <script>
+      const btnPre = document.getElementById("pre");
+      const btnNext = document.getElementById("next");
+      const stepNums = document.querySelectorAll(".step-item-num");
+      const progress = document.getElementById("progress");
+      var activeNum = 1;
+
+      btnPre.addEventListener("click", (e) => {
+        activeNum--;
+        activeNum = activeNum < 1 ? 1 : activeNum;
+        checkDisable();
+        updateUi();
+      });
+
+      btnNext.addEventListener("click", (e) => {
+        activeNum++;
+        activeNum = activeNum > 4 ? 4 : activeNum;
+        checkDisable();
+        updateUi();
+      });
+
+      function checkDisable() {
+        if (activeNum >= 4) {
+          btnNext.disabled = true;
+        } else if (activeNum <= 1) {
+          btnPre.disabled = true;
+        } else {
+          btnPre.disabled = false;
+          btnNext.disabled = false;
+        }
+      }
+
+      function updateUi() {
+        progress.style.width = ((activeNum - 1) / 3).toFixed(4) * 100 + "%";
+        stepNums.forEach((i, index) => {
+          const num = index + 1;
+          if (num <= activeNum) {
+            i.classList.add("active");
+          } else {
+            i.classList.remove("active");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

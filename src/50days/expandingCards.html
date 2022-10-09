@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expanding Cards</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+      .container {
+        width: 90%;
+        margin: 0 auto;
+      }
+      .flex {
+        display: flex;
+      }
+      .panel {
+        flex: 1;
+        border-radius: 30px;
+        margin: 20px;
+        height: 80vh;
+        position: relative;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        transition: 0.7s ease-in;
+      }
+      .panel h3 {
+        position: absolute;
+        bottom: 30px;
+        color: #fff;
+        opacity: 0;
+      }
+      .active {
+        flex: 5;
+      }
+      .active h3 {
+        opacity: 1;
+        transition: opacity 0.3s ease-in 0.4s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container flex">
+      <div
+        class="panel"
+        style="
+          background-image: url(https://images.unsplash.com/photo-1558979158-65a1eaa08691?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);
+        "
+      >
+        <h3>Explore The World</h3>
+      </div>
+      <div
+        class="panel"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1572276596237-5db2c3e16c5d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80');
+        "
+      >
+        <h3>Wild Forest</h3>
+      </div>
+      <div
+        class="panel"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1353&amp;q=80');
+        "
+      >
+        <h3>Sunny Beach</h3>
+      </div>
+      <div
+        class="panel"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1551009175-8a68da93d5f9?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1351&amp;q=80');
+        "
+      >
+        <h3>City on Winter</h3>
+      </div>
+      <div
+        class="panel"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80');
+        "
+      >
+        <h3>Mountains - Clouds</h3>
+      </div>
+    </div>
+
+    <script>
+      const container = document.querySelector(".container");
+      const panels = document.querySelectorAll(".panel");
+      container.addEventListener("click", handleClick);
+      function handleClick(e) {
+        panels.forEach((panel) => panel.classList.remove("active"));
+        e.target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
