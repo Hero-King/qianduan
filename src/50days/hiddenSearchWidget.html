@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hidden Search Widget</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        height: 100vh;
+        overflow: hidden;
+        background-image: linear-gradient(90deg, #7d5fff, #7158e2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        background-color: #fff;
+        height: 50px;
+        position: relative;
+      }
+      .btn {
+        position: absolute;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        cursor: pointer;
+        font-size: 24px;
+        background-color: white;
+        border: none;
+      }
+      input {
+        width: 200px;
+        height: 50px;
+        padding: 0 10px;
+        outline: none;
+        border: none;
+        font-size: 18px;
+        transition: width 0.4s ease-in;
+      }
+      input:focus {
+        outline: none;
+      }
+      .active > input {
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <input type="text" placeholder="Search..." />
+      <button class="btn" id="btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <script>
+      const btn = document.getElementById("btn");
+      const container = document.querySelector(".container");
+      btn.onclick = function (e) {
+        container.classList.toggle("active");
+      };
+    </script>
+  </body>
+</html>

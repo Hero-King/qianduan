@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Attr</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        width: 50vw;
+        align-items: center;
+        margin: 200px auto;
+        justify-content: center;
+      }
+
+      div.img-wrap {
+        border-radius: 20px;
+        position: relative;
+      }
+
+      div.img-wrap img {
+        border-radius: 15px;
+        display: block;
+      }
+
+      div.img-wrap::after {
+        content: attr(data-count);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
+        position: absolute;
+        color: white;
+        right: -10px;
+        top: -10px;
+      }
+
+      div.img-wrap[data-count = '0']::after{
+        display: none;
+      }
+      div.img-wrap[data-count = '5']::after{
+        content: "...";
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 如果用div包裹一个img，你会发现div的高度要超过img 4px 解决思路: 百度。 -->
+      <div class="img-wrap" data-count="0" onclick="handleClick(this)">
+        <img
+          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbkimg.cdn.bcebos.com%2Fpic%2Fb03533fa828ba61ea8d36dc54979800a304e241ff38e&refer=http%3A%2F%2Fbkimg.cdn.bcebos.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667958428&t=d658b09d1c69429c12f67ccfd2cc90ee"
+          alt=""
+          width="128px"
+        />
+      </div>
+    </div>
+
+    <script>
+      function handleClick(e) {
+        e.dataset.count = e.dataset.count * 1 + 1;
+      }
+    </script>
+  </body>
+</html>

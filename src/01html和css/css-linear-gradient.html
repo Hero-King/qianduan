@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linear-Gradient</title>
+
+    <style>
+      .container > div {
+        margin: 20px;
+        height: 100px;
+        width: 100px;
+        border: 1px solid gray;
+      }
+      .test {
+        background-image: linear-gradient(red, yellow, blue);
+      }
+      .test1 {
+        background-image: linear-gradient(to right, red, yellow);
+      }
+      .test2 {
+        background-image: linear-gradient(to bottom right, red, yellow);
+      }
+      .test3 {
+        background-image: linear-gradient(180deg, red, yellow);
+      }
+      .repeat-test {
+        background-image: repeating-linear-gradient(red, yellow 10%, green 20%);
+      }
+      .repeat-test1 {
+        background-image: repeating-linear-gradient(red, yellow 10%, green 50%);
+      }
+      .repeat-test2 {
+        background-image: repeating-linear-gradient(
+          45deg,
+          red,
+          blue 7%,
+          green 10%
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <h3>CSS3: linear - gradient</h3>
+    <p>
+      linear-gradient()
+      函数用于创建一个表示两种或多种颜色线性渐变的<strong>图片</strong>。
+    </p>
+    <h3>语法</h3>
+    <p>
+      background-image: linear-gradient(direction, color-stop1, color-stop2,
+      ...);
+    </p>
+    <div>
+      direction:
+      用角度值指定渐变的方向（或角度）(如果不指定方向，默认从上到下渐变。)
+    </div>
+    <div>color-stop1, color-stop2,...: 用于指定渐变的起止颜色。</div>
+
+    <div class="container">
+      <div class="test">如果不指定方向，默认从上到下渐变。</div>
+      <div class="test1">从左侧开始的线性渐变，从红色开始，转为黄色</div>
+      <div class="test2">从左上角到右下角的线性渐变</div>
+      <div class="test3">线性渐变指定一个角度</div>
+    </div>
+
+    <hr />
+    <h3>CSS3: repeating-linear-gradient</h3>
+    <p>repeating-linear-gradient() 函数用于创建重复的线性渐变 "图像"。</p>
+    <h3>语法</h3>
+    <p>
+      background: repeating-linear-gradient(angle | to side-or-corner,
+      color-stop1, color-stop2, ...);
+    </p>
+    <div>angle 定义渐变的角度方向。从 0deg 到 360deg，默认为 180deg。</div>
+    <div>side-or-corner 指定线性渐变的起始位置</div>
+    <div>
+      color-stop1, color-stop2,...
+      指定渐变的起止颜色，由颜色值、停止位置（可选，使用百分比指定）组成。
+    </div>
+
+    <div class="container">
+      <div class="repeat-test">
+        repeating-linear-gradient(red, yellow 10%, green 20%);
+      </div>
+      <div class="repeat-test1">
+        repeating-linear-gradient(red, yellow 10%, green 50%);
+      </div>
+      <div class="repeat-test2">
+        repeating-linear-gradient(45deg, red, blue 7%, green 10%);
+      </div>
+    </div>
+  </body>
+</html>

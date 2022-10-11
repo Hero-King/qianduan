@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blurry Loading</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      .bg {
+        width: 100vw;
+        height: 100vh;
+        background-image: url(https://images.unsplash.com/photo-1576161787924-01bb08dad4a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2104&q=80);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        opacity: 1;
+      }
+      .loading-text {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        font-size: 32px;
+        color: white;
+        font-weight: 700;
+        letter-spacing: 3px;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="bg"></section>
+    <div class="loading-text">0%</div>
+
+    <script>
+      const loadingTextDom = document.querySelector(".loading-text");
+      const bgDom = document.querySelector(".bg");
+      let loadingText = 0;
+      const timer = setInterval(() => {
+        loadingText++;
+        loadingTextDom.innerText = loadingText + "%";
+        loadingTextDom.style.opacity = (100 - loadingText) / 100;
+        bgDom.style.opacity = loadingText / 100;
+        if (loadingText >= 100) {
+          clearInterval(timer);
+        }
+      }, 50);
+    </script>
+  </body>
+</html>

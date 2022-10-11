@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG in Html</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <h3>在 HTML5 中，您能够将 SVG 元素直接嵌入 HTML 页面中：</h3>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+      <polygon
+        points="100,10 40,180 190,60 10,60 160,180"
+        style="fill: lime; stroke: purple; stroke-width: 5; fill-rule: evenodd"
+      />
+    </svg>
+    <p>
+      SVG 是一种使用 XML 描述 2D 图形的语言。 SVG 基于 XML，这意味着 SVG DOM
+      中的每个元素都是可用的。您可以为某个元素附加 JavaScript 事件处理器。 在
+      SVG 中，每个被绘制的图形均被视为对象。如果 SVG
+      对象的属性发生变化，那么浏览器能够自动重现图形。
+    </p>
+    <h3>样例</h3>
+    <div style="display: flex">
+      <svg
+        width="50%"
+        height="100%"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="100"
+          cy="50"
+          r="40"
+          stroke="black"
+          stroke-width="2"
+          fill="red"
+        />
+      </svg>
+      <svg
+        width="50%"
+        height="100%"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          width="300"
+          height="100"
+          style="fill: rgb(0, 0, 255); stroke-width: 1; stroke: rgb(0, 0, 0)"
+        />
+      </svg>
+
+      <svg
+        width="50%"
+        height="100%"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="55" cy="3" r="3"></circle>
+      </svg>
+    </div>
+  </body>
+</html>
