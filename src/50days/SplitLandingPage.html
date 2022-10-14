@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split Landing Page</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+      }
+      body > div {
+        flex: 1;
+        height: 100vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        transition: all 1s ease-in-out;
+        position: relative;
+      }
+      .left {
+        background-image: url("./img/ps.jpg");
+      }
+      .right {
+        background-image: url("./img/xbox.jpg");
+      }
+      body > div:hover {
+        flex: 2;
+      }
+      h3 {
+        position: absolute;
+        top: 30%;
+        color: white;
+        font-size: 3rem;
+        text-align: center;
+        width: 100%;
+      }
+      a {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 16px;
+        padding: 10px 50px;
+        text-decoration: none;
+        border: #fff solid 2px;
+      }
+      .left a:hover {
+        background-color: #5754ec;
+        border: 2px solid #5754ec;
+      }
+      .right a:hover {
+        background-color: #1c7a1c;
+        border: 2px solid #1c7a1c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left">
+      <h3>Playstation 5</h3>
+      <a href="#">BUY NOW</a>
+    </div>
+    <div class="right">
+      <h3>XBox Series X</h3>
+      <a href="#">BUY NOW</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Animation</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #efedd6;
+        overflow-x: hidden;
+      }
+      .box {
+        width: 400px;
+        height: 200px;
+        text-align: center;
+        background-color: #6482b4;
+        font-size: 30px;
+        color: white;
+        line-height: 200px;
+        font-weight: 700;
+        border-radius: 15px;
+        margin: 10px;
+        transform: translateX(calc((50vw + 200px)));
+        transition: transform 0.5s ease;
+      }
+      body > div.box.show {
+        transform: translateX(0px);
+      }
+      .box:nth-child(2n - 1) {
+        transform: translateX(calc((-50vw - 200px)));
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Scroll to see the animation</h3>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+    <div class="box">content</div>
+  </body>
+  <script>
+    const h3 = document.querySelector("h3");
+    const boxs = document.querySelectorAll(".box");
+    const triggerTop = (window.innerHeight / 5) * 4;
+
+    function showBox(e) {
+      boxs.forEach((i) => {
+        if (i.getBoundingClientRect().top < triggerTop) {
+          i.classList.add("show");
+        } else {
+          i.classList.remove("show");
+        }
+      });
+    }
+    showBox();
+    document.body.onscroll = showBox;
+  </script>
+</html>
