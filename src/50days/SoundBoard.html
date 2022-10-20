@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sound Board</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #a164df;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 100vh;
+        overflow: hidden;
+      }
+      .item {
+        padding: 24px 48px;
+        color: #fff;
+        font-size: 1.2rem;
+        border: none;
+        background-color: #639;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="item">
+      <audio src="sounds/applause.mp3"></audio>
+      applause
+    </button>
+    <button class="item">
+      <audio src="sounds/boo.mp3"></audio>
+      boo
+    </button>
+    <button class="item">
+      <audio src="sounds/gasp.mp3"></audio>
+      gasp
+    </button>
+    <button class="item">
+      <audio src="sounds/tada.mp3"></audio>
+      tada
+    </button>
+  </body>
+
+  <script>
+    const btns = document.querySelectorAll(".item");
+    const audioEles = document.querySelectorAll("audio");
+    btns.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const audioEle = e.target.firstElementChild;
+        audioEles.forEach((audio) => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+        audioEle.play();
+      });
+    });
+  </script>
+</html>

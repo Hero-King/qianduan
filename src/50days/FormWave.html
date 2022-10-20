@@ -29,7 +29,7 @@
         margin-bottom: 30px;
       }
       .form-control {
-        margin: 20px 0px;
+        margin: 30px 0px;
         position: relative;
       }
       input {
@@ -55,16 +55,18 @@
       }
       label {
         position: absolute;
-        top: -15px;
+        bottom: 15px;
       }
       label span {
         font-size: 18px;
         display: inline-block;
         margin: 0;
         padding: 0;
+        transition: transform 0.3s ease-in;
       }
-      input:focus + label > span {
-        transform: translateY(20px);
+      input:focus + label > span,
+      input:valid + label > span {
+        transform: translateY(-25px);
       }
     </style>
   </head>
@@ -80,12 +82,24 @@
           </label>
         </div>
         <div class="form-control">
-          <label for="">Password</label>
           <input type="text" required />
+          <label
+            ><span>P</span><span>a</span><span>s</span><span>s</span
+            ><span>w</span><span>o</span><span>r</span><span>d</span>
+          </label>
         </div>
         <button class="btn">Login</button>
         <p class="tip">Don't have an account? Register</p>
       </form>
     </div>
   </body>
+
+  <script>
+    const formCont = document.querySelectorAll(".form-control");
+    formCont.forEach((i) => {
+      i.querySelectorAll("label span").forEach((span, index) => {
+        span.style.transitionDelay = 100 * index + "ms";
+      });
+    });
+  </script>
 </html>

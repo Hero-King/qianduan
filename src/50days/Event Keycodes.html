@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Keycodes</title>
+  </head>
+  <body>
+    <div>Press any key to get the keyCode</div>
+  </body>
+  <script>
+    const divEle = document.querySelector("div");
+    document.body.onkeydown = (e) => {
+      divEle.innerHTML = `
+      eventKey: ${e.key}<br/>  
+      eventKeyCode: ${e.keyCode} <br/>  
+      eventCode: ${e.code}   <br/>
+      `;
+    };
+  </script>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dad Jokes</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        display: flex;
+        /* flex-direction: column; */
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background-color: #686de0;
+      }
+      .container {
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+        width: 80%;
+        padding: 50px 20px;
+      }
+      h3 {
+        margin: 0;
+        opacity: 0.5;
+        letter-spacing: 2px;
+      }
+      #joke {
+        /* min-height: 150px; */
+        padding: 10px 20px;
+        font-size: 30px;
+        margin: 50px auto;
+      }
+      #btn:active {
+        transform: scale(0.95);
+      }
+      #btn:focus {
+        outline: none;
+      }
+      #btn {
+        transition: transform 0.5s;
+        border: 0;
+        background-color: #9f68e0;
+        color: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+        padding: 14px 40px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Don't Laugh Challenge</h3>
+      <div id="joke"></div>
+      <button id="btn">Get Another Joke</button>
+    </div>
+    <script>
+      const jokeEl = document.getElementById("joke");
+      const jokeBtn = document.getElementById("btn");
+
+      jokeBtn.addEventListener("click", generateJoke);
+
+      generateJoke();
+
+      // USING ASYNC/AWAIT
+      async function generateJoke() {
+        const config = {
+          headers: {
+            Accept: "application/json",
+          },
+        };
+
+        const res = await fetch("https://icanhazdadjoke.com", config);
+
+        const data = await res.json();
+
+        jokeEl.innerHTML = data.joke;
+      }
+    </script>
+  </body>
+</html>
