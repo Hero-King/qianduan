@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme Clock</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      :root {
+        --primary-color: #000;
+        --secondary-color: #fff;
+      }
+      body {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        display: flex;
+        height: 100vh;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        font-family: "Montserrat", sans-serif;
+        transition: all 0.5s;
+        overflow: hidden;
+      }
+      button:focus {
+        outline: none;
+      }
+      button {
+        height: 50px;
+        padding: 10px 40px;
+        color: var(--secondary-color);
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 10px;
+        transition: all 0.5s;
+      }
+      .dark {
+        --primary-color: #fff;
+        --secondary-color: #000;
+      }
+      .clock {
+        width: 200px;
+        height: 200px;
+        /* border: 1.5px solid white; */
+        position: relative;
+      }
+      .clock-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 2px;
+        height: 2px;
+        transform: translate(-50%, -50%);
+        background-color: rgb(0, 255, 162);
+        z-index: 20;
+        border-radius: 50%;
+      }
+      .clock-line-wrap {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -3px;
+        margin-top: -3px;
+        width: 45%;
+        display: flex;
+        align-items: center;
+        transform-origin: 3px 3px;
+      }
+      .clock-line-dot {
+        border: 1px solid red;
+        height: 6px;
+        width: 6px;
+        border-radius: 50%;
+        background-color: transparent;
+      }
+      .clock-line {
+        flex: 1;
+        background-color: transparent;
+        height: 4px;
+        margin-left: -1px;
+      }
+      body .clock-line-h {
+        background-color: var(--primary-color);
+        flex: 0 0 50%;
+      }
+      body .clock-line-m {
+        background-color: var(--primary-color);
+        width: 80%;
+        flex: none;
+      }
+      body .clock-line-s {
+        background-color: red;
+        z-index: 10;
+      }
+      .time-text {
+        font-size: 30px;
+      }
+    </style>
+  </head>
+  <body class="dark">
+    <button id="btn">Dark mode</button>
+    <div class="clock">
+      <div class="clock-center"></div>
+
+      <div class="clock-line-wrap">
+        <div class="clock-line-dot"></div>
+        <div class="clock-line clock-line-h"></div>
+      </div>
+      <div class="clock-line-wrap">
+        <div class="clock-line-dot"></div>
+        <div class="clock-line clock-line-m"></div>
+      </div>
+      <div class="clock-line-wrap">
+        <div class="clock-line-dot"></div>
+        <div class="clock-line clock-line-s"></div>
+      </div>
+    </div>
+    <div class="time-text">2:04 PM</div>
+    <script>
+      const d = document;
+      const btn = d.getElementById("btn");
+      const lineWraps = d.querySelectorAll(".clock-line-wrap");
+      const timeText = d.querySelector(".time-text");
+      btn.addEventListener("click", (e) => {
+        d.body.classList.toggle("dark");
+      });
+      setInterval(updateClock, 1000);
+
+      function updateClock() {
+        let date = new Date();
+        const h = date.getHours();
+        const m = date.getMinutes();
+        const s = date.getSeconds();
+        lineWraps[0].style.transform = `rotate(${
+          ((h % 12) * 3600 + m * 60 + s) / (24 * 10) - 90
+        }deg)`;
+        lineWraps[2].style.transform = `rotate(${s * 6 - 90}deg)`;
+        lineWraps[1].style.transform = `rotate(${m * 6 - 90}deg)`;
+        timeText.textContent = `${h} : ${m}`;
+      }
+      updateClock();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Button Ripple Effect</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background-color: #000;
+      }
+      #btn {
+        height: 50px;
+        /* font-size: ; */
+        padding: 10px 20px;
+        background-color: blueviolet;
+        color: white;
+        letter-spacing: 4px;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+      }
+      .dot {
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        transform: translate(-50%, -50%) scale(0);
+        background-color: white;
+        animation: linearLarge 0.5s;
+        border-radius: 50%;
+      }
+      @keyframes linearLarge {
+        100% {
+          transform: translate(-50%, -50%) scale(100);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="btn">CLICK ME</button>
+
+    <script>
+      const btn = document.getElementById("btn");
+      btn.addEventListener("click", (e) => {
+        const span = document.createElement("span");
+        span.className = "dot";
+        span.style = `position: absolute;left:${e.offsetX}px; top: ${e.offsetY}px;  `;
+        span.addEventListener("webkitAnimationEnd", (e) => {
+          console.log(e, "animationed");
+          span.remove();
+        });
+        btn.appendChild(span);
+      });
+    </script>
+  </body>
+</html>

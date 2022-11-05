@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drawing App</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      #canvas {
+        border: 1px solid #6a5acd;
+        height: 50%;
+        width: 50%;
+      }
+      #toolbox {
+        background-color: #4682b4;
+        border: 1px solid #6a5acd;
+        padding: 1rem;
+        width: 50%;
+        height: 10%;
+      }
+      .square {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        background-color: white;
+        border: none;
+        margin: 0 10px;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="toolbox">
+      <button class="square" id="sub">-</button>
+      <button class="square" id="add">+</button>
+      <input class="square" type="color" name="" id="color" />
+    </div>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drink Water</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #3494e4;
+        color: white;
+        padding: 20px;
+        font-family: "Montserrat", sans-serif;
+      }
+      .glass {
+        width: 50px;
+        height: 100px;
+        text-align: center;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        padding: 5px;
+        color: #144fc6;
+        border: #144fc6 4px solid;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #ffffffe6;
+        margin: 20px;
+        cursor: pointer;
+      }
+      .glass.active {
+        background-color: #3494e4;
+        color: white;
+      }
+      p {
+        margin: 0;
+        line-height: 1.5em;
+        font-size: 20px;
+      }
+
+      .text-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        margin: 0 auto;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .water-total-wrap {
+        height: 30vh;
+        width: 150px;
+        overflow: hidden;
+        padding: 0;
+      }
+      .water-total {
+        flex: 1;
+        width: 100%;
+      }
+      .glass-list {
+        width: 400px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      .percent {
+        height: 0;
+        background-color: #3494e4;
+        text-align: center;
+        display: flex;
+        overflow: hidden;
+        font-weight: bold;
+        font-size: 30px;
+        transition: 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Drink Water</h1>
+      <h3>Goal: 2 Liters</h3>
+      <div class="water-total-wrap glass">
+        <div class="water-total text-center">250 ml</div>
+        <div class="percent text-center"></div>
+      </div>
+
+      <h4>Select how many glasses of water that you have drank</h4>
+      <div class="glass-list">
+        <span class="glass"> 250 ml </span>
+      </div>
+    </div>
+
+    <script>
+      const d = document;
+      const glassItem = d.querySelector(".glass-list > .glass");
+      const glassList = d.querySelector(".glass-list");
+      const percentDom = d.querySelector(".percent");
+      const waterTotalDom = d.querySelector(".water-total");
+
+      for (let index = 0; index < 7; index++) {
+        glassItem.parentNode.appendChild(glassItem.cloneNode(true));
+      }
+
+      glassList.addEventListener("click", handleClick);
+      updateTotal();
+
+      function handleClick(e) {
+        let target = e.target;
+        while (target.nodeName.toLowerCase() !== "span") {
+          target = target.parentElement;
+        }
+
+        // 添加active样式
+        let clickIndex;
+        for (let index = 0; index < glassList.children.length; index++) {
+          const glassItemDom = glassList.children[index];
+          if (glassItemDom === target) {
+            clickIndex = index;
+          }
+          if (typeof clickIndex !== "undefined" && clickIndex !== index) {
+            glassItemDom.classList.remove("active");
+          } else if (clickIndex === index) {
+            glassItemDom.classList.toggle("active");
+          } else {
+            glassItemDom.classList.add("active");
+          }
+        }
+        updateTotal();
+      }
+
+      function updateTotal() {
+        const activeCount = glassList.querySelectorAll(".active").length;
+        const percent = (activeCount / glassList.children.length) * 100;
+        percentDom.textContent = percent.toFixed(1) + "%";
+        percentDom.style.height = percent.toFixed(1) + "%";
+        waterTotalDom.style.height = (100 - percent).toFixed(1) + "%";
+        waterTotalDom.textContent =
+          ((250 * (glassList.children.length - activeCount)) / 1000).toFixed(
+            2
+          ) + "L  Remained";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background Slider</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+      .container {
+        height: 80%;
+        width: 80%;
+        position: relative;
+        overflow: hidden;
+      }
+      .mask::before {
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #000000b3;
+        z-index: -1;
+      }
+      .slide {
+        opacity: 0;
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        left: -12.5%;
+        top: -12.5%;
+        background-size: cover;
+        background-position: center;
+        transition: 0.4s ease;
+      }
+      .btn {
+        position: fixed;
+        top: 50%;
+        background-color: #0000;
+        z-index: 2;
+        color: #fff;
+        padding: 20px;
+        font-size: 30px;
+        border: 2px solid #ffa500;
+      }
+      .left {
+        left: 10%;
+        transform: translate(-100%);
+      }
+      .right {
+        right: 10%;
+        transform: translate(100%);
+      }
+      .active {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body class="mask">
+    <div class="container">
+      <button class="btn left"><i class="fas fa-arrow-left"></i></button>
+      <button class="btn right"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <script>
+      const config = [
+        {
+          url: "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1559087867-ce4c91325525?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1495467033336-2effd8753d51?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
+        },
+        {
+          url: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80",
+        },
+      ];
+
+      const d = document;
+      const container = d.querySelector(".container");
+      const leftBtn = d.querySelector(".left");
+      const rightBtn = d.querySelector(".right");
+      const totalIndex = config.length - 1;
+      let curIndex = 0;
+
+      config.forEach((i) => {
+        const dom = d.createElement("div");
+        dom.classList.add("slide");
+        dom.style.backgroundImage = `url(${i.url})`;
+        container.appendChild(dom);
+      });
+
+      function activeDom(index) {
+        let slides = d.querySelectorAll(".slide");
+        slides.forEach((i) => i.classList.remove("active"));
+        slides[index].classList.add("active");
+        d.body.style.backgroundImage = slides[index].style.backgroundImage;
+      }
+      activeDom(curIndex);
+      leftBtn.addEventListener("click", (e) => {
+        curIndex = (--curIndex + config.length) % config.length;
+        activeDom(curIndex);
+      });
+      rightBtn.addEventListener("click", (e) => {
+        console.log(curIndex);
+        curIndex = ++curIndex % config.length;
+        activeDom(curIndex);
+      });
+    </script>
+  </body>
+</html>
