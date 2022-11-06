@@ -31,7 +31,8 @@
         border: 1px solid #6a5acd;
         padding: 1rem;
         width: 50%;
-        height: 10%;
+        display: flex;
+        /* justify-content: center; */
       }
       .square {
         display: inline-block;
@@ -40,7 +41,13 @@
         background-color: white;
         border: none;
         margin: 0 10px;
+        font-size: 26px;
         vertical-align: middle;
+      }
+      #clear {
+        /* 单行内某一个元素靠右对其 */
+        /* float: right; */
+        margin-left: auto;
       }
     </style>
   </head>
@@ -48,8 +55,42 @@
     <canvas id="canvas"></canvas>
     <div id="toolbox">
       <button class="square" id="sub">-</button>
+      <button class="square" id="val">10</button>
       <button class="square" id="add">+</button>
       <input class="square" type="color" name="" id="color" />
+      <button id="clear" class="square">X</button>
     </div>
+
+    <script>
+      const d = document;
+      const squares = d.querySelectorAll(".square");
+      const val = d.getElementById("val");
+      const canvas = d.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      squares.forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+          const id = this.id;
+          console.log(id, e);
+          const textVal = parseInt(val.innerText);
+          switch (id) {
+            case "sub":
+              val.innerText = textVal <= 5 ? textVal : textVal - 5;
+              break;
+            case "add":
+              val.innerText = textVal >= 50 ? textVal : textVal + 5;
+              break;
+            case "color":
+              ctx.fillStyle = this.value;
+            default:
+              break;
+          }
+        });
+      });
+
+      // TODO 学习canvas
+      canvas.addEventListener("mousedown", function (e) {});
+
+      function draw() {}
+    </script>
   </body>
 </html>
