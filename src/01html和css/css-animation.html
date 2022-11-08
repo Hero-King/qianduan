@@ -1,183 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        /* css案列 在Web项目里面CSS基础里面有很多 */
-        /* 定义动画 */
-        @keyframes leftToRight {
-
-            /* 时间序列 百分比是对时间的划分 */
-            from {
-                transform: translateX(0px);
-            }
-
-            25% {
-                transform: translateX(1000px);
-            }
-
-            50% {
-                transform: translate(1000px, 300px);
-            }
-
-            74% {
-                transform: translate(0px, 300px);
-            }
-
-            to {
-                transform: translateX(0);
-            }
+      /* css案列 在Web项目里面CSS基础里面有很多 */
+      /* 定义动画 */
+      @keyframes leftToRight {
+        /* 时间序列 百分比是对时间的划分 */
+        from {
+          transform: translateX(0px);
         }
 
-        .mydiv {
-            width: 200px;
-            height: 200px;
-            border: 1px solid pink;
-            animation: leftToRight 5s;
-            /* animation-name: 动画名称 */
-            /* animation-duration: 动画的周期时间 */
-            /* animation-timing-function: 动画的速度曲线 断断续续的动画使用steps()函数*/
-            /* animation-delay: 延迟时间 */
-            /* animation-iteration-count: 动画播放次数 默认 1  可设置数字 infinite:无数次 */
-            /* animation-direction	规定动画是否在下一周期逆向地播放。默认是 "normal"。 reverse 动画反向播放 alternate:奇数正向,偶数反向  */
-            /* animation-play-state	规定动画是否正在运行或暂停。默认是 "running"。 鼠标焦点时候让动画停止设置pause */
-            /* animation-fill-mode 属性规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。
-            默认情况下，CSS 动画在第一个关键帧播放完之前不会影响元素，在最后一个关键帧完成后停止影响元素。animation-fill-mode 属性可重写该行为。forwards	在动画结束后（由 animation-iteration-count 决定），动画将应用100%状态的属性值。
+        25% {
+          transform: translateX(1000px);
+        }
+
+        50% {
+          transform: translate(1000px, 300px);
+        }
+
+        74% {
+          transform: translate(0px, 300px);
+        }
+
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      .mydiv {
+        width: 200px;
+        height: 200px;
+        border: 1px solid pink;
+        animation: leftToRight 5s;
+        /* animation-name: 动画名称 */
+        /* animation-duration: 动画的周期时间 */
+        /* animation-timing-function: 动画的速度曲线 断断续续的动画使用steps()函数*/
+        /* animation-delay: 延迟时间 */
+        /* animation-iteration-count: 动画播放次数 默认 1  可设置数字 infinite:无数次 */
+        /* animation-direction	规定动画是否在下一周期逆向地播放。默认是 "normal"。 reverse 动画反向播放 alternate:奇数正向,偶数反向  */
+        /* animation-play-state	规定动画是否正在运行或暂停。默认是 "running"。 鼠标焦点时候让动画停止设置pause */
+        /* animation-fill-mode 属性规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。
+            默认情况下，CSS 动画在第一个关键帧播放完之前不会影响元素，在最后一个关键帧完成后停止影响元素。animation-fill-mode 属性可重写该行为 forwards 在动画结束后（由 animation-iteration-count 决定），动画将应用100%状态的属性值。
             backwards	动画将应用在 animation-delay 定义期间启动动画的第一次迭代的关键帧中定义的属性值。这些都是 from 关键帧中的值（当 animation-direction 为 "normal" 或 "alternate" 时）或 to 关键帧中的值（当 animation-direction 为 "reverse" 或 "alternate-reverse" 时）。
              */
 
-            /* 哪些属性会有动画？？
+        /* 哪些属性会有动画？？
                 有中间值的属性才会有动画
 
                 currentColor 关键字  获取到当前元素的color属性的颜色
               */
+      }
 
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100vw;
+        height: 100vh;
+        background-color: #344955;
+      }
+
+      @keyframes hd {
+        from {
+          background-color: white;
         }
 
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+        50% {
+          transform: scale(0.5);
         }
 
-        body {
-            width: 100vw;
-            height: 100vh;
-            background-color: #344955;
+        to {
+          background-color: red;
+        }
+      }
+
+      #keyframe1 {
+        animation: hd 2s;
+        animation-timing-function: linear;
+      }
+
+      @keyframes kf2 {
+        25% {
+          transform: translateX(200px);
         }
 
-        @keyframes hd {
-            from {
-                background-color: white;
-            }
-
-            50% {
-                transform: scale(0.5);
-            }
-
-            to {
-                background-color: red;
-            }
+        50% {
+          transform: translate(200px, 200px);
+          border-radius: 0;
         }
 
-        #keyframe1 {
-            animation: hd 2s;
-            animation-timing-function: linear;
+        75% {
+          transform: translateY(200px);
         }
 
-        @keyframes kf2 {
-            25% {
-                transform: translateX(200px);
-            }
+        /* 可以使用这种方式减少代码 */
+        25%,
+        75% {
+          border-radius: 50%;
+        }
+      }
 
-            50% {
-                transform: translate(200px, 200px);
-                border-radius: 0;
-            }
+      @keyframes backgroundFrames {
+        50% {
+          background-color: yellow;
+        }
+      }
 
-            75% {
-                transform: translateY(200px);
-            }
+      #kf2 {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        /* 使用下面方式绑定多个动画 */
+        animation-name: kf2, backgroundFrames;
+        animation-duration: 4s;
+        /* animation-duration: 4s, 2s; */
+        text-align: center;
+        /* animation-timing-function: linear; */
+      }
 
-            /* 可以使用这种方式减少代码 */
-            25%,
-            75% {
-                border-radius: 50%;
-            }
+      .heart {
+        background-color: red;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        transform: rotate(45deg);
+        animation: heart 1s infinite;
+        font-size: 20px;
+        /* text-align: center; */
+        color: #fff;
+      }
+      .heart::after,
+      .heart::before {
+        content: " ";
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        transform: translateX(-50%);
+        background-color: red;
+        border-radius: 50%;
+      }
+      .heart::before {
+        position: absolute;
+        transform: translateY(-50%);
+        background-color: red;
+        border-radius: 50%;
+      }
+      .heart .heart-innertext {
+        position: absolute;
+        z-index: 10;
+      }
+      @keyframes heart {
+        50% {
+          transform: scale(1.3) rotate(45deg);
         }
-
-        @keyframes backgroundFrames {
-            50% {
-                background-color: yellow;
-            }
-        }
-
-        #kf2 {
-            width: 100px;
-            height: 100px;
-            background-color: white;
-            /* 使用下面方式绑定多个动画 */
-            animation-name: kf2, backgroundFrames;
-            animation-duration: 4s;
-            /* animation-duration: 4s, 2s; */
-            text-align: center;
-            /* animation-timing-function: linear; */
-        }
-
-        .heart {
-            background-color: red;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto;
-            transform: rotate(45deg);
-            animation: heart 1s infinite;
-            font-size: 20px;
-            /* text-align: center; */
-            color: #fff;
-        }
-        .heart::after,.heart::before{
-            content: " ";
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            transform: translateX(-50%);
-            background-color: red;
-            border-radius: 50%;
-        }
-        .heart::before{
-            position: absolute;
-            transform: translateY(-50%);
-            background-color: red;
-            border-radius: 50%;
-        }
-        .heart .heart-innertext{
-            position: absolute;
-            z-index: 10;
-        }
-        @keyframes heart {
-            50%{
-                transform: scale(1.3) rotate(45deg);
-            }
-        }
+      }
     </style>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="mydiv"></div>
     <div id="keyframe1">12123514235</div>
-    <div id="kf2">kf2
-        设置多个动画时候属性重叠 在相同的时间点后面定义的动画的属性为准 某个时间点不会重叠时候就不会冲突了 继续动画
+    <div id="kf2">
+      kf2 设置多个动画时候属性重叠 在相同的时间点后面定义的动画的属性为准
+      某个时间点不会重叠时候就不会冲突了 继续动画
     </div>
 
     <hr />
 
     <div class="heart">
-        <div class="heart-innertext"></div>
+      <div class="heart-innertext"></div>
     </div>
-</body>
-
+  </body>
 </html>

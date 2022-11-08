@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Toast Notification</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <style>
+      body {
+        background-color: #639;
+        height: 100vh;
+        overflow: hidden;
+      }
+      button {
+        border-radius: 5px;
+        background-color: white;
+        padding: 10px 20px;
+        border: none;
+        margin: 0 20px;
+      }
+      .toast-list {
+        position: fixed;
+        top: 12px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .toast-list-bottom {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+      .toast-item {
+        margin: 10px 0;
+        padding: 20px;
+        display: inline-block;
+        border-radius: 10px;
+        word-break: break-all;
+        min-width: 100px;
+        max-width: 30vw;
+        transform: translateX(calc(100% + 40px));
+        animation: show 0.5s forwards;
+        background-color: #fff;
+      }
+      @keyframes show {
+        to {
+          transform: translateX(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="center">
+    <button id="btn">Show Notification</button>
+    <button id="btn1">Show Notification Bottom</button>
+    <div class="toast-list">
+      <!-- <div class="toast-item">12134345666667777888888888888888888</div> -->
+    </div>
+    <div class="toast-list-bottom"></div>
+
+    <script>
+      const btn = document.getElementById("btn");
+      const btnBottom = document.getElementById("btn1");
+      const list = document.querySelector(".toast-list");
+      const listBottom = document.querySelector(".toast-list-bottom");
+
+      function click(e) {
+        const randomNum = Math.random() * 1000;
+        const fix = Math.random() * 10;
+        const parent = this.id === "btn" ? list : listBottom;
+        createToast(parent, randomNum.toFixed(fix));
+      }
+
+      btnBottom.onclick = click;
+      btn.onclick = click;
+
+      function removeToast() {
+        setTimeout(() => {
+          this.remove();
+        }, 2000);
+      }
+
+      function createToast(parent = list, text) {
+        const div = document.createElement("div");
+        div.className = "toast-item";
+        div.innerText = text;
+        parent.appendChild(div);
+        div.addEventListener("webkitAnimationEnd", removeToast);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+@import url("https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css");
+* {
+  box-sizing: border-box;
+}
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

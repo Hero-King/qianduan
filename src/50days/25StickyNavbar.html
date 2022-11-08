@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sticky Navbar</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .dark {
+        --color: white;
+        --bg-color: black;
+      }
+      body {
+        --color: black;
+        --bg-color: white;
+        color: var(--color);
+        background-color: var(--bg-color);
+      }
+      header {
+        height: 50px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--color);
+        background-color: var(--bg-color);
+        transition: all 0.3s ease-in-out;
+      }
+      main {
+        margin-top: 50px;
+        height: calc(100vh - 50px);
+        background-color: #ccc;
+        color: white;
+      }
+      .logo {
+        height: 100%;
+        margin-left: 20px;
+      }
+      .flexCol {
+        display: flex;
+        flex-direction: column;
+      }
+      .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .menu-item {
+        padding: 0 20px;
+        color: var(--color);
+      }
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo center">My WebSite</div>
+      <div class="menu center">
+        <a href="#" class="menu-item">Home</a>
+        <a href="#" class="menu-item">About</a>
+        <a href="#" class="menu-item">Services</a>
+        <a href="#" class="menu-item">Contact</a>
+      </div>
+    </header>
+    <main class="flexCol center">
+      <h1>Welcome To My Website</h1>
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores,
+        consequuntur?
+      </p>
+    </main>
+    <section class="container content">
+      <h2>Content One</h2>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione
+        dolorem voluptates eveniet tempora ut cupiditate magnam, sapiente, hic
+        quo in ipsum iste soluta eaque perferendis nihil recusandae dolore
+        officia aperiam corporis similique. Facilis quos tempore labore totam!
+        Consectetur molestiae iusto ducimus error reiciendis aspernatur dolor,
+        modi dolorem sit architecto, voluptate magni sunt unde est quas?
+        Voluptates a dolorum voluptatum quo perferendis aut sit. Aspernatur
+        libero laboriosam ab eligendi omnis delectus earum labore, placeat
+        officiis sint illum rem voluptas ipsum repellendus iste eius recusandae
+        quae excepturi facere, iure rerum sequi? Illum velit delectus dicta et
+        iste dolorum obcaecati minus odio eligendi!
+      </p>
+
+      <h3>Content Two</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
+        provident nostrum possimus inventore nisi laboriosam consequatur modi
+        nulla eos, commodi, omnis distinctio! Maxime distinctio impedit
+        provident, voluptates illo odio nostrum minima beatae similique a sint
+        sapiente voluptatum atque optio illum est! Tenetur tempora doloremque
+        quae iste aperiam hic cumque repellat?
+      </p>
+    </section>
+
+    <script>
+      const header = document.querySelector("header");
+      window.addEventListener("scroll", fixNav);
+      const body = document.body;
+
+      function fixNav() {
+        if (window.scrollY > header.offsetHeight + 150) {
+          header.classList.add("dark");
+        } else {
+          header.classList.remove("dark");
+        }
+      }
+    </script>
+  </body>
+</html>

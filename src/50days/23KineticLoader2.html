@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kinetic Loader</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background-color: #2c3e50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .center {
+        height: 100px;
+        width: 100px;
+        position: relative;
+      }
+      .center::before {
+        content: " ";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 50px solid transparent;
+        border-left-color: white;
+        box-sizing: border-box;
+        animation: rotate 4s infinite;
+      }
+
+      .center::after {
+        content: " ";
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border: 50px solid transparent;
+        border-bottom-color: white;
+        box-sizing: border-box;
+        animation: rotate 4s 1s infinite;
+      }
+
+      @keyframes rotate {
+        25% {
+          transform: rotate(180deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(360deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center"></div>
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Content Placeholder</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        background-color: #ecf0f1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .center {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+      }
+      .center-header {
+        height: 200px;
+        background-color: transparent;
+      }
+      .center-content {
+        padding: 20px;
+        background-color: white;
+      }
+      .author {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+      }
+      .author img {
+        width: 50px;
+        flex: none;
+        height: 50px;
+        margin-right: 20px;
+      }
+      h6 {
+        margin: 10px 0px;
+      }
+      .animation-bg {
+        background-image: linear-gradient(
+          to right,
+          #f6f7f8 0%,
+          #edeef1 10%,
+          #f6f7f8 20%,
+          #f6f7f8 100%
+        );
+        background-size: 200% 100%;
+        animation: bgPos 1s linear infinite;
+      }
+
+      .animation-bg-text {
+        border-radius: 50px;
+        display: inline-block;
+        margin: 0;
+        height: 20px;
+        width: 100%;
+      }
+
+      @keyframes bgPos {
+        0% {
+          background-position: 50% 0;
+        }
+
+        100% {
+          background-position: -150% 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center loading">
+      <div class="center-header"></div>
+      <div class="center-content">
+        <h4></h4>
+        <p></p>
+        <div class="author">
+          <img src="" alt="" />
+          <div class="author-info">
+            <h6></h6>
+            <small></small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const loadingSecond = 4;
+      const header = document.querySelector(".center-header");
+      const authorInfo = document.querySelector(".author-info");
+      header.classList.add("animation-bg");
+      const h4 = document.querySelector("h4");
+      const p = document.querySelector("p");
+      const img = document.querySelector("img");
+      const h6 = document.querySelector("h6");
+      const small = document.querySelector("small");
+
+      function animationed(dom) {
+        dom.classList.add("animation-bg-text");
+        dom.classList.add("animation-bg");
+      }
+
+      function removeAnimationed(dom) {
+        dom.classList.remove("animation-bg-text");
+        dom.classList.remove("animation-bg");
+      }
+
+      animationed(h4);
+      animationed(p);
+      animationed(img);
+      animationed(authorInfo);
+
+      setTimeout(() => {
+        h4.innerText = "Lorem ipsum dolor sit amet";
+        h6.innerText = "John Doe";
+        small.innerText = "Oct 08, 2020";
+        p.innerText =
+          " Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore perferendis";
+        img.src = "./img/photo150.jpeg";
+
+        removeAnimationed(h4);
+        removeAnimationed(p);
+        removeAnimationed(img);
+        removeAnimationed(authorInfo);
+        removeAnimationed(header);
+      }, loadingSecond * 1000);
+    </script>
+  </body>
+</html>
