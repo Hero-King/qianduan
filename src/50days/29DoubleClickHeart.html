@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Click Heart</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .heart {
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+        background-color: red;
+        transform: rotate(45deg);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        position: relative;
+        margin: 0 10px;
+        opacity: 1;
+        /* transform-origin: ; */
+      }
+      .heart::after {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+        background-color: red;
+        position: absolute;
+        left: 100%;
+        transform: rotate(-90deg);
+        transform-origin: left bottom;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      .love {
+        height: 500px;
+        width: 260px;
+        margin: 0 auto;
+        background-position: center;
+        background-repeat: no-repeat;
+        box-shadow: 0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%);
+        background-image: url("./img/photo-car.avif");
+        position: relative;
+      }
+
+      @keyframes grow {
+        to {
+          transform: rotate(45deg) scale(10);
+          opacity: 0;
+        }
+      }
+
+      .larger {
+        animation: grow 1s;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Double click on the image to<span class="heart"></span> it</h3>
+    <p>You liked it 0 times</p>
+    <div class="love"></div>
+
+    <script>
+      const love = document.querySelector(".love");
+      const pDom = document.querySelector("p");
+      let count = 0;
+      love.addEventListener("click", function (e) {
+        count++;
+        pDom.innerText = `You liked it ${count} times`;
+        createHeart(e);
+        console.log(e);
+      });
+
+      function createHeart(e) {
+        const span = document.createElement("span");
+        span.className = "heart larger";
+        const x = e.clientX;
+        const y = e.clientY;
+
+        const leftOffset = love.offsetLeft;
+        const topOffset = love.offsetTop;
+
+        const xInside = x - leftOffset;
+        const yInside = y - topOffset;
+        span.style = `left: ${xInside}px; top: ${yInside}px`;
+        love.appendChild(span);
+        span.addEventListener("webkitAnimationEnd", (e) => {
+          span.remove();
+        });
+      }
+    </script>
+  </body>
+</html>
