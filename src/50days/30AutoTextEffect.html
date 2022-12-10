@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auto Text Effect</title>
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-color: #e9967a;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .text-container {
+      }
+      .speed-container {
+        position: absolute;
+        bottom: 20px;
+        background-color: #d1876e;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="text-container"></h1>
+    <div class="speed-container">
+      <label>
+        Speed:
+        <input type="number" name="" id="input" value="1" min="1" max="10" />
+      </label>
+    </div>
+
+    <script>
+      const input = document.getElementById("input");
+      const textContainer = document.querySelector(".text-container");
+      let speedVal = input.value;
+      const text = "We Love Programming!";
+      let timer = null;
+      let activeTextIndex = 0;
+
+      input.addEventListener("change", handleChange);
+
+      function handleChange(e) {
+        if (timer !== null) {
+          clearInterval(timer);
+        }
+        updateView();
+        timer = setInterval(updateView, getInterval(e.target.value));
+      }
+
+      function updateView() {
+        activeTextIndex =
+          ++activeTextIndex > text.length
+            ? activeTextIndex % text.length
+            : activeTextIndex;
+        let newText = text.substring(0, activeTextIndex);
+        textContainer.innerHTML = newText;
+      }
+
+      function getInterval(speed) {
+        return 500 / speed;
+      }
+
+      timer = setInterval(updateView, getInterval(speedVal));
+    </script>
+  </body>
+</html>

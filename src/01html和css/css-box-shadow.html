@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box Shadow</title>
+
+    <style>
+      .shadow {
+        width: 40px;
+        height: 40px;
+        margin: 10px auto;
+        border: 2px solid orange;
+        box-shadow: 50px 50px 0px 0px #00ff00;
+      }
+      .shadow1 {
+        width: 40px;
+        height: 40px;
+        margin: 50px auto;
+        border: 2px solid orange;
+        box-shadow: 50px 50px 10px 0px #00ff00, -50px 50px 40px 0px #00ff00;
+      }
+      .spread1 {
+        width: 40px;
+        height: 40px;
+        margin: 50px auto;
+        border: 2px solid orange;
+        box-shadow: 60px 60px 0 10px #00ff00;
+      }
+      .spread2 {
+        width: 40px;
+        height: 40px;
+        margin: 50px auto;
+        border: 2px solid orange;
+        box-shadow: 60px 60px 0 -10px #00ff00;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>
+      参考:
+      <a href="https://www.cnblogs.com/qiu-freedom/p/9671033.html"
+        >box-shadow制作各种单边,多边阴影
+      </a>
+    </h2>
+    <p>
+      box-shadow参数定义: [inset] offset-x offset-y [blur-radius]
+      [spread-radius] color [,] 备注: 可以使用多个投影,中间是用,隔开
+    </p>
+    <ul>
+      <li>offset-x 设置水平偏移量,如果是负值则阴影位于元素左边。</li>
+      <li>
+        offset-y
+        设置垂直偏移量,如果是负值则阴影位于元素上面。如果两者都是0,那么阴影位于元素后面。这时如果设置了blur-radius
+        或spread-radius 则有模糊效果。
+      </li>
+      <li>
+        blur-radius 模糊半径值越大，模糊面积越大，阴影就越大越淡。
+        不能为负值。默认为0，此时阴影边缘锐利。
+      </li>
+      <li>
+        spread-radius
+        扩展半径取正值时，阴影扩大；取负值时，阴影收缩。默认为0，此时阴影与元素同样大。
+      </li>
+      <li>使用 inset 后，阴影在边框内（即使是透明边框），背景之上内容之下。</li>
+    </ul>
+
+    <h3>阴影大小</h3>
+    <p>
+      spread-radius才是用来控制阴影大小（扩展还是缩小）。如果没有设置扩展半径，那么阴影尺寸与元素大小相同。
+    </p>
+    <div class="shadow"></div>
+
+    <h3>模糊半径是否影响阴影大小？</h3>
+    只要没有设置扩展半径，阴影实际的大小不改变。blur-radius的值用来控制模糊程度，并不控制阴影的大小。blur-radius就类似于于photoshop中的羽化半径。
+    <div class="shadow1"></div>
+
+    <h3>扩展半径正负值对阴影大小的影响</h3>
+    <div class="spread1"></div>
+    <div style="padding: 20px 0"></div>
+
+    <div class="spread2"></div>
+    扩展半径如果是正的值，阴影扩展，如原来总宽高为44px的元素（包括边框2px），在设置10px扩展半径后，阴影的宽高会变为64px。
+    扩展半径如果是负的值，阴影收缩，如原来总宽高为44px的元素（包括边框2px），在设置-10px半径后，阴影的宽高会变为24px。
+  </body>
+</html>

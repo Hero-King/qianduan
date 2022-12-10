@@ -21,19 +21,18 @@
         height: 100vh;
         overflow: hidden;
         margin: 0;
+        --square-width: 20px;
       }
       .container {
-        width: 300px;
         min-height: 300px;
       }
       .square {
         display: inline-block;
         background-color: #1d1d1d;
         box-shadow: 0 0 2px #000;
-        height: 16px;
-        width: 16px;
+        height: var(--square-width);
+        width: var(--square-width);
         margin: 2px;
-        transition: 2s ease;
       }
     </style>
   </head>
@@ -44,26 +43,33 @@
   <script>
     const container = document.getElementById("container");
     const colors = ["#e74c3c", "#8e44ad", "#3498db", "#e67e22", "#2ecc71"];
-    const SQUARES = 500;
+    const col = 20;
+    const row = 20;
 
-    for (let i = 0; i < SQUARES; i++) {
-      const square = document.createElement("div");
-      square.classList.add("square");
+    for (let i = 0; i < row; i++) {
+      const rowDiv = document.createElement("div");
+      for (let inner = 0; inner < col; inner++) {
+        const square = document.createElement("div");
+        square.classList.add("square");
 
-      square.addEventListener("mouseover", () => setColor(square));
+        square.addEventListener("mouseenter", () => setColor(square));
 
-      square.addEventListener("mouseout", () => removeColor(square));
+        square.addEventListener("mouseleave", () => removeColor(square));
+        rowDiv.appendChild(square);
+      }
 
-      container.appendChild(square);
+      container.appendChild(rowDiv);
     }
 
     function setColor(element) {
       const color = getRandomColor();
       element.style.background = color;
       element.style.boxShadow = `0 0 2px ${color}, 0 0 10px ${color}`;
+      element.style.transition = "";
     }
 
     function removeColor(element) {
+      element.style.transition = "2s ease";
       element.style.background = "#1d1d1d";
       element.style.boxShadow = "0 0 2px #000";
     }
