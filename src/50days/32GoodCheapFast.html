@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>good-cheap-fast</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .check-item-wrap {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+      .checked.check-item {
+        background-color: #8e44ad;
+      }
+      .checked .check-item__inner {
+        animation: moveRight 0.5s linear forwards;
+      }
+      @keyframes moveRight {
+        0% {
+          left: 4px;
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          left: 44px;
+          transform: scale(1);
+        }
+      }
+      @keyframes moveLeft {
+        0% {
+          left: 44px;
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          left: 4px;
+          transform: scale(1);
+        }
+      }
+      .check-item {
+        position: relative;
+        height: 40px;
+        width: 80px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        background-color: #ccc;
+      }
+      .check-item__inner {
+        content: "";
+        position: absolute;
+        top: 4px;
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        background-color: white;
+        animation: moveLeft 0.5s linear forwards;
+      }
+      .check-item__label {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>How do you want your project to be?</h2>
+    <div class="check-item-wrap">
+      <div class="check-item">
+        <div class="check-item__inner"></div>
+      </div>
+      <div class="check-item__label">Good</div>
+    </div>
+
+    <script>
+      let checkItems = document.querySelectorAll(".check-item");
+      checkItems.forEach((i) => {
+        i.addEventListener("click", handleClick);
+      });
+
+      //   target 代表点击的具体的哪一个元素, currentTarget代表当前事件绑定的元素, 同this
+      function handleClick(e) {
+        console.log("111", e, e.target, e.currentTarget);
+        this.classList.toggle("checked");
+      }
+    </script>
+  </body>
+</html>
