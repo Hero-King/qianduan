@@ -1,128 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            /* border: 1px solid red; */
+      * {
+        /* border: 1px solid red; */
+      }
 
-        }
+      div {
+        width: 200px;
+        height: 20px;
+      }
 
-        div {
-            width: 200px;
-            height: 20px;
-        }
+      #root {
+        width: 100%;
+        height: 300px;
+        border: 1px solid red;
+      }
 
-        #root {
-            width: 100%;
-            height: 300px;
-            border: 1px solid red;
-        }
-
-        .mouseover {
-            height: 200px;
-            border: 1px solid red;
-        }
-        #event{
-            height: 1000px;
-            margin: 20px;
-            width: 800px;
-            background-color: #ccc;
-            box-sizing: border-box;
-            border: 100px solid red;
-            padding: 50px;
-            overflow: auto;
-        }
-        .h2000{
-            height: 2000px;
-        }
+      .mouseover {
+        height: 200px;
+        border: 1px solid red;
+      }
+      #event {
+        height: 1000px;
+        margin: 20px;
+        width: 800px;
+        background-color: #ccc;
+        box-sizing: border-box;
+        border: 100px solid red;
+        padding: 50px;
+        overflow: auto;
+      }
+      .h2000 {
+        height: 2000px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="root">
-        <div class="mouseover">mouse over
-            <div>子盒子子盒子子盒子子盒子子盒子子盒子子盒子</div>
-        </div>
+      <div class="mouseover">
+        mouse over
+        <div>子盒子子盒子子盒子子盒子子盒子子盒子子盒子</div>
+      </div>
     </div>
 
     <div id="event">
-        <div style="height: 100px; background-color: pink;">content</div>
-        <div class="h2000"></div>
+      <div style="height: 100px; background-color: pink">content</div>
+      <div class="h2000"></div>
     </div>
     <input type="text" value="请输入搜索内容" id="txt" />
 
     <script>
-        const ele = document.getElementById("event")
-        ele.addEventListener("click",e => {
-            console.log(e)
-            console.log("e.clientX",e.clientX)
-            console.log("e.clientY",e.clientY)  // 举例书签栏的绝对坐标
-            console.log("e.pageX",e.pageX)  // 
-            console.log("e.pageY",e.pageY)  // 举例body元素的距离
+      const ele = document.getElementById("event");
+      ele.addEventListener("click", (e) => {
+        console.log(e);
+        console.log("e.clientX", e.clientX);
+        console.log("e.clientY", e.clientY); // 距离书签栏的绝对坐标
+        console.log("e.pageX", e.pageX); //
+        console.log("e.pageY", e.pageY); // 距离body元素的距离
 
-            // 盒子大小相关属性
-            console.log('盒子大小相关属性')
-            console.log(ele.offsetHeight)
-            console.log(ele.offsetTop)  // 元素上边框外侧距离包含元素上边框内侧的像素数。
+        // 盒子大小相关属性
+        console.log("盒子大小相关属性");
+        console.log(ele.offsetHeight);
+        console.log(ele.offsetTop); // 元素上边框外侧距离包含元素上边框内侧的像素数。
 
-            console.log(ele.clientHeight)   // 内容区高度 content + padding
+        console.log(ele.clientHeight); // 内容区高度 content + padding
 
-            console.log(ele.scrollHeight);  // ，没有滚动条出现时，元素内容的总高度。
-            console.log(ele.scrollTop)  // 具有滚动属性的盒子  滚动之后,内容区顶部隐藏的像素数，设置这个属性可以改变元素的滚动位置 
-            // 默认情况下 html不需要设置overflow 属性就可以有滚动scrollTop
+        console.log(ele.scrollHeight); // ，没有滚动条出现时，元素内容的总高度。
+        console.log(ele.scrollTop); // 具有滚动属性的盒子  滚动之后,内容区顶部隐藏的像素数，设置这个属性可以改变元素的滚动位置
+        // 默认情况下 html不需要设置overflow 属性就可以有滚动scrollTop
 
-            // 浏览器在每个元素上都暴露了 getBoundingClientRect()方法，返回一个 DOMRect 对象，包含6 个属性：left、top、right、bottom、height 和 width。这些属性给出了元素在页面中相对于视口的位置。
-            console.log(ele.getBoundingClientRect())        // 返回了元素大小及相对视口的位置
-        })
+        // 浏览器在每个元素上都暴露了 getBoundingClientRect()方法，返回一个 DOMRect 对象，包含6 个属性：left、top、right、bottom、height 和 width。这些属性给出了元素在页面中相对于视口的位置。
+        console.log(ele.getBoundingClientRect()); // 返回了元素大小及相对视口的位置
+      });
     </script>
 
     <script>
-        function my$(id) {
-            return document.getElementById(id);
+      function my$(id) {
+        return document.getElementById(id);
+      }
+      const querys = function (selector) {
+        return document.querySelector(selector);
+      };
+
+      const mouseover = document.querySelector(".mouseover");
+      mouseover.addEventListener("mouseover", function (params) {
+        console.log("mouseover");
+      });
+
+      mouseover.addEventListener("mouseenter", function (params) {
+        console.log("mouseenter");
+      });
+
+      // mouseover在鼠标移动到盒子上面时候触发, 移动到其子盒子时候也触发; 有一个重复触发,冒泡过程
+      // mouseenter在鼠标移动到子盒子上面不会触发
+
+      //注册获取焦点的事件
+      my$("txt").onfocus = function () {
+        //判断文本框的内容是不是默认的内容
+        if (this.value == "请输入搜索内容") {
+          this.value = ""; //清空文本框
+          this.style.color = "black";
         }
-        const querys = function (selector) {
-            return document.querySelector(selector)
+      };
+
+      //注册失去焦点的事件
+      my$("txt").onblur = function () {
+        //    if (this.value == "") {
+        //      this.value = "请输入搜索内容";
+        //      this.style.color = "gray";
+        //    }
+
+        if (this.value.length == 0) {
+          this.value = "请输入搜索内容";
+          this.style.color = "gray";
         }
-
-        const mouseover = document.querySelector(".mouseover");
-        mouseover.addEventListener("mouseover", function (params) {
-            console.log("mouseover");
-        })
-
-        mouseover.addEventListener("mouseenter", function (params) {
-            console.log("mouseenter");
-        });
-
-        // mouseover在鼠标移动到盒子上面时候触发, 移动到其子盒子时候也触发; 有一个重复触发,冒泡过程
-        // mouseenter在鼠标移动到子盒子上面不会触发
-
-        //注册获取焦点的事件
-        my$("txt").onfocus = function () {
-            //判断文本框的内容是不是默认的内容
-            if (this.value == "请输入搜索内容") {
-                this.value = "";//清空文本框
-                this.style.color = "black";
-            }
-        };
-
-        //注册失去焦点的事件
-        my$("txt").onblur = function () {
-            //    if (this.value == "") {
-            //      this.value = "请输入搜索内容";
-            //      this.style.color = "gray";
-            //    }
-
-            if (this.value.length == 0) {
-                this.value = "请输入搜索内容";
-                this.style.color = "gray";
-            }
-
-        };
+      };
     </script>
-</body>
-
+  </body>
 </html>

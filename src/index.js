@@ -1,20 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-let divdom = document.createElement("div")
+let divdom = document.createElement("div");
 divdom.onclick = function (e) {
-    console.log("dom create div click")
-}
-divdom.innerText = "i am dom create div"
-document.body.appendChild(divdom)
+  console.log("dom create div click");
+};
+divdom.innerText = "i am dom create div";
+document.body.appendChild(divdom);
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));
 
-let rootElement = React.createElement( "div" ,{title: "iam title"}, <div>i am children</div> )
-// console.log("react.createElemetn" , rootElement)    
+let rootElement = React.createElement(
+  "div",
+  { title: "iam title" },
+  <div>i am children</div>
+);
+// console.log("react.createElemetn" , rootElement)
 /**
  * {
  * $$typeof: Symbol(react.element)
@@ -28,7 +32,7 @@ _self: null
 _source: null}
  */
 
-// console.log(<div>jsx</div>)     
+// console.log(<div>jsx</div>)
 /**
  * {
  * $$typeof: Symbol(react.element)
@@ -40,7 +44,7 @@ _owner: null
 _store: {validated: false}
 _self: null  }
  */
-ReactDOM.render( rootElement , document.getElementById("myrendertest"))
+ReactDOM.render(rootElement, document.getElementById("myrendertest"));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

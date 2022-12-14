@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     postmessage
     <script>
-        window.isParent = false
-        window.addEventListener('message', function (e) {
-            console.log(e.data);
-        }, false);
+      window.isParent = false;
+      window.addEventListener(
+        "message",
+        function (e) {
+          console.log(e.data);
+        },
+        false
+      );
     </script>
-</body>
-
+  </body>
 </html>

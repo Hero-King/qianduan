@@ -31,13 +31,13 @@
         background-color: white;
         position: relative;
         transition: transform 0.5s linear;
-        transform-origin: 0 0 ;
+        transform-origin: 0 0;
       }
       .circle-container {
         position: fixed;
         top: 0;
         left: 0;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         transition: transform 0.5s linear;
         width: 200px;
         height: 200px;
@@ -50,7 +50,7 @@
         top: 65%;
         width: 30px;
       }
-      #close{
+      #close {
         position: absolute;
         left: 20%;
         top: 60%;
@@ -62,48 +62,46 @@
         color: #fff;
         background-color: transparent;
       }
-      .show-nav{
+      .show-nav {
         transform: rotate(-20deg);
-        
       }
-      .show-nav .circle-container{
-        transform: translate(-50%,-50%) rotate(-70deg)
+      .show-nav .circle-container {
+        transform: translate(-50%, -50%) rotate(-70deg);
       }
 
-      nav{
+      nav {
         position: fixed;
         bottom: 10%;
       }
 
-      ul{
+      ul {
         list-style: none;
         font-size: 20px;
         font-weight: 700;
       }
-      li{
+      li {
         padding: 10px;
         width: 100px;
         cursor: pointer;
-        color: #FFF;
+        color: #fff;
         word-break: break-all;
         transform: translateX(-100%);
         transition: all 0.4s ease-in;
       }
 
       /* 使用兄弟选择器 避免嵌套的dom结构 */
-      .container.show-nav + nav li{
+      .container.show-nav + nav li {
         transform: translate(20px);
         transition-delay: 0.3s;
       }
-      .container.show-nav + nav li:nth-child(2){
+      .container.show-nav + nav li:nth-child(2) {
         transform: translate(40px);
         transition-delay: 0.3s;
       }
-      .container.show-nav + nav li:nth-child(3){
+      .container.show-nav + nav li:nth-child(3) {
         transform: translate(60px);
         transition-delay: 0.3s;
       }
-
     </style>
   </head>
   <body>
@@ -147,23 +145,23 @@
       </div>
     </div>
     <nav>
-        <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-        </ul>
+      <ul>
+        <li>Home</li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
     </nav>
 
     <script>
-        const openBtn = document.getElementById('open')
-        const closeBtn = document.getElementById('close')
-        const container = document.querySelector('.container')
-        openBtn.addEventListener('click',() => {
-            container.classList.add('show-nav')
-        })
-        closeBtn.addEventListener('click',() => {
-            container.classList.remove('show-nav')
-        })
+      const openBtn = document.getElementById("open");
+      const closeBtn = document.getElementById("close");
+      const container = document.querySelector(".container");
+      openBtn.addEventListener("click", () => {
+        container.classList.add("show-nav");
+      });
+      closeBtn.addEventListener("click", () => {
+        container.classList.remove("show-nav");
+      });
     </script>
   </body>
 </html>

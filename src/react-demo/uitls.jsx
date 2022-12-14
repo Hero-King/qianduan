@@ -1,13 +1,10 @@
-import { sum, add } from './otherutils'
+import { sum, add } from "./otherutils";
 export function test(params) {
-    console.log(params || "noparams");
+  console.log(params || "noparams");
 }
 
-export {
-    add,
-    sum
-}
+export { add, sum };
 
 export default function () {
-    console.log("default");
+  console.log("default");
 }

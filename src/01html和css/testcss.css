@@ -2,51 +2,60 @@
 
 /* 元素选择器 */
 div {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 /* 类选择器 */
 .nav {
-    color: brown;
+  color: brown;
 }
 
 /* ID选择器 */
 #mydiv {
-    font-style: italic;
-    /* 斜体*/
+  font-style: italic;
+  /* 斜体*/
 }
 
 /* 通配符选择器 */
 * {
-    padding: 0;
-    margin: 0;
-    text-indent: 2em;
-    *font-size: 24px;
-    /* 前面的*代表只有IE6IE7执行这行代码  */
+  padding: 0;
+  margin: 0;
+  text-indent: 2em;
+  *font-size: 24px;
+  /* 前面的*代表只有IE6IE7执行这行代码  */
 }
 
 /* 组选择器、并集选择器 */
 div,
 p {
-    /* div和p标签都选中 */
+  /* div和p标签都选中 */
 }
 
 /* 交集选择器 */
 div.mydiv {
-    /* div标签并且class=‘mydiv’的选中 */
-    /* 
+  /* div标签并且class=‘mydiv’的选中 */
+  /* 
     div#div1
     */
 }
 
 /* 属性选择器E[att]   -- img[alt]  input[type="text"] a[href][title]*/
 /* 如果您希望把包含标题（title）的所有元素变为红色，可以写作： */
-*[title] {color:red;}
+*[title] {
+  color: red;
+}
 /* 可以只对有 href 属性的锚（a 元素）应用样式： */
-a[href] {color:red;}
+a[href] {
+  color: red;
+}
 /* 为了将同时有 href 和 title 属性的 HTML 超链接的文本设置为红色，可以这样写： */
-a[href][title] {color:red;}
-a[href="http://www.w3school.com.cn/"][title="W3School"] {color: red;}
+a[href][title] {
+  color: red;
+}
+a[href="http://www.w3school.com.cn/"][title="W3School"]
+{
+  color: red;
+}
 /* [attribute]	用于选取带有指定属性的元素。
 [attribute=value]	用于选取带有指定属性和值的元素。
 [attribute~=value]	用于选取属性值中包含指定词汇的元素。
@@ -57,138 +66,138 @@ a[href="http://www.w3school.com.cn/"][title="W3School"] {color: red;}
 
 /* 后代选择器--格式是父标签空格子标签（怎么定位到父标签要管吗？） */
 div p {
-    text-align: center;
+  text-align: center;
 }
 
 /* 子元素选择器 */
-.myclass>p {
-    text-decoration: underline;
+.myclass > p {
+  text-decoration: underline;
 }
 
 /* 相邻兄弟选择器 */
-p+p {
-    /* 先找到p标签，后面的兄弟也是p的话选中后面的p */
+p + p {
+  /* 先找到p标签，后面的兄弟也是p的话选中后面的p */
 }
 
 /* 兄弟选择器 */
-p~p {
-    /* 找到第一个P标签，其兄弟标签中也是p标签的选中 */
+p ~ p {
+  /* 找到第一个P标签，其兄弟标签中也是p标签的选中 */
 }
 
 /* 伪类选择器 类选择是. 伪类是： E代表某个元素 下面四个顺序不可以颠倒 */
 E:link {
-    /* 还没有被点击的状态 */
+  /* 还没有被点击的状态 */
 }
 
 E:visited {
-    /* 点击后回来显示的状态 */
+  /* 点击后回来显示的状态 */
 }
 
 E:hover {
-    /* 获得焦点时候要显示的状态 */
+  /* 获得焦点时候要显示的状态 */
 }
 
 E:active {
-    /* 鼠标点下没有弹起来的状态 */
+  /* 鼠标点下没有弹起来的状态 */
 }
 
 a {
-    color: #3c3c3c;
-    /* 加粗 */
-    font-weight: 700;
-    /* 没有下划线 */
-    text-decoration: none;
-    /* 字体大小(一定要加上单位) */
-    font-size: 25px;
+  color: #3c3c3c;
+  /* 加粗 */
+  font-weight: 700;
+  /* 没有下划线 */
+  text-decoration: none;
+  /* 字体大小(一定要加上单位) */
+  font-size: 25px;
 }
 
 a:hover {
-    color: red;
+  color: red;
 }
 
 /* 实际开发中不需要四种状态 上面的写法*/
 
 #renwu1 {
-    width: 100px;
-    height: 100px;
-    background-color: #f00
+  width: 100px;
+  height: 100px;
+  background-color: #f00;
 }
 
 #renwu2 {
-    height: 150px;
-    width: 150px;
-    display: inline-block;
-    background-color: #0f0;
+  height: 150px;
+  width: 150px;
+  display: inline-block;
+  background-color: #0f0;
 }
 
 #background {
-    height: 50px;
-    width: 50px;
-    background-color: #0f0;
-    background-image: url(text.img);
-    /* 背景是否平铺 默认平铺占据所有的盒子空间 repeat-x x轴平铺*/
-    background-repeat: no-repeat;
-    /* 位置 参数是 x y   position(背景图片位置，这里是图片和盒子怎么对齐)后面可以跟方位名词，他们没有前后顺序之分 top bottom left right 写一个另一个方向默认居中*/
-    background-position: center top;
-    /* 也可以跟50px 12px  也 12px center 用在哪里？ 图片小了或者大了盒子的时候还有图片像素不变但是不同显示屏分辨率不同 常用如下*/
-    background-position: center top;
-    background-attachment: scroll;
-    /* 设置背景图随对象内容滚动还是固定  固定就是滚轮滑动背景图不动 */
-    /* 也可以连写 background: #fff  url() no-repeat fixed center top */
-    background: rgba(0, 0, 0, 0)
-        /* 背景图透明度设置 使用函数rgba a代表透明度0~1 取值 */
+  height: 50px;
+  width: 50px;
+  background-color: #0f0;
+  background-image: url(text.img);
+  /* 背景是否平铺 默认平铺占据所有的盒子空间 repeat-x x轴平铺*/
+  background-repeat: no-repeat;
+  /* 位置 参数是 x y   position(背景图片位置，这里是图片和盒子怎么对齐)后面可以跟方位名词，他们没有前后顺序之分 top bottom left right 写一个另一个方向默认居中*/
+  background-position: center top;
+  /* 也可以跟50px 12px  也 12px center 用在哪里？ 图片小了或者大了盒子的时候还有图片像素不变但是不同显示屏分辨率不同 常用如下*/
+  background-position: center top;
+  background-attachment: scroll;
+  /* 设置背景图随对象内容滚动还是固定  固定就是滚轮滑动背景图不动 */
+  /* 也可以连写 background: #fff  url() no-repeat fixed center top */
+  background: rgba(0, 0, 0, 0);
+  /* 背景图透明度设置 使用函数rgba a代表透明度0~1 取值 */
 }
 
 #border {
-    border-width: 3px;
-    border-color: #f00;
-    border-style: solid;
-    border-collapse: collapse;
-    /* collapse 奔溃 折叠 合并相邻的边框 */
-    /* border: 1px solid red;
+  border-width: 3px;
+  border-color: #f00;
+  border-style: solid;
+  border-collapse: collapse;
+  /* collapse 奔溃 折叠 合并相邻的边框 */
+  /* border: 1px solid red;
     input{
         border: 0px;
         border-bottom: 1px dashed red;
     }
     */
-    /* solid实线 dashed虚线 dotted点线 */
+  /* solid实线 dashed虚线 dotted点线 */
 
-    padding: 10px;
-    /* padding用于设置边框与内容之间的距离 严格设置的 太大了会撑大外面的盒子 */
-    margin: 0 auto;
-    /* 盒子水平居中（盒子是块级元素并且设置了宽度->让左右外边距设置为auto） 通俗写法 上下0px 左右auto  auto是充满的意思margin-left: auto的效果是左边充满，盒子跑到了右边 */
+  padding: 10px;
+  /* padding用于设置边框与内容之间的距离 严格设置的 太大了会撑大外面的盒子 */
+  margin: 0 auto;
+  /* 盒子水平居中（盒子是块级元素并且设置了宽度->让左右外边距设置为auto） 通俗写法 上下0px 左右auto  auto是充满的意思margin-left: auto的效果是左边充满，盒子跑到了右边 */
 
-    border-radius: 10px;
-    /* radius半径 px 50%   10px 20px 30px 40px（左上右上顺时针转）   */
+  border-radius: 10px;
+  /* radius半径 px 50%   10px 20px 30px 40px（左上右上顺时针转）   */
 
-    /* 盒子阴影 box-shadow : 水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影颜色 内/外部阴影 水平阴影就是阴影横向出来的距离 模糊距离指的是模糊块（虚虚的那一块）的宽度 （第五节课笔记）*/
-    /* box-shadow: */
+  /* 盒子阴影 box-shadow : 水平阴影 垂直阴影 模糊距离 阴影尺寸 阴影颜色 内/外部阴影 水平阴影就是阴影横向出来的距离 模糊距离指的是模糊块（虚虚的那一块）的宽度 （第五节课笔记）*/
+  /* box-shadow: */
 }
 
 #pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #text {
-    cursor: text;
+  cursor: text;
 }
 #move {
-    cursor: move;
+  cursor: move;
 }
 
-.testBefore{
-    background-color: pink;
-    position: relative;
+.testBefore {
+  background-color: pink;
+  position: relative;
 }
 
-.testBefore::before{
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-left: 5px solid;
-    content: ""
+.testBefore::before {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-left: 5px solid;
+  content: "";
 }
 
 /* CSS优先级：是由四个级别和各级别的出现次数决定的。
@@ -209,4 +218,3 @@ a:hover {
 
 　　算法：将每条规则中，选择符对应的数相加后得到的”四位数“，从左到右进行比较，大的优先级越高。　
 　 */
-

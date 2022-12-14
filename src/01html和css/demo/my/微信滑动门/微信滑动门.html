@@ -1,80 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>微信，是一个生活方式</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            background: url(./wx.jpg) repeat-x;
-        }
-        .nav{
-            width: 968px;
-            margin: 0 auto;
-            height: 75px;
-        }
-        .nav .logo {
-            height: 44px;
-            float: left;
-            margin-top: 14px
-        }
-        .nav ul{
-            list-style: none;
-            float: right;
-            margin-top: 25px;
-        }
-        li{
-            display: inline;
-            padding: 20px;
-        }
-        .nav ul a{
-            display: inline-block;
-            text-decoration: none;
-            padding-left: 10px;
-            color: #fff;
-            line-height: 33px;
-            font-size: 700;
-        }
-        .nav ul a:hover{
-            background: url(./ao.png) no-repeat ;
-        }
-        .nav ul a span {
-            display: inline-block;
-            padding-right: 10px;
-        }
-        /* 鼠标经过后里面的span标签 */
-        .nav ul a:hover span {
-            background: url(./ao.png) no-repeat right;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: url(./wx.jpg) repeat-x;
+      }
+      .nav {
+        width: 968px;
+        margin: 0 auto;
+        height: 75px;
+      }
+      .nav .logo {
+        height: 44px;
+        float: left;
+        margin-top: 14px;
+      }
+      .nav ul {
+        list-style: none;
+        float: right;
+        margin-top: 25px;
+      }
+      li {
+        display: inline;
+        padding: 20px;
+      }
+      .nav ul a {
+        display: inline-block;
+        text-decoration: none;
+        padding-left: 10px;
+        color: #fff;
+        line-height: 33px;
+        font-size: 700;
+      }
+      .nav ul a:hover {
+        background: url(./ao.png) no-repeat;
+      }
+      .nav ul a span {
+        display: inline-block;
+        padding-right: 10px;
+      }
+      /* 鼠标经过后里面的span标签 */
+      .nav ul a:hover span {
+        background: url(./ao.png) no-repeat right;
+      }
 
-        /* 优化  
+      /* 优化  
         .nav ul a:hover , .nav ul a:hover span {
             background: url(./ao.png) no-repeat right;
         }
         如果只更改background里面的某一个属性，那么最好写全 不要只写background
         */
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-        <div class="nav">
-            <a href="#">
-                <img src="./logo.png" alt="" class="logo">
-            </a>
-            <ul>
-                <li><a href="#"><span>首页</span></a></li>
-                <li><a href="#"><span>帮助与反馈</span></a></li>
-                <li><a href="#"><span>公众平台</span></a></li>
-                <li>开放平台</li>
-                <li>支付</li>
-                <li>表情包开放平台</li>
-            </ul>
-        </div>
+      <div class="nav">
+        <a href="#">
+          <img src="./logo.png" alt="" class="logo" />
+        </a>
+        <ul>
+          <li>
+            <a href="#"><span>首页</span></a>
+          </li>
+          <li>
+            <a href="#"><span>帮助与反馈</span></a>
+          </li>
+          <li>
+            <a href="#"><span>公众平台</span></a>
+          </li>
+          <li>开放平台</li>
+          <li>支付</li>
+          <li>表情包开放平台</li>
+        </ul>
+      </div>
     </div>
-</body>
+  </body>
 </html>

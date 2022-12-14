@@ -1,53 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        div {
-            width: 200px;
-            height: 200px;
-            background-color: red;
-        }
+      div {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+      }
     </style>
     <script>
-        console.log("111")
-        const html = document.getElementsByTagName("html");
-        console.log(html[0])
-        html[0].style.fontSize = "14px";
+      console.log("111");
+      const html = document.getElementsByTagName("html");
+      console.log(html[0]);
+      html[0].style.fontSize = "14px";
 
-        html[0].onclick = function click() {
-            console.log("click")
-            document.body.appendChild(document.createElement("div"))    // 改变dom  引发Schedule Style Recalculation  然后layout  在下一帧Update Layer Tree
-        }
-        // const root = document.getElementById("root")    // error 获取不到，因为还js的执行影响dom的渲染
-        // root.addEventListener("click", function rootClick1() {
-        //     root.style.scale = 0.5
-        // })
+      html[0].onclick = function click() {
+        console.log("click");
+        document.body.appendChild(document.createElement("div")); // 改变dom  引发Schedule Style Recalculation  然后layout  在下一帧Update Layer Tree
+      };
+      // const root = document.getElementById("root")    // error 获取不到，因为还js的执行影响dom的渲染
+      // root.addEventListener("click", function rootClick1() {
+      //     root.style.scale = 0.5
+      // })
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="root"></div>
-    <div id="root2"> root2</div>
+    <div id="root2">root2</div>
 
     <script>
-        const root = document.getElementById("root")    //click引发样式重计算 
-        root.addEventListener("click", function rootClick1(e) {
-            e.stopPropagation()
-            root.style.fontSize = "12px"
-        })
+      const root = document.getElementById("root"); //click引发样式重计算
+      root.addEventListener("click", function rootClick1(e) {
+        e.stopPropagation();
+        root.style.fontSize = "12px";
+      });
 
-        // const root2 = document.getElementById("root2")    //
-        // root2.addEventListener("click", function rootClick2(e) {
-        //     e.stopPropagation();
-        //     // console.log(root2.style.position)
-        //     root2.style.fontSize = "12px"
-        // })
+      // const root2 = document.getElementById("root2")    //
+      // root2.addEventListener("click", function rootClick2(e) {
+      //     e.stopPropagation();
+      //     // console.log(root2.style.position)
+      //     root2.style.fontSize = "12px"
+      // })
     </script>
-</body>
-
+  </body>
 </html>

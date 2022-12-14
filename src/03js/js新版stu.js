@@ -180,7 +180,7 @@ screenX 和 screenY 属性获取鼠标光标在屏幕上的坐标   针对的是
 */
 
 function aa(params) {
-    console.log("js加载完成并执行了");
+  console.log("js加载完成并执行了");
 }
 aa();
 
@@ -209,20 +209,20 @@ typeof 42n // "bigint"
 
  *
  */
-Object.prototype.toString.call(999) // "[object Number]"
-Object.prototype.toString.call('') // "[object String]"
-Object.prototype.toString.call(Symbol()) // "[object Symbol]"
-Object.prototype.toString.call(42n) // "[object BigInt]"
-Object.prototype.toString.call(null) // "[object Null]"
-Object.prototype.toString.call(undefined) // "[object Undefined]"
-Object.prototype.toString.call(true) // "[object Boolean]
+Object.prototype.toString.call(999); // "[object Number]"
+Object.prototype.toString.call(""); // "[object String]"
+Object.prototype.toString.call(Symbol()); // "[object Symbol]"
+Object.prototype.toString.call(42n); // "[object BigInt]"
+Object.prototype.toString.call(null); // "[object Null]"
+Object.prototype.toString.call(undefined); // "[object Undefined]"
+Object.prototype.toString.call(true); // "[object Boolean]
 // 复杂数据类型也能返回相应的类型
-Object.prototype.toString.call({a:1}) // "[object Object]"
-Object.prototype.toString.call([1,2]) // "[object Array]"
-Object.prototype.toString.call(new Date) // "[object Date]"
-Object.prototype.toString.call(function(){}) // "[object Function]"
-Object.prototype.toString.call(new Error()) // "[object Error]"
-Object.prototype.toString.call(new Map()) // "[object Map]"
+Object.prototype.toString.call({ a: 1 }); // "[object Object]"
+Object.prototype.toString.call([1, 2]); // "[object Array]"
+Object.prototype.toString.call(new Date()); // "[object Date]"
+Object.prototype.toString.call(function () {}); // "[object Function]"
+Object.prototype.toString.call(new Error()); // "[object Error]"
+Object.prototype.toString.call(new Map()); // "[object Map]"
 
 // 方法三、obj instanceof Object ，可以左边放你要判断的内容，右边放类型来进行JS类型判断，只能用来判断复杂数据类型,
 // 因为instanceof 是用于检测构造函数（右边）的 prototype 属性是否出现在某个实例对象（左边）的原型链上。

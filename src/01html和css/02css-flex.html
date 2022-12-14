@@ -1,142 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Flex学习</title>
 
-
     <style>
-        * {
-            color: white;
-            box-sizing: border-box;
-        }
+      * {
+        color: white;
+        box-sizing: border-box;
+      }
 
-        div {
-            /* 通过设置父元素flex布局 子元素span有了大小宽高*/
-            display: flex;
-            width: 80%;
-            height: 600px;
-            background-color: pink;
+      div {
+        /* 通过设置父元素flex布局 子元素span有了大小宽高*/
+        display: flex;
+        width: 80%;
+        height: 600px;
+        background-color: pink;
 
-            /* 设置主轴的方向 row row-reverse column column-reverse*/
-            flex-direction: row;
-            /*设置主轴上面子元素的排列方式 space-around（平均分配剩余空间） space-between(先两边贴边，在平均分配剩余空间) center flex-start flex-end */
-            justify-content: space-around;
-            /* 主轴上面元素摆不开情况，是否自动换行 默认会在一行，挤压子元素的宽度 */
-            flex-wrap: wrap;
-            /* 设置侧轴对齐方式（只对有一行的盒子有效） 如果侧轴有盒子，就可以通过这个属性设置对齐方式： center: 居中 flex-start flex-end stretch拉伸（子盒子不能有高度）
+        /* 设置主轴的方向 row row-reverse column column-reverse*/
+        flex-direction: row;
+        /*设置主轴上面子元素的排列方式 space-around（平均分配剩余空间） space-between(先两边贴边，在平均分配剩余空间) center flex-start flex-end */
+        justify-content: space-around;
+        /* 主轴上面元素摆不开情况，是否自动换行 默认会在一行，挤压子元素的宽度 */
+        flex-wrap: wrap;
+        /* 设置侧轴对齐方式（只对有一行的盒子有效） 如果侧轴有盒子，就可以通过这个属性设置对齐方式： center: 居中 flex-start flex-end stretch拉伸（子盒子不能有高度）
                 如果子项目没有纵轴没有设置aligh-self 那么按照align-items排列
             */
-            /* align-items: center; */
-            /* 单行无效果！！如果侧轴有多行盒子(flex-wrap: wrap)侧轴布局使用align-content，我们想实现justify-content的space-around效果 */
-            align-content: space-around;
+        /* align-items: center; */
+        /* 单行无效果！！如果侧轴有多行盒子(flex-wrap: wrap)侧轴布局使用align-content，我们想实现justify-content的space-around效果 */
+        align-content: space-around;
+      }
 
+      div span {
+        /* 子元素属性 */
 
-        }
+        /* flex-grow 定义项目的放大比例 默认0 有剩余空间也不放大 所有项目指定为1 等分剩余空间  某一个为2 占据的剩余空间是其他的两倍 */
+        /* flex-shrink 定义项目的缩小比例 默认为1 空间不足项目将缩小 0空间不足项目不缩小 0 false 1true */
+        /* flex-basis 项目占据主轴的空间 默认auto  */
+        /* 上面三个组成 flex   值auto(占据剩余所有空间) : 1 1 auto none: 0 0 auto 默认值 0 1 auto*/
+        /* flex: 定义子项目分配剩余空间，表示占用的份数 */
+        /* 如果设置了flex: 1 的元素的子元素泰太大,会把flex:1的盒子撑大,可以使用: [1] overfolw:auto [2] 指定height/width:0 [3]使得子元素脱离文档流 Position: absolute*/
+        /* align-self 单个项目和其他项目使用不同的对齐方式，覆盖align-item属性 默认auto继承align-items属性*/
+        width: 200px;
+        /* flex: 1; */
+        height: 100px;
+        background-color: blue;
+        margin-right: 5px;
+      }
 
-        div span {
-            /* 子元素属性 */
+      p.p-flexoneparam {
+        display: flex;
+        height: 100px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: pink;
+      }
 
-            /* flex-grow 定义项目的放大比例 默认0 有剩余空间也不放大 所有项目指定为1 等分剩余空间  某一个为2 占据的剩余空间是其他的两倍 */
-            /* flex-shrink 定义项目的缩小比例 默认为1 空间不足项目将缩小 0空间不足项目不缩小 0 false 1true */ 
-            /* flex-basis 项目占据主轴的空间 默认auto  */
-            /* 上面三个组成 flex   值auto(占据剩余所有空间) : 1 1 auto none: 0 0 auto 默认值 0 1 auto*/
-            /* flex: 定义子项目分配剩余空间，表示占用的份数 */
-            /* 如果设置了flex: 1 的元素的子元素泰太大,会把flex:1的盒子撑大,可以使用: [1] overfolw:auto [2] 指定height/width:0 [3]使得子元素脱离文档流 Position: absolute*/
-            /* align-self 单个项目和其他项目使用不同的对齐方式，覆盖align-item属性 默认auto继承align-items属性*/
-            width: 200px;
-            /* flex: 1; */
-            height: 100px;
-            background-color: blue;
-            margin-right: 5px;
-        }
+      p.p-flexoneparam span {
+        /* 不给子元素宽度，导致剩余空间是全部宽度，然后平均分配了三等分  */
+        flex: 1;
+        /* 设置子元素占用的宽度 */
+        flex: 25px;
+      }
 
-        p.p-flexoneparam {
-            display: flex;
-            height: 100px;
-            width: 80%;
-            margin: 0 auto;
-            background-color: pink;
-        }
+      p.p-flexoneparam span:nth-child(2) {
+        /* CSS3选择器 */
+        background: #000;
+      }
 
-        p.p-flexoneparam span {
-            /* 不给子元素宽度，导致剩余空间是全部宽度，然后平均分配了三等分  */
-            flex: 1;
-            /* 设置子元素占用的宽度 */
-            flex: 25px;
+      /* flex-grow */
+      p.p-flex-grow {
+        display: flex;
+        height: 100px;
+        margin: 0 auto;
+        background-color: pink;
+      }
 
-        }
+      p.p-flex-grow span {
+        width: 3000px;
+        border: 1px solid red;
+        box-sizing: border-box;
 
-        p.p-flexoneparam span:nth-child(2) {
-            /* CSS3选择器 */
-            background: #000;
-        }
+        /* 有剩余空间项目将放大 */
+        /* flex-grow: 1;    */
 
-/* flex-grow */
-        p.p-flex-grow {
-            display: flex;
-            height: 100px;
-            margin: 0 auto;
-            background-color: pink;
-        }
+        /* 空间不够将缩小 */
+        /* flex-shrink: 1; */
 
-        p.p-flex-grow span {
-            width: 3000px;
-            border: 1px solid red;
-            box-sizing: border-box;
-            
-            /* 有剩余空间项目将放大 */
-            /* flex-grow: 1;    */
+        /* 指定项目占据的长度 默认是盒子的宽度 也可以指定百分比,相对于父亲的*/
+        flex-basis: 300px;
+      }
 
-            /* 空间不够将缩小 */
-            /* flex-shrink: 1; */
-
-            /* 指定项目占据的长度 默认是盒子的宽度 也可以指定百分比,相对于父亲的*/
-            flex-basis: 300px;
-        }
-
-        p.p-flex-grow span:nth-child(2) {
-            /* CSS3选择器 */
-            background: #000;
-        }
-
+      p.p-flex-grow span:nth-child(2) {
+        /* CSS3选择器 */
+        background: #000;
+      }
     </style>
+  </head>
 
-
-</head>
-
-<body>
+  <body>
     <!-- flex布局不区分行内元素或者块内元素 -->
     <div>
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-        <span>6</span>
-        <span>7</span>
-
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+      <span>6</span>
+      <span>7</span>
     </div>
 
-    <hr>
+    <hr />
     <p class="p-flexoneparam">
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
     </p>
 
-    <hr/>
+    <hr />
     <p class="p-flex-grow">
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
     </p>
-
-
-</body>
-
+  </body>
 </html>

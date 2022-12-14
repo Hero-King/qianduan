@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
 
@@ -13,32 +12,28 @@
     <script src="../lib/16.8/react.development.js"></script>
     <script src="../lib/16.8/react-dom.development.js"></script>
     <style>
-        body {
-            height: 2000px;
-        }
+      body {
+        height: 2000px;
+      }
     </style>
 
     <script>
-        function unmount() {
-            console.log("unmount")
-            ReactDOM.unmountComponentAtNode(rootContainer)
-
-        }
+      function unmount() {
+        console.log("unmount");
+        ReactDOM.unmountComponentAtNode(rootContainer);
+      }
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <button onclick="unmount()">卸载组件(事件通过原生方式绑定)</button>
-    <div id="root">
-
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useRef, useEffect, useState, useMemo, useCallback } = React;
-        const rootContainer = document.getElementById("root")
+      const { useRef, useEffect, useState, useMemo, useCallback } = React;
+      const rootContainer = document.getElementById("root");
 
-        /*
+      /*
 
         synthetic event 整个流程
         https://www.cnblogs.com/forcheng/p/13187388.html
@@ -60,48 +55,52 @@
         对开发者友好
         */
 
-        function Count(props) {
-            const [count, setcount] = useState(0);
-            console.log("count 组件 render");
+      function Count(props) {
+        const [count, setcount] = useState(0);
+        console.log("count 组件 render");
 
-            useEffect(() => {
-                const count2 = document.getElementById("count2");
-                const count3 = document.getElementById("count3");
-                function onClick(e) {
-                    console.log("count2 原生事件执行了");
-                    console.log("原生事件对象: ", e)
-                }
-                count2.addEventListener("click", onClick)
-                count3.addEventListener("click", function (e) {
-                    console.log("count3 原生事件执行了");
-                    // 阻止冒泡,导致react委托在document上面的事件不能执行
-                    e.stopPropagation()
-                })
+        useEffect(() => {
+          const count2 = document.getElementById("count2");
+          const count3 = document.getElementById("count3");
+          function onClick(e) {
+            console.log("count2 原生事件执行了");
+            console.log("原生事件对象: ", e);
+          }
+          count2.addEventListener("click", onClick);
+          count3.addEventListener("click", function (e) {
+            console.log("count3 原生事件执行了");
+            // 阻止冒泡,导致react委托在document上面的事件不能执行
+            e.stopPropagation();
+          });
 
-                return () => {
-                    count2.removeEventListener("click", onClick)
-                };
-            }, [])
+          return () => {
+            count2.removeEventListener("click", onClick);
+          };
+        }, []);
 
-            return <div>
-                Count: {count}
-                <button id="count2" onClick={e => {
-                    // 如果你想异步访问事件属性，你需在事件上调用 event.persist()，此方法会从池中移除合成事件，允许用户代码保留对事件的引用。
-                    // 存留，坚持；持续，固执  persist
-                    e.persist();
-                    // e.nativeEvent   指向原生事件
-                    console.log("Count2 click", "react合成事件对象: ", e)
-                }} >Count2</button>
-                <button id="count3" onClick={e => console.log("Count3 click")}>原生禁止冒泡</button>
-            </div>
-        }
+        return (
+          <div>
+            Count: {count}
+            <button
+              id="count2"
+              onClick={(e) => {
+                // 如果你想异步访问事件属性，你需在事件上调用 event.persist()，此方法会从池中移除合成事件，允许用户代码保留对事件的引用。
+                // 存留，坚持；持续，固执  persist
+                e.persist();
+                // e.nativeEvent   指向原生事件
+                console.log("Count2 click", "react合成事件对象: ", e);
+              }}
+            >
+              Count2
+            </button>
+            <button id="count3" onClick={(e) => console.log("Count3 click")}>
+              原生禁止冒泡
+            </button>
+          </div>
+        );
+      }
 
-
-
-
-        ReactDOM.render(<Count />, document.getElementById("root"));
-
+      ReactDOM.render(<Count />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>

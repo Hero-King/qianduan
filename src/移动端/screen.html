@@ -1,53 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        #app {
-            width: 100%;
-            border: 1px solid red;
-            height: 300px;
-        }
+      #app {
+        width: 100%;
+        border: 1px solid red;
+        height: 300px;
+      }
 
-        @media screen and (min-width: 768px) {
-            body {
-                background-color: blue;
-            }
+      @media screen and (min-width: 768px) {
+        body {
+          background-color: blue;
         }
+      }
 
-        /* 这个应该写在下面 */
-        @media screen and (min-width: 1000px) {
-            body {
-                background-color: pink;
-            }
+      /* 这个应该写在下面 */
+      @media screen and (min-width: 1000px) {
+        body {
+          background-color: pink;
         }
+      }
 
-        @media screen and (min-width: 992px) {
-            body {
-                background-color: yellow;
-            }
+      @media screen and (min-width: 992px) {
+        body {
+          background-color: yellow;
         }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="app">
-        @media mediatype and|not |only (media feature){
-        css-code
-        }
+      @media mediatype and|not |only (media feature){ css-code }
+      小于600px的时候，.example样式 @media only screen and (max-width: 600px) {
+      .example {background: red;} } 你也可以针对不同的媒体使用不同 stylesheets :
 
-        小于600px的时候，.example样式
-        @media only screen and (max-width: 600px) {
-        .example {background: red;}
-        }
-
-        你也可以针对不同的媒体使用不同 stylesheets :
-
-        <!-- <link rel="stylesheet" media="mediatype and|not|only (media feature)" href="mystylesheet.css"> -->
+      <!-- <link rel="stylesheet" media="mediatype and|not|only (media feature)" href="mystylesheet.css"> -->
     </div>
-</body>
-
+  </body>
 </html>

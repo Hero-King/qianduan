@@ -384,22 +384,22 @@
           for (let index = 0; index < treeData.length; index++) {
             const item = treeData[index];
             let obj = {};
-            if(item.children){
-                obj.children = loop(item.children);
+            if (item.children) {
+              obj.children = loop(item.children);
             }
-            if(item.title.includes(searchValue)){
-                obj.title = `<span>${item.title}</span>`;
-                obj.key = item.key;
-                result.push(obj)
-            }else if(obj.children && obj.children.length > 0){
-                obj.title = item.title
-                obj.key = item.key;
-                result.push(obj)
+            if (item.title.includes(searchValue)) {
+              obj.title = `<span>${item.title}</span>`;
+              obj.key = item.key;
+              result.push(obj);
+            } else if (obj.children && obj.children.length > 0) {
+              obj.title = item.title;
+              obj.key = item.key;
+              result.push(obj);
             }
           }
           return result;
         }
-        console.log(loop(treeData))
+        console.log(loop(treeData));
       }
     </script>
   </body>

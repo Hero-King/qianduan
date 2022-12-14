@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        // Array.prototype.includes() 方法
-        // String.prototype.includes()
-        // str.includes(searchString[, position])
-        console.log('---------------', "includes", '--------------------');
-        console.log("12345包括23吗", "12345".includes("23"));
+      // Array.prototype.includes() 方法
+      // String.prototype.includes()
+      // str.includes(searchString[, position])
+      console.log("---------------", "includes", "--------------------");
+      console.log("12345包括23吗", "12345".includes("23"));
 
-        // arr.includes(searchElement, fromIndex)
-        console.log("[1,2,3,4].includes(1) ", [1, 2, 3, 4].includes(1))  // false
-        console.log("[1,2,3,4].includes(1) ", [1, 2, 3, 4].includes("1"))  // false
+      // arr.includes(searchElement, fromIndex)
+      console.log("[1,2,3,4].includes(1) ", [1, 2, 3, 4].includes(1)); // false
+      console.log("[1,2,3,4].includes(1) ", [1, 2, 3, 4].includes("1")); // false
 
-        console.log('---------------', "求幂运算", '--------------------');
-        console.log(2 ** 10);// 输出 1024
-        console.log(Math.pow(2, 10)) // 输出 1024
+      console.log("---------------", "求幂运算", "--------------------");
+      console.log(2 ** 10); // 输出 1024
+      console.log(Math.pow(2, 10)); // 输出 1024
 
-        console.log('---------------', "String.padStart(targetLength,[padString]) ", '--------------------');
-        console.log('x'.padStart(4, 'ab')) // 'abax'
-        console.log('x'.padEnd(5, 'ab')) // 'xabab'
+      console.log(
+        "---------------",
+        "String.padStart(targetLength,[padString]) ",
+        "--------------------"
+      );
+      console.log("x".padStart(4, "ab")); // 'abax'
+      console.log("x".padEnd(5, "ab")); // 'xabab'
 
-
-        console.log('---------------', "?.运算", '--------------------');
-        function fun(data) {
-            let name = data?.row?.name;     // 等价于 data && data.row && data.row.name ? data.row.name : undefined
-            console.log(name)
-            console.log( 0 || 5)    // 5
-            console.log( 0 ?? 5)    // 0
-        }
-        fun()   // undefined
-
+      console.log("---------------", "?.运算", "--------------------");
+      function fun(data) {
+        let name = data?.row?.name; // 等价于 data && data.row && data.row.name ? data.row.name : undefined
+        console.log(name);
+        console.log(0 || 5); // 5
+        console.log(0 ?? 5); // 0
+      }
+      fun(); // undefined
     </script>
-</body>
-
+  </body>
 </html>

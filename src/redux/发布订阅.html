@@ -1,95 +1,99 @@
 <!-- 待学习 redux react-redux等 -->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
     <div>FrankFang GitHub这个人</div>
 
     <script type="text/babel">
-        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
-        const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
+      // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+      const { useRef, useEffect, useState, useMemo, useReducer, useContext } =
+        React;
 
-        const context = React.createContext();
-        function App(props) {
-            return <context.Provider value={substore}>
-                <CountH />
-            </context.Provider>
+      const context = React.createContext();
+      function App(props) {
+        return (
+          <context.Provider value={substore}>
+            <CountH />
+          </context.Provider>
+        );
+      }
+
+      function Count({ state, dispatch, ...props }) {
+        return (
+          <div>
+            Count: {state.count}
+            <button onClick={(e) => dispatch({ type: "increment" })}>
+              {" "}
+              +{" "}
+            </button>
+          </div>
+        );
+      }
+
+      const reducers = function (state, action) {
+        switch (action.type) {
+          case "increment":
+            return { count: state.count + 1 };
+
+          default:
+            return state;
         }
+      };
 
-        function Count({ state, dispatch, ...props }) {
-            return <div>
-                Count: {state.count}
-                <button onClick={e => dispatch({ type: "increment" })}> + </button>
-            </div>
-        }
+      function connect(WrapperComponent) {
+        return (props) => {
+          const { state, setstate } = useContext(context);
+          const [update, setupdate] = useState();
+          useEffect(() => {
+            substore.subscribe(() => {
+              setupdate({});
+            });
+          }, []);
+          const dispatch = (action) => {
+            setstate(reducers(state, action));
+            // setupdate({})
+          };
+          return (
+            <WrapperComponent state={state} dispatch={dispatch} {...props} />
+          );
+        };
+      }
+      const CountH = connect(Count);
 
-        const reducers = function (state, action) {
-            switch (action.type) {
-                case "increment":
-                    return { count: state.count + 1 }
+      // 必须处理的问题： 这样每个高阶组件里面都维护了一个自己的usestate钩子，某一个组件dispatch更改全局数据的时候,其他组件并不会刷洗, 我们只有采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
+      // 再store里面提供发布订阅模式
 
-                default:
-                    return state;
-            }
-        }
+      // 这样只有connect连接到全局状态的组件才会更新
 
-        function connect(WrapperComponent) {
-            return (props) => {
-                const { state, setstate } = useContext(context);
-                const [update, setupdate] = useState();
-                useEffect(() => {
-                    substore.subscribe(() => {setupdate({})})
-                }, [])
-                const dispatch = (action) => {
-                    setstate(reducers(state, action));
-                    // setupdate({})
-                }
-                return <WrapperComponent state={state} dispatch={dispatch} {...props} />
-            }
-        }
-        const CountH = connect(Count)
+      const substore = {
+        state: { count: 1 },
+        setstate(newstate) {
+          substore.state = newstate;
+          substore.subscribes.forEach((i) => i(newstate));
+        },
+        subscribes: [],
+        subscribe(fn) {
+          substore.subscribes.push(fn);
 
+          // 取消订阅
+          return () => {
+            const index = substore.subscribes.indexOf(fn);
+            substore.subscribes.splice(index, 1);
+          };
+        },
+      };
 
-
-        // 必须处理的问题： 这样每个高阶组件里面都维护了一个自己的usestate钩子，某一个组件dispatch更改全局数据的时候,其他组件并不会刷洗, 我们只有采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
-        // 再store里面提供发布订阅模式
-
-        // 这样只有connect连接到全局状态的组件才会更新   
-
-        const substore = {
-            state: { count: 1 },
-            setstate(newstate) {
-                substore.state = newstate;
-                substore.subscribes.forEach(i => i(newstate))
-            },
-            subscribes: [],
-            subscribe(fn) {
-                substore.subscribes.push(fn);
-                
-                // 取消订阅
-                return () => {
-                    const index = substore.subscribes.indexOf(fn);
-                    substore.subscribes.splice(index,1)
-                }
-            }
-
-        }
-
-
-
-
-        ReactDOM.render(<App />, document.getElementById("root"));
+      ReactDOM.render(<App />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>

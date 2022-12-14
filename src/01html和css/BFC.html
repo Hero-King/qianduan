@@ -1,45 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="testcss.css" rel="stylesheet" />
-</head>
+  </head>
 
-<body>
+  <body>
     BFC 块级格式化上下文
     一个创建了新的BFC的盒子是独立布局,盒子内的元素布局不会影响盒子外面的布局
-
-    每个BFC区域只包括其子元素,不包括跨级的子元素
-    触发BFC的条件:
+    每个BFC区域只包括其子元素,不包括跨级的子元素 触发BFC的条件:
     body根元素/浮动/定位/行内块显示模式/overflow属性/表格单元格/flex
 
-    <div class="import">
-        每一个BFC都是独立的,布局上相互不影响
-    </div>
+    <div class="import">每一个BFC都是独立的,布局上相互不影响</div>
 
-    @import "aaa.css" @import url("./aaa.css")
-    link和@import
-    link是HTML标签 可以加载内容不只是css 页面解析的时候同步加载link 而import等待页面全部下载完成在加载
+    @import "aaa.css" @import url("./aaa.css") link和@import link是HTML标签
+    可以加载内容不只是css 页面解析的时候同步加载link
+    而import等待页面全部下载完成在加载
 
     <div>
-        CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？ CSS3 新增
-        伪类有那些？
-        * 1.id 选择器（ # myid）
-        2.类选择器（.myclassname）
-        3.标签选择器（div, h1, p）
-        4.相邻选择器（h1 + p）
-        5.子选择器（ul > li） 
-        6.后代选择器（li a） 
-        7.通配符选择器（ * ） 
-        8.属性选择器（a[rel="external" ]）
-        9.伪类选择器（a: hover, li: nth - child） *
-            可继承： font-size font-family color, UL LI DL DD DT; * 不可继承 ：border padding margin width height ; *
-            优先级就近原则，样式定义最近者为准; </div>
-
-</body>
-
-
+      CSS 选择符有哪些？哪些属性可以继承？优先级算法如何计算？ CSS3 新增
+      伪类有那些？ * 1.id 选择器（ # myid） 2.类选择器（.myclassname）
+      3.标签选择器（div, h1, p） 4.相邻选择器（h1 + p） 5.子选择器（ul > li）
+      6.后代选择器（li a） 7.通配符选择器（ * ） 8.属性选择器（a[rel="external"
+      ]） 9.伪类选择器（a: hover, li: nth - child） * 可继承： font-size
+      font-family color, UL LI DL DD DT; * 不可继承 ：border padding margin
+      width height ; * 优先级就近原则，样式定义最近者为准;
+    </div>
+  </body>
 </html>

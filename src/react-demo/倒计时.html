@@ -1,50 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
+  </head>
 
-</head>
-
-<body>
-    <div id="root">
-
-    </div>
+  <body>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useRef, useEffect, useState, useMemo } = React;
+      const { useRef, useEffect, useState, useMemo } = React;
 
-        function Counter(props) {
-            const [count, setcount] = useState(props.count || 10);
-            const intervalRef = useRef();
-            useEffect(() => {
-                const id = setInterval(() => {
-                    setcount(count => {
-                        if (count <= 0) {
-                            clearInterval(intervalRef.current)
-                            return count
-                        }
-                        return count - 1
-                    })
-                }, 1000);
-                intervalRef.current = id;
-                return () => {
-                    clearInterval(intervalRef.current);
-                };
-            }, []);
+      function Counter(props) {
+        const [count, setcount] = useState(props.count || 10);
+        const intervalRef = useRef();
+        useEffect(() => {
+          const id = setInterval(() => {
+            setcount((count) => {
+              if (count <= 0) {
+                clearInterval(intervalRef.current);
+                return count;
+              }
+              return count - 1;
+            });
+          }, 1000);
+          intervalRef.current = id;
+          return () => {
+            clearInterval(intervalRef.current);
+          };
+        }, []);
 
-            return <div>
-                倒计时: {count} s
-            </div>
-        }
+        return <div>倒计时: {count} s</div>;
+      }
 
-        ReactDOM.render(<Counter />, document.getElementById("root"));
+      ReactDOM.render(<Counter />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>

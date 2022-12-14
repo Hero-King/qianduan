@@ -1,59 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        img {
-            width: 200px;
-            height: 200px;
-        }
+      img {
+        width: 200px;
+        height: 200px;
+      }
 
-        div {
-            position: absolute;
-        }
+      div {
+        position: absolute;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <input type="button" value="摇起来" onclick="move()">   <!-- 这里的需要加上括号 -->
-    <input type="button" value="停止" onclick="" id="stop">
+  <body>
+    <input type="button" value="摇起来" onclick="move()" />
+    <!-- 这里的需要加上括号 -->
+    <input type="button" value="停止" onclick="" id="stop" />
     <div id="div1">
-        <img src="1.jpg" alt="" id="img1">
-        <img src="2.jpg" alt="">
+      <img src="1.jpg" alt="" id="img1" />
+      <img src="2.jpg" alt="" />
     </div>
     <script>
-        /*
+      /*
             效果: 当用户点击了第一个按钮 图片随机动起来
             思路: 启动一个定时器,随机生成两个位置数字,作为left和top值
             */
-        let timeId;
-        function move() {
-            timeId = setInterval(function () {
-                let left = parseInt(Math.random() * 99) + 1;
-                let top = parseInt(Math.random() * 99) + 50;
-                let img1 =  document.getElementById('img1');
-                let div1 =  document.getElementById('div1');
-                // 怎么获取img1的left属性值? 因为是在style标签中设置的 不能直接点出来
-                console.log(img1.style.left);   // 空串
-                console.log(div1.offsetLeft);   //返回了 数字
-                document.getElementById('div1').style.left = left + 'px';
-                document.getElementById('div1').style.top = top + 'px';
-            }, 500)
-        }
-        document.getElementById('stop').onclick=function(){
-            clearInterval(timeId)
-        }
+      let timeId;
+      function move() {
+        timeId = setInterval(function () {
+          let left = parseInt(Math.random() * 99) + 1;
+          let top = parseInt(Math.random() * 99) + 50;
+          let img1 = document.getElementById("img1");
+          let div1 = document.getElementById("div1");
+          // 怎么获取img1的left属性值? 因为是在style标签中设置的 不能直接点出来
+          console.log(img1.style.left); // 空串
+          console.log(div1.offsetLeft); //返回了 数字
+          document.getElementById("div1").style.left = left + "px";
+          document.getElementById("div1").style.top = top + "px";
+        }, 500);
+      }
+      document.getElementById("stop").onclick = function () {
+        clearInterval(timeId);
+      };
 
-        function aa (){
-            let n = 10 ;
-            console.log(n);
-        }
-        aa()
+      function aa() {
+        let n = 10;
+        console.log(n);
+      }
+      aa();
     </script>
-</body>
-
+  </body>
 </html>

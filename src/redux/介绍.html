@@ -1,104 +1,101 @@
 <!-- 待学习 redux react-redux等 -->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
     <div>FrankFang GitHub这个人</div>
 
     <script type="text/babel">
-        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
-        const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
+      // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+      const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
 
-        const context = React.createContext();
-        function App(props) {
-            const [state, setstate] = useState({ count: 0 });
-            const contextValue = { state, setstate }
-            return <context.Provider value={contextValue}>
-                <Count />
-                <Count1 />
-                <Wrapper />
-            </context.Provider>
-        }
+      const context = React.createContext();
+      function App(props) {
+          const [state, setstate] = useState({ count: 0 });
+          const contextValue = { state, setstate }
+          return <context.Provider value={contextValue}>
+              <Count />
+              <Count1 />
+              <Wrapper />
+          </context.Provider>
+      }
 
-        function Count(props) {
-            const { state, setstate } = useContext(context)
-            return <div>
-                Count: {state.count}
-                <button onClick={e => setstate({ count: state.count + 1 })}> + </button>
-            </div>
-        }
+      function Count(props) {
+          const { state, setstate } = useContext(context)
+          return <div>
+              Count: {state.count}
+              <button onClick={e => setstate({ count: state.count + 1 })}> + </button>
+          </div>
+      }
 
-        const reducers = function (state, action) {
-            switch (action.type) {
-                case "increment":
-                    return { count: state.count + 1 }
+      const reducers = function (state, action) {
+          switch (action.type) {
+              case "increment":
+                  return { count: state.count + 1 }
 
-                default:
-                    return state;
-            }
-        }
+              default:
+                  return state;
+          }
+      }
 
-        function Count1(props) {
-            const { state, setstate } = useContext(context)
-            return <div>
-                Count: {state.count}
-                <button onClick={e => setstate(reducers(state, { type: "increment" }))}> + </button>
-            </div>
-        }
+      function Count1(props) {
+          const { state, setstate } = useContext(context)
+          return <div>
+              Count: {state.count}
+              <button onClick={e => setstate(reducers(state, { type: "increment" }))}> + </button>
+          </div>
+      }
 
-        function Wrapper() {
-            const { state, setstate } = useContext(context);
-            function dispatch(action) {
-                setstate(reducers(state, action))
-            }
-            return <Count2 state={state} dispatch={dispatch}></Count2>
-        }
+      function Wrapper() {
+          const { state, setstate } = useContext(context);
+          function dispatch(action) {
+              setstate(reducers(state, action))
+          }
+          return <Count2 state={state} dispatch={dispatch}></Count2>
+      }
 
-        function Count2({ state, dispatch }) {
-            return <div>
-                Count: {state.count}
-                <button onClick={e => dispatch({ type: "increment" })}> + </button>
-            </div>
-        }
+      function Count2({ state, dispatch }) {
+          return <div>
+              Count: {state.count}
+              <button onClick={e => dispatch({ type: "increment" })}> + </button>
+          </div>
+      }
 
-        ReactDOM.render(<App />, document.getElementById("root"));
+      ReactDOM.render(<App />, document.getElementById("root"));
 
-        // reducer 的由来是： 可以查看上面onClick事件处理程序有点复杂， 而且setstate一旦出现错误，整个页面将崩溃， 出现了reducer  --> Count1
-        // dispatch 由来 原因同上，我们更新一次state数据很麻烦  --Count2
-        // 但是每次使用都得创建一个Wrapper组件，  书写高阶组件解决问题  现在触发一次setstate 会将整个组件数重新执行一次，并不合适
-        // setstate抽离成单独的store 然后再高阶组件里面创建useState 进行获取新的state 强制更新组件  -》 
-        const store = {
-            state: { count: 1 },
-            setstate(newState) {
-                this.state = newState;
-            },
-            
-        }
+      // reducer 的由来是： 可以查看上面onClick事件处理程序有点复杂， 而且setstate一旦出现错误，整个页面将崩溃， 出现了reducer  --> Count1
+      // dispatch 由来 原因同上，我们更新一次state数据很麻烦  --Count2
+      // 但是每次使用都得创建一个Wrapper组件，  书写高阶组件解决问题  现在触发一次setstate 会将整个组件数重新执行一次，并不合适
+      // setstate抽离成单独的store 然后再高阶组件里面创建useState 进行获取新的state 强制更新组件  -》
+      const store = {
+          state: { count: 1 },
+          setstate(newState) {
+              this.state = newState;
+          },
 
-        // 在优化： 这样每个高阶组件里面都维护了一个自己的usestate钩子，某一个组件dispatch更改全局数据的时候,其他组件并不会刷洗, 我们只有采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
-        // 再store里面提供发布订阅模式
-        
-        // 这样只有connect连接到全局状态的组件才会更新   在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
-        const substore = {
-            state: {count:1},
-            setState(newstate){
-                this.state = newstate;
-            },
-            subscribes = [],
-            
-        }
+      }
 
+      // 在优化： 这样每个高阶组件里面都维护了一个自己的usestate钩子，某一个组件dispatch更改全局数据的时候,其他组件并不会刷洗, 我们只有采用发布订阅的方式，store中setstate的时候发布，高阶组件挂载完成时候 订阅变化
+      // 再store里面提供发布订阅模式
+
+      // 这样只有connect连接到全局状态的组件才会更新   在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
+      const substore = {
+          state: {count:1},
+          setState(newstate){
+              this.state = newstate;
+          },
+          subscribes = [],
+
+      }
     </script>
-</body>
-
+  </body>
 </html>

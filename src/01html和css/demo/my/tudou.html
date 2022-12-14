@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+      }
 
-        .head {
-            display: block;
-            width: 448px;
-            height: 252px;
-            margin: 100px;
-            position: relative;
-        }
+      .head {
+        display: block;
+        width: 448px;
+        height: 252px;
+        margin: 100px;
+        position: relative;
+      }
 
-        .mask {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: url(./arr.png) rgba(0, 0, 0, 0.4) center no-repeat;
-            display: none;
-        }
+      .mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url(./arr.png) rgba(0, 0, 0, 0.4) center no-repeat;
+        display: none;
+      }
 
-        a:hover .mask {
-            /* 鼠标经过A的时候  然后里面的mask显示出来 */
-            display: block;
-        }
+      a:hover .mask {
+        /* 鼠标经过A的时候  然后里面的mask显示出来 */
+        display: block;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <a href="#" class="head">
-        <img src="./tudou.jpg" alt="">
-        <!-- 灰蒙版可以写在这里  先不显示，鼠标经过时候显示出来 思考：播放按钮怎么放-->
-        <div class="mask"></div>
+      <img src="./tudou.jpg" alt="" />
+      <!-- 灰蒙版可以写在这里  先不显示，鼠标经过时候显示出来 思考：播放按钮怎么放-->
+      <div class="mask"></div>
     </a>
-</body>
-
+  </body>
 </html>

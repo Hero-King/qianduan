@@ -1,54 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
-        #div1{
-            margin-top: 20px;
-            height: 50px;
-            width: 80px;
-            background-color: green;
-            position: absolute;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #div1 {
+        margin-top: 20px;
+        height: 50px;
+        width: 80px;
+        background-color: green;
+        position: absolute;
+      }
     </style>
-</head>
-<body>
-    <input id="btn1" type="button" value="移动到400px">
-    <input id="btn2" type="button" value="移动到800px">
+  </head>
+  <body>
+    <input id="btn1" type="button" value="移动到400px" />
+    <input id="btn2" type="button" value="移动到800px" />
     <div id="div1"></div>
     <script>
-        let btn1 = document.getElementById('btn1');
-        let btn2 = document.getElementById('btn2');
-        let div1 = document.getElementById('div1');
-        // btn1.onclick
-        btn1.onclick = function(){
-            console.log(this)   // dom元素
-            move(div1,400);
-        };
-        btn2.onclick = function(){
-            move(div1,800);
-        };
-        function move(element,target){
-            // 获取element的当前位置  left值
-            let current = element.offsetLeft;
-            let step = current < target ? 10 : -10;
-            let timeId = setInterval(function(){
-                if(current != target){
-                    current+= step;
-                    element.style.left = current+step + 'px';
-                }else{
-                    clearInterval(timeId)
-                }
-            },50)
-            
-        }
+      let btn1 = document.getElementById("btn1");
+      let btn2 = document.getElementById("btn2");
+      let div1 = document.getElementById("div1");
+      // btn1.onclick
+      btn1.onclick = function () {
+        console.log(this); // dom元素
+        move(div1, 400);
+      };
+      btn2.onclick = function () {
+        move(div1, 800);
+      };
+      function move(element, target) {
+        // 获取element的当前位置  left值
+        let current = element.offsetLeft;
+        let step = current < target ? 10 : -10;
+        let timeId = setInterval(function () {
+          if (current != target) {
+            current += step;
+            element.style.left = current + step + "px";
+          } else {
+            clearInterval(timeId);
+          }
+        }, 50);
+      }
     </script>
-</body>
+  </body>
 </html>

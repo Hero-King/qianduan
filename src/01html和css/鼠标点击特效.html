@@ -1,98 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        body {
-            width: 100vw;
-            height: 100vh;
-        }
+      body {
+        width: 100vw;
+        height: 100vh;
+      }
 
-        @keyframes rollup {
-            to {
-                opacity: 0;
-                transform: translateY(-200px);
-            }
+      @keyframes rollup {
+        to {
+          opacity: 0;
+          transform: translateY(-200px);
         }
+      }
 
-        .float-span {
-            position: absolute;
-            animation: rollup 2s linear;
-            animation-fill-mode: forwards;
-        }
+      .float-span {
+        position: absolute;
+        animation: rollup 2s linear;
+        animation-fill-mode: forwards;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>点击查看特效</div>
 
     <script>
+      function color16() {
+        //十六进制颜色随机
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        var color = "#" + r.toString(16) + g.toString(16) + b.toString(16);
+        return color;
+      }
 
-        function color16() {//十六进制颜色随机
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            var color = '#' + r.toString(16) + g.toString(16) + b.toString(16);
-            return color;
-        }
+      document.body.onclick = function (e) {
+        console.log(e);
+      };
 
-        document.body.onclick = function (e) {
-            console.log(e)
-        }
+      function method1() {
+        document.body.addEventListener("click", function (e) {
+          let max = 300;
+          let movepath = 0;
+          const span = document.createElement("span");
+          span.style.position = "absolute";
+          span.textContent = "哈哈哈";
+          span.style.left = e.pageX + "px";
+          span.style.top = e.pageY + "px";
+          const pagey = e.pageY;
+          const inter = setInterval(() => {
+            span.style.top = pagey - (movepath += 2) + "px";
+            span.style.opacity = 1 - (1 / max) * movepath;
+            span.style.border = `1px solid ${color16()}`;
+            span.style.color = color16();
+            if (movepath >= max) {
+              clearInterval(inter);
+              span.remove();
+            }
+          }, 10);
+          document.body.appendChild(span);
+        });
+      }
+      // method1()
 
-        function method1() {
-            document.body.addEventListener("click", function (e) {
-                let max = 300;
-                let movepath = 0
-                const span = document.createElement("span");
-                span.style.position = "absolute";
-                span.textContent = "哈哈哈";
-                span.style.left = e.pageX + "px";
-                span.style.top = e.pageY + "px";
-                const pagey = e.pageY
-                const inter = setInterval(() => {
-                    span.style.top = pagey - (movepath += 2) + "px";
-                    span.style.opacity = 1 - 1 / max * movepath;
-                    span.style.border = `1px solid ${color16()}`;
-                    span.style.color = color16()
-                    if (movepath >= max) {
-                        clearInterval(inter);
-                        span.remove()
-                    }
-                }, 10);
-                document.body.appendChild(span);
-            });
+      // 使用原生js监听动画结束事件
+      function method2() {
+        const { body } = document;
+        body.addEventListener("animationend", function (e) {
+          console.log(e);
+          if (e.animationName === "rollup") {
+            e.target.remove();
+          }
+        });
 
-        }
-        // method1()
-
-        // 使用原生js监听动画结束事件
-        function method2() {
-
-            const { body } = document;
-            body.addEventListener("animationend", function (e) {
-                console.log(e)
-                if (e.animationName === "rollup") {
-                    e.target.remove();
-                }
-            })
-
-            document.body.addEventListener("click", function (e) {
-                const span = document.createElement("span");
-                span.textContent = "哈哈哈";
-                span.style.left = e.pageX + "px";
-                span.style.top = e.pageY + "px";
-                span.classList.add("float-span");
-                document.body.appendChild(span);
-            })
-        }
-        method2()
-
-
+        document.body.addEventListener("click", function (e) {
+          const span = document.createElement("span");
+          span.textContent = "哈哈哈";
+          span.style.left = e.pageX + "px";
+          span.style.top = e.pageY + "px";
+          span.classList.add("float-span");
+          document.body.appendChild(span);
+        });
+      }
+      method2();
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,139 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
     <style>
-        body {
-            height: 2000px;
-        }
+      body {
+        height: 2000px;
+      }
     </style>
 
     <script>
-        function unmount() {
-            console.log("unmount")
-            ReactDOM.unmountComponentAtNode(rootContainer)
-            
-        }
+      function unmount() {
+        console.log("unmount");
+        ReactDOM.unmountComponentAtNode(rootContainer);
+      }
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <button onclick="unmount()">卸载组件</button>
-    <div id="root">
-
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useRef, useEffect, useState, useMemo, useCallback } = React;
-        const rootContainer = document.getElementById("root")
+      const { useRef, useEffect, useState, useMemo, useCallback } = React;
+      const rootContainer = document.getElementById("root");
 
-        // 实现window.onresize 获取页面宽高
-        function useResize() {
-            function getInit() {
-                return {
-                    height: document.documentElement.clientHeight,
-                    width: document.documentElement.clientWidth
-                }
-            }
-
-            const resize = useCallback(
-                () => {
-                    console.log("resize")
-                    setstate({
-                        height: document.documentElement.clientHeight,
-                        width: document.documentElement.clientWidth
-                    })
-                },
-                [],
-            )
-            // window onresize 这个hooks也会刷新
-            console.log("useResize render");
-
-            useEffect(() => {
-                window.addEventListener("resize", resize);
-                return () => {
-                    // 删除事件绑定必须传入之前的回调事件
-                    window.removeEventListener('resize', resize)
-                }
-            }, [])
-
-            const [state, setstate] = useState(() => getInit())
-            return state
+      // 实现window.onresize 获取页面宽高
+      function useResize() {
+        function getInit() {
+          return {
+            height: document.documentElement.clientHeight,
+            width: document.documentElement.clientWidth,
+          };
         }
 
-        function App() {
-            // 使用自定义的hooks 内部状态变化后,组件会更新
-            // 个人对自定义hooks理解就是 抽离了本来应该写在这个组件里面的,公共代码到自定义hooks去
-            const screen = useResize();
-            console.log(screen)
-            return <Count />
-        }
+        const resize = useCallback(() => {
+          console.log("resize");
+          setstate({
+            height: document.documentElement.clientHeight,
+            width: document.documentElement.clientWidth,
+          });
+        }, []);
+        // window onresize 这个hooks也会刷新
+        console.log("useResize render");
 
-        // ReactDOM.render(<App />, document.getElementById("root"));
+        useEffect(() => {
+          window.addEventListener("resize", resize);
+          return () => {
+            // 删除事件绑定必须传入之前的回调事件
+            window.removeEventListener("resize", resize);
+          };
+        }, []);
 
-        //  实现自定义的useState，支持类似class组件setState方法  状态更新后 执行callback
-        function useXState(initValue) {
-            const [state, setstate] = useState(initValue);
-            const call = useRef()
-            const setXState = (newState, callback) => {
-                setstate(pre => {
-                    call.current = callback
-                    return typeof newState == "function" ? newState(pre) : newState
+        const [state, setstate] = useState(() => getInit());
+        return state;
+      }
+
+      function App() {
+        // 使用自定义的hooks 内部状态变化后,组件会更新
+        // 个人对自定义hooks理解就是 抽离了本来应该写在这个组件里面的,公共代码到自定义hooks去
+        const screen = useResize();
+        console.log(screen);
+        return <Count />;
+      }
+
+      // ReactDOM.render(<App />, document.getElementById("root"));
+
+      //  实现自定义的useState，支持类似class组件setState方法  状态更新后 执行callback
+      function useXState(initValue) {
+        const [state, setstate] = useState(initValue);
+        const call = useRef();
+        const setXState = (newState, callback) => {
+          setstate((pre) => {
+            call.current = callback;
+            return typeof newState == "function" ? newState(pre) : newState;
+          });
+        };
+
+        useEffect(() => {
+          console.log(state);
+          if (call.current) {
+            call.current(state);
+          }
+        }, [state]);
+
+        return [state, setXState];
+      }
+
+      function Count(props) {
+        const [count, setcount] = useXState(0);
+        console.log("count 组件 render");
+        return (
+          <div>
+            Count: {count}
+            <button onClick={(e) => setcount(count + 1)}>Count1</button>
+            <button onClick={(e) => setcount((count) => count + 1)}>
+              Count2
+            </button>
+            <button
+              onClick={(e) =>
+                setcount(count + 1, (newstate) => {
+                  console.log("update", newstate);
                 })
-            }
+              }
+            >
+              Count3
+            </button>
+          </div>
+        );
+      }
 
-            useEffect(() => {
-                console.log(state)
-                if (call.current) {
-                    call.current(state)
-                }
-            }, [state])
+      ReactDOM.render(<App />, document.getElementById("root"));
 
-
-            return [state, setXState]
-        }
-
-
-
-
-        function Count(props) {
-            const [count, setcount] = useXState(0);
-            console.log("count 组件 render")
-            return <div>
-                Count: {count}
-                <button onClick={e => setcount(count + 1)}>Count1</button>
-                <button onClick={e => setcount(count => count + 1)}>Count2</button>
-                <button onClick={e => setcount(count + 1, (newstate) => {
-                    console.log("update", newstate)
-                })}>Count3</button>
-            </div>
-        }
-
-
-
-
-        ReactDOM.render(<App />, document.getElementById("root"));
-
-        // 防抖函数
-        function debounce(fun, timeout = 500) {
-            let timer;
-            return function (e) {
-                timer && clearTimeout(timer);
-                timer = setTimeout(() => {
-                    fun()
-                }, timeout)
-            }
-        }
-
-        
+      // 防抖函数
+      function debounce(fun, timeout = 500) {
+        let timer;
+        return function (e) {
+          timer && clearTimeout(timer);
+          timer = setTimeout(() => {
+            fun();
+          }, timeout);
+        };
+      }
     </script>
-</body>
-
+  </body>
 </html>

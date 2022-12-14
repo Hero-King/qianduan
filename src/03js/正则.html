@@ -1,44 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-
-
-
+  <body>
     <script>
+      // 创建正则 let expression = /pattern/flags;
+      // g：全局模式，表示查找字符串的全部内容，而不是找到第一个匹配的内容就结束。
+      // i：不区分大小写，表示在查找匹配时忽略 pattern 和字符串的大小写。
+      const pattern1 = /[1-9]/;
 
-        // 创建正则 let expression = /pattern/flags;
-        // g：全局模式，表示查找字符串的全部内容，而不是找到第一个匹配的内容就结束。
-        // i：不区分大小写，表示在查找匹配时忽略 pattern 和字符串的大小写。
-        const pattern1 = /[1-9]/
+      const re1 = /cat/g;
+      console.log(re1); // "/cat/g"
 
-        const re1 = /cat/g;
-        console.log(re1); // "/cat/g"
+      // RegExp 实例的主要方法是 exec()  这个方法只接收一个参数，即要应用模式的字符串。如果找到了匹配项，则返回包含第一个匹配信息的数组；如果没找到匹配项，则返回null。
 
-        // RegExp 实例的主要方法是 exec()  这个方法只接收一个参数，即要应用模式的字符串。如果找到了匹配项，则返回包含第一个匹配信息的数组；如果没找到匹配项，则返回null。
+      let text = "cat, bat, sat, fat";
+      let pattern = /.at/;
+      let matches = pattern.exec(text);
+      console.log(matches); // 返回数组 ["cat", index: 0, input: "cat, bat, sat, fat", groups: undefined]
 
-        let text = "cat, bat, sat, fat";
-        let pattern = /.at/;
-        let matches = pattern.exec(text);
-        console.log(matches)    // 返回数组 ["cat", index: 0, input: "cat, bat, sat, fat", groups: undefined]
-
-            // 另一个方法是 test()，接收一个字符串参数。 如果输入的文本与模式匹配，则参数
-            // 返回 true，否则返回 false。
-
-            ; (function (params) {
-                let text1 = "000-00-0000";
-                let pattern = /\d{3}-\d{2}-\d{4}/;
-                if (pattern.test(text1)) {
-                    console.log("The pattern was matched.");
-                }
-            })()
+      // 另一个方法是 test()，接收一个字符串参数。 如果输入的文本与模式匹配，则参数
+      // 返回 true，否则返回 false。
+      (function (params) {
+        let text1 = "000-00-0000";
+        let pattern = /\d{3}-\d{2}-\d{4}/;
+        if (pattern.test(text1)) {
+          console.log("The pattern was matched.");
+        }
+      })();
     </script>
-</body>
-
+  </body>
 </html>

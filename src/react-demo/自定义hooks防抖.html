@@ -1,143 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
     <style>
-        body {
-            height: 2000px;
-        }
+      body {
+        height: 2000px;
+      }
     </style>
 
     <script>
-        function unmount() {
-            console.log("unmount")
-            ReactDOM.unmountComponentAtNode(rootContainer)
-
-        }
+      function unmount() {
+        console.log("unmount");
+        ReactDOM.unmountComponentAtNode(rootContainer);
+      }
     </script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <button onclick="unmount()">卸载组件</button>
-    <div id="root">
-
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useRef, useEffect, useState, useMemo, useCallback } = React;
-        const rootContainer = document.getElementById("root")
+      const { useRef, useEffect, useState, useMemo, useCallback } = React;
+      const rootContainer = document.getElementById("root");
 
-        // 实现window.onresize 获取页面宽高
-        function useResize() {
-            function getInit() {
-                console.log("useresize get Init ")
-                return {
-                    height: document.documentElement.clientHeight,
-                    width: document.documentElement.clientWidth
-                }
-            }
-
-            const resizeCall = useCallback(
-                debounce(() => {
-                    console.log("resize callback")
-                    setstate({
-                        height: document.documentElement.clientHeight,
-                        width: document.documentElement.clientWidth
-                    });
-                }, 1000),
-                [],
-            )
-
-
-            const resize = (e) => {
-                console.log("resize");
-                setstate({
-                    height: document.documentElement.clientHeight,
-                    width: document.documentElement.clientWidth
-                });
-            }
-
-            console.log("useresize render")
-
-            const resize2 = debounce((e) => {
-                console.log("resize2");
-                setstate({
-                    height: document.documentElement.clientHeight,
-                    width: document.documentElement.clientWidth
-                });
-            }, 1000)
-
-            // App 组件刷新 ,这个hooks会执行多次
-            // console.log("useresize render")
-
-            useEffect(() => {
-                // window.addEventListener("resize", resize);
-                // window.addEventListener("resize", resize2);
-                window.addEventListener("resize", resizeCall);
-                return () => {
-                    // window.removeEventListener('resize', resize)
-                    // window.removeEventListener('resize', resize2)
-                    window.removeEventListener('resize', resizeCall)
-                }
-            }, [])
-
-            const [state, setstate] = useState(() => getInit())
-            return state
+      // 实现window.onresize 获取页面宽高
+      function useResize() {
+        function getInit() {
+          console.log("useresize get Init ");
+          return {
+            height: document.documentElement.clientHeight,
+            width: document.documentElement.clientWidth,
+          };
         }
 
-        function App() {
-            // 使用自定义的hooks 内部状态变化后,组件会更新
-            const screen = useResize();
-            const [count, setcount] = useState(0)
-            useEffect(() => {
-                let interval = setInterval(() => {
-                    setcount((pre) => pre + 1)
-                }, 500);
-                return () => {
-                    clearInterval(interval)
-                };
-            }, [])
-            return <div>
-                App Count : {count}
-                <Count />
-                </div>
-        }
+        const resizeCall = useCallback(
+          debounce(() => {
+            console.log("resize callback");
+            setstate({
+              height: document.documentElement.clientHeight,
+              width: document.documentElement.clientWidth,
+            });
+          }, 1000),
+          []
+        );
 
+        const resize = (e) => {
+          console.log("resize");
+          setstate({
+            height: document.documentElement.clientHeight,
+            width: document.documentElement.clientWidth,
+          });
+        };
 
-        function Count(props) {
-            const [count, setcount] = useState(0);
-            return <div>
-                Count: {count}
-                <button onClick={e => setcount(count + 1)}>Count1</button>
-                <button onClick={e => setcount(count => count + 1)}>Count2</button>
-            </div>
-        }
+        console.log("useresize render");
 
+        const resize2 = debounce((e) => {
+          console.log("resize2");
+          setstate({
+            height: document.documentElement.clientHeight,
+            width: document.documentElement.clientWidth,
+          });
+        }, 1000);
 
+        // App 组件刷新 ,这个hooks会执行多次
+        // console.log("useresize render")
 
+        useEffect(() => {
+          // window.addEventListener("resize", resize);
+          // window.addEventListener("resize", resize2);
+          window.addEventListener("resize", resizeCall);
+          return () => {
+            // window.removeEventListener('resize', resize)
+            // window.removeEventListener('resize', resize2)
+            window.removeEventListener("resize", resizeCall);
+          };
+        }, []);
 
-        ReactDOM.render(<App />, document.getElementById("root"));
+        const [state, setstate] = useState(() => getInit());
+        return state;
+      }
 
-        // 防抖函数
-        function debounce(fun, timeout = 500) {
-            let timer;
-            return function (e) {
-                timer && clearTimeout(timer);
-                timer = setTimeout(() => {
-                    fun()
-                }, timeout)
-            }
-        }
+      function App() {
+        // 使用自定义的hooks 内部状态变化后,组件会更新
+        const screen = useResize();
+        const [count, setcount] = useState(0);
+        useEffect(() => {
+          let interval = setInterval(() => {
+            setcount((pre) => pre + 1);
+          }, 500);
+          return () => {
+            clearInterval(interval);
+          };
+        }, []);
+        return (
+          <div>
+            App Count : {count}
+            <Count />
+          </div>
+        );
+      }
 
+      function Count(props) {
+        const [count, setcount] = useState(0);
+        return (
+          <div>
+            Count: {count}
+            <button onClick={(e) => setcount(count + 1)}>Count1</button>
+            <button onClick={(e) => setcount((count) => count + 1)}>
+              Count2
+            </button>
+          </div>
+        );
+      }
 
+      ReactDOM.render(<App />, document.getElementById("root"));
+
+      // 防抖函数
+      function debounce(fun, timeout = 500) {
+        let timer;
+        return function (e) {
+          timer && clearTimeout(timer);
+          timer = setTimeout(() => {
+            fun();
+          }, timeout);
+        };
+      }
     </script>
-</body>
-
+  </body>
 </html>

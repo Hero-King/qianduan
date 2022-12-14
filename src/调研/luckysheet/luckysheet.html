@@ -67,8 +67,11 @@
       "
     >
       <h3>excel导入导出</h3>
-      参考 <a href="https://gitee.com/style1987/luckysheet-vue-importAndExport.git">luckysheet-vue-importAndExport项目</a>
-      <br>
+      参考
+      <a href="https://gitee.com/style1987/luckysheet-vue-importAndExport.git"
+        >luckysheet-vue-importAndExport项目</a
+      >
+      <br />
       <input type="file" name="excel" id="import" />
 
       <button id="button">加载test.xlsx在线编辑</button>
@@ -100,16 +103,17 @@
           }
         );
       }
-    
-      const button = document.getElementById('button')
-      button.addEventListener('click',function (e) {
 
+      const button = document.getElementById("button");
+      button.addEventListener("click", function (e) {
         // 使用url远程地址 需要url支持跨域请求
         // let url = "http://10.36.30.83:80/statics/2022/06/22/15394331249943552001111.xlsx"
         // LuckyExcel.transformExcelToLuckyByUrl(url,"Test", function (exportJson, luckysheetfile) {
-        
-        LuckyExcel.transformExcelToLuckyByUrl('./test.xlsx',"Test", function (exportJson, luckysheetfile) {
 
+        LuckyExcel.transformExcelToLuckyByUrl(
+          "./test.xlsx",
+          "Test",
+          function (exportJson, luckysheetfile) {
             // luckysheetfile 是对exportJson的序列化
             console.log(exportJson, luckysheetfile, "----");
             luckysheet.create({
@@ -118,9 +122,9 @@
               title: exportJson.info.name,
               userInfo: exportJson.info.name.creator,
             });
-          })
-      })
-    
+          }
+        );
+      });
     </script>
 
     <script>

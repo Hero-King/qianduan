@@ -1,195 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/underscore.js"></script>
     <script>
-        // 写一个函数  第一秒打印1  第二秒打印2
-        for (let i = 0; i < 5; i++) {
-            setTimeout(function () {
-                console.log(i)
-            }, 1000 * i)
+      // 写一个函数  第一秒打印1  第二秒打印2
+      for (let i = 0; i < 5; i++) {
+        setTimeout(function () {
+          console.log(i);
+        }, 1000 * i);
+      }
+
+      for (var i = 0; i < 5; i++) {
+        (function (i) {
+          setTimeout(function () {
+            console.log(i);
+          }, 1000 * i);
+        })(i);
+      }
+
+      // 简单实现Node的Events模块
+      (function () {
+        function MyEvent() {
+          this.handles = {};
+          this.on = function (eventName, callback) {
+            if (!this.handles[eventName]) {
+              this.handles[eventName] = [];
+            }
+            this.handles[eventName].push(callback);
+          };
+          this.emit = function (eventName, ...param) {
+            if (this.handles[eventName]) {
+              this.handles[eventName].forEach((i) => i.call(this, ...param)); //  打印的this是 myevent实例
+              // this.handles[eventName].forEach(i => i(...param))    //打印的this是windows
+            } else {
+              throw new Error("事件未定义");
+            }
+          };
         }
 
-        for (var i = 0; i < 5; i++) {
-            (function (i) {
-                setTimeout(function () {
-                    console.log(i)
-                }, 1000 * i)
-            })(i)
+        function test(params) {
+          const event1 = new MyEvent();
+          event1.on("click", function () {
+            console.log("click", this);
+          });
+          event1.emit("click", "1212");
         }
+        test();
+      })();
 
-        // 简单实现Node的Events模块
-        (function () {
-            function MyEvent() {
-                this.handles = {}
-                this.on = function (eventName, callback) {
-                    if (!this.handles[eventName]) {
-                        this.handles[eventName] = []
-                    }
-                    this.handles[eventName].push(callback)
-                }
-                this.emit = function (eventName, ...param) {
-                    if (this.handles[eventName]) {
-                        this.handles[eventName].forEach(i => i.call(this, ...param)) //  打印的this是 myevent实例
-                        // this.handles[eventName].forEach(i => i(...param))    //打印的this是windows
-                    } else {
-                        throw new Error("事件未定义")
-                    }
-                }
-            }
+      // 用闭包写个单例模式
+      const AA = (function () {
+        var instance;
+        return function (name) {
+          if (!instance) {
+            instance = this;
+          }
+          return instance;
+        };
+      })();
+      console.log(new AA() == new AA()); // true
 
-            function test(params) {
-                const event1 = new MyEvent();
-                event1.on("click", function () {
-                    console.log("click", this)
-                })
-                event1.emit("click", "1212")
-            }
-            test()
-
-        })();
-
-        // 用闭包写个单例模式
-        const AA = (function () {
-            var instance;
-            return function (name) {
-                if (!instance) {
-                    instance = this
-                }
-                return instance
-            }
-        })();
-        console.log(new AA() == new AA())   // true
-
-        // 在JS引擎中，通过标识符查找标识符的值，会从当前作用域向上查找，直到作用域找到第一个匹配的标识符位置。就是JS的作用域链。
+      // 在JS引擎中，通过标识符查找标识符的值，会从当前作用域向上查找，直到作用域找到第一个匹配的标识符位置。就是JS的作用域链。
     </script>
-</head>
+  </head>
 
-<body>
-    <div class="test1" style="width:200px; height: 200px"></div>
+  <body>
+    <div class="test1" style="width: 200px; height: 200px"></div>
     <div id="jsonp"></div>
     <ul id="myul">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
     </ul>
     <script>
-            // 创建10个`<a>`标签，点击的时候弹出来对应的序号
-            (function () {
-                const test1 = document.getElementsByClassName("test1")[0]
-                let domarr = [];
-                let innerHtml = ""
-                for (let i = 0; i < 10; i++) {
-                    innerHtml += `<a data-index=${i}>${i}</a>`;
-                };
-                test1.innerHTML = innerHtml;
-                test1.onclick = function (e) {
-                    e.preventDefaut();
-                    // e.currentTarget  代表当前事件绑定在哪
-                    console.log(e.target.dataset.index)
-                }
-            })();
-
-        // 学习document.queryselector
-        (function () {
-            // querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。
-            console.log(document.querySelector(".test1") === document.getElementsByClassName("test1")[0])  // true
-            // document.querySelectorAll()	document.querySelectorAll() 是 HTML5中引入的新方法，返回文档中匹配的CSS选择器的所有元素节点列表
-            const test1 = document.querySelector(".test1");
-            // 全屏展示： HTML5规范允许用户自定义网页上**任一元素**全屏显示。
-            // requestFullscreen()   //让元素开启全屏显示    
-            // document.fullScreen 检测当前是否处于全屏状态
-            // 全屏的伪类 :full-screen .box {}
-            test1.onclick = function (e) {
-                if (document.fullscreen) {
-                    console.log(document.fullscreenElement)
-                    this.backgroundcolor = "red";
-                } else {
-                    this.requestFullscreen()
-                }
-            }
-        })();
-
-        const { log } = console;
-        log(1 == true, "1 == true"); //  true   true转换成数字是1 
-        log(2 == true, "2 == true"); // false   会把布尔类型的值转换为数字类型 true=1 false=0
-        log([] == false, "[] == false");    // true
-        log([] == ![], "[] == ![]")         // true
-        if ([]) { log("if([])输出了") }
-        (function (log) {
-            var a;
-            log(typeof a); // “undefined”
-            // log(b); // 报错  不会自动提升
-            b = 10;
-            log(typeof b);//”number”
-        })(log);
-
-        // 排序
-        const numberArray = [3, 6, 2, 4, 1, 5];
-        log(numberArray.sort((a, b) => a - b)); // 升序 在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
-        log(numberArray.sort());     // 默认升序
-
-        // 注意 if 条件的真假判定，记住以下是 false 的情况：空字符串、false、undefined、null、0
-
-        // 用 js 实现随机选取 10–100 之间的 10 个数字，存入一个数组，并排序。
-        ; (function () {
-            function getRandom(startInt, endInt) {
-                return Math.random() * (endInt - startInt) + startInt;
-            }
-
-            function getRandomBi(istart, iend) {
-                var iChoice = istart - iend + 1;
-                return Math.floor(Math.random() * iChoice + istart);
-            };
-            let array = [];
-            for (let index = 0; index < 10; index++) {
-                array.push(getRandom(10, 100))
-            }
-            array.sort();
-            console.log(array)
-        })();
-
-        // 手写jsonp
-        ; (function (params) {
-            const jsonp = document.querySelector("#jsonp");
-            jsonp.style.width = "100px";
-            jsonp.style.height = "100px";
-            jsonp.style.border = "1px solid red";
-
-            function log(str) {
-                console.log(str)
-            }
-
-            jsonp.addEventListener("click", function (e) {
-                const domscript = document.createElement("script");
-                domscript.src = "http://localhost:90/getJsonp?callback=log";
-                jsonp.appendChild(domscript);
-            })
-        })();
-
-        // 为什么不能定义1px左右的div容器？ IE6下这个问题是因为默认的行高造成的，解决的方法也有很多，例如：overflow:hidden | zoom:0.08 | line-height:1px
-
-
-        function foo() {
-            foo.a = function () { alert(1) };
-            this.a = function () { alert(2) };
-            a = function () { alert(3) };
-            var a = function () { alert(4) };
+      // 创建10个`<a>`标签，点击的时候弹出来对应的序号
+      (function () {
+        const test1 = document.getElementsByClassName("test1")[0];
+        let domarr = [];
+        let innerHtml = "";
+        for (let i = 0; i < 10; i++) {
+          innerHtml += `<a data-index=${i}>${i}</a>`;
+        }
+        test1.innerHTML = innerHtml;
+        test1.onclick = function (e) {
+          e.preventDefaut();
+          // e.currentTarget  代表当前事件绑定在哪
+          console.log(e.target.dataset.index);
         };
-        console.log(foo)        //打印出函数的代码
-        console.log(foo.a)      // undefined  此时foo函数什么属性都没有
-        foo()
-        console.log(foo.a)      // alert(1)
+      })();
 
-        var bool = !!2; log(bool); //true;   技巧：双向非操作可以把字符串和数字转换为布尔值。
+      // 学习document.queryselector
+      (function () {
+        // querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素。
+        console.log(
+          document.querySelector(".test1") ===
+            document.getElementsByClassName("test1")[0]
+        ); // true
+        // document.querySelectorAll()	document.querySelectorAll() 是 HTML5中引入的新方法，返回文档中匹配的CSS选择器的所有元素节点列表
+        const test1 = document.querySelector(".test1");
+        // 全屏展示： HTML5规范允许用户自定义网页上**任一元素**全屏显示。
+        // requestFullscreen()   //让元素开启全屏显示
+        // document.fullScreen 检测当前是否处于全屏状态
+        // 全屏的伪类 :full-screen .box {}
+        test1.onclick = function (e) {
+          if (document.fullscreen) {
+            console.log(document.fullscreenElement);
+            this.backgroundcolor = "red";
+          } else {
+            this.requestFullscreen();
+          }
+        };
+      })();
 
-        /**
+      const { log } = console;
+      log(1 == true, "1 == true"); //  true   true转换成数字是1
+      log(2 == true, "2 == true"); // false   会把布尔类型的值转换为数字类型 true=1 false=0
+      log([] == false, "[] == false"); // true
+      log([] == ![], "[] == ![]"); // true
+      if ([]) {
+        log("if([])输出了");
+      }
+      (function (log) {
+        var a;
+        log(typeof a); // “undefined”
+        // log(b); // 报错  不会自动提升
+        b = 10;
+        log(typeof b); //”number”
+      })(log);
+
+      // 排序
+      const numberArray = [3, 6, 2, 4, 1, 5];
+      log(numberArray.sort((a, b) => a - b)); // 升序 在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
+      log(numberArray.sort()); // 默认升序
+
+      // 注意 if 条件的真假判定，记住以下是 false 的情况：空字符串、false、undefined、null、0
+
+      // 用 js 实现随机选取 10–100 之间的 10 个数字，存入一个数组，并排序。
+      (function () {
+        function getRandom(startInt, endInt) {
+          return Math.random() * (endInt - startInt) + startInt;
+        }
+
+        function getRandomBi(istart, iend) {
+          var iChoice = istart - iend + 1;
+          return Math.floor(Math.random() * iChoice + istart);
+        }
+        let array = [];
+        for (let index = 0; index < 10; index++) {
+          array.push(getRandom(10, 100));
+        }
+        array.sort();
+        console.log(array);
+      })();
+
+      // 手写jsonp
+      (function (params) {
+        const jsonp = document.querySelector("#jsonp");
+        jsonp.style.width = "100px";
+        jsonp.style.height = "100px";
+        jsonp.style.border = "1px solid red";
+
+        function log(str) {
+          console.log(str);
+        }
+
+        jsonp.addEventListener("click", function (e) {
+          const domscript = document.createElement("script");
+          domscript.src = "http://localhost:90/getJsonp?callback=log";
+          jsonp.appendChild(domscript);
+        });
+      })();
+
+      // 为什么不能定义1px左右的div容器？ IE6下这个问题是因为默认的行高造成的，解决的方法也有很多，例如：overflow:hidden | zoom:0.08 | line-height:1px
+
+      function foo() {
+        foo.a = function () {
+          alert(1);
+        };
+        this.a = function () {
+          alert(2);
+        };
+        a = function () {
+          alert(3);
+        };
+        var a = function () {
+          alert(4);
+        };
+      }
+      console.log(foo); //打印出函数的代码
+      console.log(foo.a); // undefined  此时foo函数什么属性都没有
+      foo();
+      console.log(foo.a); // alert(1)
+
+      var bool = !!2;
+      log(bool); //true;   技巧：双向非操作可以把字符串和数字转换为布尔值。
+
+      /**
         Link和import 区别
         区别 1：link 是 XHTML 标签，除了加载 CSS 外，还可以定义 RSS 等其他事务；@import
 属于 CSS 范畴，只能加载 CSS。
@@ -202,63 +213,66 @@
 *
          */
 
-        //  数组扁平化处理
-        log("//  数组扁平化处理");
-        ; (function (params) {
-            const arr = [1, [2, [3, [4, 5]]], 6]     // => [1,2,3,4,5,6]
-            const arr1 = [[1, 2], [3, 4, [5]]]
-            console.log(_.flatten(arr))     //  [1, 2, 3, 4, 5, 6]
-            console.log(_.flatten(arr1))     //  [1, 2, 3, 4, 5]     //  /ˈflætn/ 击败，摧毁；使……平坦  变平；变单调
+      //  数组扁平化处理
+      log("//  数组扁平化处理");
+      (function (params) {
+        const arr = [1, [2, [3, [4, 5]]], 6]; // => [1,2,3,4,5,6]
+        const arr1 = [
+          [1, 2],
+          [3, 4, [5]],
+        ];
+        console.log(_.flatten(arr)); //  [1, 2, 3, 4, 5, 6]
+        console.log(_.flatten(arr1)); //  [1, 2, 3, 4, 5]     //  /ˈflætn/ 击败，摧毁；使……平坦  变平；变单调
 
-            // ES6规范增加了 Array.prototype.flat()方法。该方法接收 depth 参数（默认值为 1），返回一个对要打平 Array 实例的浅复制副本。
-            arr.flat(Infinity)      // Infinity 无穷；无限大；无限距
+        // ES6规范增加了 Array.prototype.flat()方法。该方法接收 depth 参数（默认值为 1），返回一个对要打平 Array 实例的浅复制副本。
+        arr.flat(Infinity); // Infinity 无穷；无限大；无限距
 
-            // 使用reduce  reduce如果没有提供initialValue，reduce 会从索引1的地方开始执行 callback 方法，跳过第一个索引。如果提供initialValue，从索引0开始。
+        // 使用reduce  reduce如果没有提供initialValue，reduce 会从索引1的地方开始执行 callback 方法，跳过第一个索引。如果提供initialValue，从索引0开始。
 
-            const callback = (prevalue, curvalue, curIndex, arr) => {
-                if (Array.isArray(curvalue)) {
-                    curvalue.reduce(callback, prevalue);
-                } else {
-                    prevalue.push(curvalue);
-                }
-                return prevalue
-            }
-            const reduceArr = arr.reduce(callback, [])
-            log(reduceArr, "reduceArr")
+        const callback = (prevalue, curvalue, curIndex, arr) => {
+          if (Array.isArray(curvalue)) {
+            curvalue.reduce(callback, prevalue);
+          } else {
+            prevalue.push(curvalue);
+          }
+          return prevalue;
+        };
+        const reduceArr = arr.reduce(callback, []);
+        log(reduceArr, "reduceArr");
 
-            // Array.prototype.flatMap()方法会在打平数组之前执行一次映射操作。在功能上，arr.flatMap(f)与 arr.map(f).flat()等价；但 arr.flatMap()更高效，因为浏览器只需要执行一次遍历。
-            const arrT = [[1], [3], [5]];
-            console.log(arrT.map(([x]) => [x, x + 1]));
-            // [[1, 2], [3, 4], [5, 6]]
-            console.log(arrT.flatMap(([x]) => [x, x + 1]));
-            // [1, 2, 3, 4, 5, 6] 
-        })()
+        // Array.prototype.flatMap()方法会在打平数组之前执行一次映射操作。在功能上，arr.flatMap(f)与 arr.map(f).flat()等价；但 arr.flatMap()更高效，因为浏览器只需要执行一次遍历。
+        const arrT = [[1], [3], [5]];
+        console.log(arrT.map(([x]) => [x, x + 1]));
+        // [[1, 2], [3, 4], [5, 6]]
+        console.log(arrT.flatMap(([x]) => [x, x + 1]));
+        // [1, 2, 3, 4, 5, 6]
+      })();
 
-        // 类数组转数组   类数组是具有length属性 但是没有数组原型上面的方法 常见的有arguments dom查询 时候的返回值
-        const myul = document.getElementById("myul");
-        const child = myul.children;
-        console.log(child.length, Array.isArray(child))  // 5  false
-        log(Array.from(child), "Array.from(child)");
-        log(Array.prototype.slice.call(child), "(Array.prototype.slice.call(child)")
-        log([...child]);
+      // 类数组转数组   类数组是具有length属性 但是没有数组原型上面的方法 常见的有arguments dom查询 时候的返回值
+      const myul = document.getElementById("myul");
+      const child = myul.children;
+      console.log(child.length, Array.isArray(child)); // 5  false
+      log(Array.from(child), "Array.from(child)");
+      log(
+        Array.prototype.slice.call(child),
+        "(Array.prototype.slice.call(child)"
+      );
+      log([...child]);
 
+      (function (params) {
+        // 不改变原始的数组的方法: map filter concat slice join
+        let x = 10;
+        let foo = () => {
+          // console.log(x,"xxxx");  // error
+          let x = 20;
+          console.log(x, "xxxx"); // 20
+          x++;
+        };
+        foo();
+      })();
 
-        ; (
-            function (params) {
-                // 不改变原始的数组的方法: map filter concat slice join
-                let x = 10
-                let foo = () => {
-                    // console.log(x,"xxxx");  // error
-                    let x = 20;
-                    console.log(x, "xxxx");  // 20
-                    x++;
-                }
-                foo()
-            })()
-
-
-        // new 的时候干了什么
-        /*
+      // new 的时候干了什么
+      /*
         
         (1) 在内存中创建一个新对象。
         (2) 这个新对象内部的[[Prototype]]特性被赋值为构造函数的 prototype 属性。
@@ -268,131 +282,131 @@
 
         */
 
-        // return 关键词用于终止函数,函数返回值,不能用于for循环中,但是能放在函数内的for循环 用于终止函数
-        // for (let i = 0; i < 10; i++) {
-        //     console.log(i)
-        //     if (i == 5) {
-        //         return i        // 报错
+      // return 关键词用于终止函数,函数返回值,不能用于for循环中,但是能放在函数内的for循环 用于终止函数
+      // for (let i = 0; i < 10; i++) {
+      //     console.log(i)
+      //     if (i == 5) {
+      //         return i        // 报错
+      //     }
+
+      // }
+
+      function add(params) {
+        for (let i = 0; i < 10; i++) {
+          console.log(i);
+          if (i == 5) {
+            return i;
+          }
+        }
+      }
+      add();
+      // 使用{}  代替自调用函数
+      {
+        // 不改变原始的数组的方法: map filter concat slice
+        let x = 10;
+        let foo = () => {
+          // console.log(x,"xxxx");  // error
+          let x = 20;
+          console.log(x, "xxxx"); // 20
+          x++;
+        };
+        foo();
+      }
+
+      {
+        // 点击li打印对应的下标
+        const uldom = document.getElementById("myul");
+        // uldom.addEventListener("click", function (e) {
+        //     const lilist = uldom.children;
+        //     for (let i = 0; i < lilist.length; i++) {
+        //         const li = lilist[i];
+        //         if (li == e.target) {
+        //             console.log(i)
+        //         }
+
         //     }
+        // })
+      }
 
-        // }
+      {
+        const lilist = document.querySelectorAll("#myul li");
+        for (var i = 0; i < lilist.length; i++) {
+          const li = lilist[i];
+          li.addEventListener(
+            "click",
+            (function (index) {
+              return function (e) {
+                console.log(index);
+              };
+            })(i)
+          );
+        }
+      }
 
-        function add(params) {
-            for (let i = 0; i < 10; i++) {
-                console.log(i)
-                if (i == 5) {
-                    return i
-                }
+      {
+        var obj = { proto: { a: 1, b: 2 } };
+        function F() {}
+        F.prototype = obj.proto;
+        var f = new F();
+        obj.proto.c = 3;
+        obj.proto = { a: -1, b: -2 };
+        log(f.a); //1
+        log(f.c); //3
+        delete F.prototype["a"];
+        log(f.a); //undefined
+        log(obj.proto.a); //-1
+      }
 
+      {
+        //手写数组filter
+        [1, 2, 3].filter((i) => i > 2); //filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+        Array.prototype.myFilter = function (callback) {
+          if (this == undefined) {
+            throw new TypeError("this is null or undefined");
+          }
+          if (typeof callback !== "function") {
+            throw new TypeError("calback is not a function");
+          }
+          let result = [];
+          for (const v of this) {
+            if (callback(v)) {
+              result.push(v);
             }
-        }
-        add()
-        // 使用{}  代替自调用函数
-        {
-            // 不改变原始的数组的方法: map filter concat slice
-            let x = 10
-            let foo = () => {
-                // console.log(x,"xxxx");  // error
-                let x = 20;
-                console.log(x, "xxxx");  // 20
-                x++;
-            }
-            foo()
-        }
+          }
+          return result;
+        };
+        console.log(
+          [1, 2, 3, 7, 6, 4].myFilter((i) => i > 4),
+          "myfilter"
+        ); // [7,6]
 
-        {
-            // 点击li打印对应的下标
-            const uldom = document.getElementById("myul");
-            // uldom.addEventListener("click", function (e) {
-            //     const lilist = uldom.children;
-            //     for (let i = 0; i < lilist.length; i++) {
-            //         const li = lilist[i];
-            //         if (li == e.target) {
-            //             console.log(i)
-            //         }
+        Array.prototype.myMap = function (callback) {
+          if (this == undefined) {
+            throw new TypeError("this is null or undefined");
+          }
+          if (typeof callback !== "function") {
+            throw new TypeError("calback is not a function");
+          }
+          let result = [];
+          for (const v of this) {
+            result.push(callback(v));
+          }
+          return result;
+        };
+      }
 
-            //     }
-            // })
-        }
-
-        {
-            const lilist = document.querySelectorAll("#myul li");
-            for (var i = 0; i < lilist.length; i++) {
-                const li = lilist[i];
-                li.addEventListener("click", (function (index) {
-                    return function (e) { console.log(index) }
-                })(i))
-
-            }
-        }
-
-        {
-            var obj = { proto: { a: 1, b: 2 } };
-            function F() { };
-            F.prototype = obj.proto;
-            var f = new F();
-            obj.proto.c = 3;
-            obj.proto = { a: -1, b: -2 };
-            log(f.a);//1
-            log(f.c);//3
-            delete F.prototype['a'];
-            log(f.a);//undefined
-            log(obj.proto.a);//-1
-        }
-
-        {
-
-            //手写数组filter
-            [1, 2, 3].filter(i => i > 2)        //filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
-            Array.prototype.myFilter = function (callback) {
-                if (this == undefined) {
-                    throw new TypeError("this is null or undefined")
-                }
-                if (typeof callback !== "function") {
-                    throw new TypeError("calback is not a function")
-                }
-                let result = []
-                for (const v of this) {
-                    if (callback(v)) {
-                        result.push(v)
-                    }
-                }
-                return result
-            }
-            console.log([1, 2, 3, 7, 6, 4].myFilter(i => i > 4), "myfilter");   // [7,6]
-
-            Array.prototype.myMap = function (callback) {
-                if (this == undefined) {
-                    throw new TypeError("this is null or undefined")
-                }
-                if (typeof callback !== "function") {
-                    throw new TypeError("calback is not a function")
-                }
-                let result = []
-                for (const v of this) {
-                    result.push(callback(v))
-
-                }
-                return result
-            }
-
-        }
-
-        {
-            // bar();//报错
-            var foo = function bar(name) {
-                console.log("hello" + name);
-                console.log(bar);
-            };
-            //alert(typeof bar);
-            foo("world");//"helloworld"  打印函数内容
-            // console.log(bar);//undefined
-            console.log(foo.toString());    //打印函数内容
-            bar();//报错
-        }
-
-
+      {
+        // bar();//报错
+        var foo = function bar(name) {
+          console.log("hello" + name);
+          console.log(bar);
+        };
+        //alert(typeof bar);
+        foo("world"); //"helloworld"  打印函数内容
+        // console.log(bar);//undefined
+        console.log(foo.toString()); //打印函数内容
+        bar(); //报错
+      }
     </script>
-</body>
-
+  </body>
 </html>

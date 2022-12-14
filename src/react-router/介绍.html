@@ -1,63 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <p>
-        HashRouter 原理是读取url后面的hash值 点击标签注意观察 url变化
+      HashRouter 原理是读取url后面的hash值 点击标签注意观察 url变化
 
-        <a href="#/a">a</a>
-        <a href="#/b">b</a>
-        <img src="a.jpg" id="wrapper"></src>
+      <a href="#/a">a</a>
+      <a href="#/b">b</a>
+      <img src="a.jpg" id="wrapper" />
     </p>
     <p id="myp">
-        BrowserRouter 原理是采用的html5 history Api 切换 点击之后,页面的url会变化 但是不触发加载刷新操作
-        <a onclick="push('/a')">a</a>
-        <a onclick="push('/b')">b</a>
-
+      BrowserRouter 原理是采用的html5 history Api 切换 点击之后,页面的url会变化
+      但是不触发加载刷新操作
+      <a onclick="push('/a')">a</a>
+      <a onclick="push('/b')">b</a>
     </p>
 
     <h2>阅读前端源码小技巧</h2>
     <div>
-        就比如react-router包来看,有cjs(commonjs模块规范) es() umd(通用模块规范) esm(es module规范);
-        方便自己查看的肯定是esm里面的代码  其他文件夹下面的都是通过webpack等打包工具生成
-
-
+      就比如react-router包来看,有cjs(commonjs模块规范) es() umd(通用模块规范)
+      esm(es module规范); 方便自己查看的肯定是esm里面的代码
+      其他文件夹下面的都是通过webpack等打包工具生成
     </div>
 
-
     <script>
-        console.log(location.hash);
-        const wrapper = document.getElementById("wrapper")
-        const myp = document.getElementById("myp")
-        window.addEventListener("hashchange", () => {
-            wrapper.src = location.hash.substring(2) + ".jpg"
-        })
+      console.log(location.hash);
+      const wrapper = document.getElementById("wrapper");
+      const myp = document.getElementById("myp");
+      window.addEventListener("hashchange", () => {
+        wrapper.src = location.hash.substring(2) + ".jpg";
+      });
 
-        function push(path) {
-            // pushState(状态对象,title,url)
-            history.pushState({ path }, null, path)
-        }
+      function push(path) {
+        // pushState(状态对象,title,url)
+        history.pushState({ path }, null, path);
+      }
 
-        // 浏览器点击向前 向后触发
-        // popstate
-        // 当前活动历史项(history entry)改变会触发popstate事件。调用history.pushState()创建新的历史项(history entry) ，或调用history.replaceState()替换新的历史项(history entry) ，那么popstate事件的state属性会包含历史项(history entry)状态对象(state object)的拷贝。
+      // 浏览器点击向前 向后触发
+      // popstate
+      // 当前活动历史项(history entry)改变会触发popstate事件。调用history.pushState()创建新的历史项(history entry) ，或调用history.replaceState()替换新的历史项(history entry) ，那么popstate事件的state属性会包含历史项(history entry)状态对象(state object)的拷贝。
 
-        // 需要注意的是调用history.pushState()或history.replaceState()不会触发popstate事件。只有在做出浏览器动作时，才会触发该事件，如用户点击浏览器的回退按钮（或者在Javascript代码中调用history.back() ）
-        window.addEventListener("popstate", () => {
-            console.log(e)
-        })
+      // 需要注意的是调用history.pushState()或history.replaceState()不会触发popstate事件。只有在做出浏览器动作时，才会触发该事件，如用户点击浏览器的回退按钮（或者在Javascript代码中调用history.back() ）
+      window.addEventListener("popstate", () => {
+        console.log(e);
+      });
 
-        console.log(void 0);
-        // void 关键字: void 运算符 对给定的表达式进行求值，然后返回 undefined。
-        // void expression
-        // void 运算符通常只用于获取 undefined的原始值，一般使用void(0)（等同于void 0）。在上述情况中，也可以使用全局变量undefined 来代替（假定其仍是默认值）。
+      console.log(void 0);
+      // void 关键字: void 运算符 对给定的表达式进行求值，然后返回 undefined。
+      // void expression
+      // void 运算符通常只用于获取 undefined的原始值，一般使用void(0)（等同于void 0）。在上述情况中，也可以使用全局变量undefined 来代替（假定其仍是默认值）。
     </script>
-</body>
-
+  </body>
 </html>

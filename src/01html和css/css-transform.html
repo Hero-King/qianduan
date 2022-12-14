@@ -1,94 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        .div{
-            transform: translate(100px, 0px);
-            /* 
+      * {
+        box-sizing: border-box;
+      }
+      .div {
+        transform: translate(100px, 0px);
+        /* 
             transform-origin: x y  设置元素转换的中心点 默认: 50% 50%*/
-            /*translate 优点: 不会影响其他盒子的布局 50% 50% 是相对自己的长宽度的50%  对行内标签无效 */
-        }
-        .transform-origin{
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            overflow: hidden;
-            border: 1px solid pink ;
-        }
-        .transform-origin::after{
-            content: " 哈哈 ";
-            height: 100%; width: 100%; 
-            display: inline-block;
-            background-color: #6d6de2;
-            text-align: center; 
-            transform:rotate(180deg); 
-            transition: all .5s;
-            transform-origin: left bottom;
-        }
-        .transform-origin:hover::after{
-            transform: rotate(0deg);
-        }
+        /*translate 优点: 不会影响其他盒子的布局 50% 50% 是相对自己的长宽度的50%  对行内标签无效 */
+      }
+      .transform-origin {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        overflow: hidden;
+        border: 1px solid pink;
+      }
+      .transform-origin::after {
+        content: " 哈哈 ";
+        height: 100%;
+        width: 100%;
+        display: inline-block;
+        background-color: #6d6de2;
+        text-align: center;
+        transform: rotate(180deg);
+        transition: all 0.5s;
+        transform-origin: left bottom;
+      }
+      .transform-origin:hover::after {
+        transform: rotate(0deg);
+      }
 
-        .rotate{
-            width: 200px;
-            height: 200px;
-            transition: all 1s;
-        }
-        .rotate:hover{
-            transform: rotate(360deg);
-        }
+      .rotate {
+        width: 200px;
+        height: 200px;
+        transition: all 1s;
+      }
+      .rotate:hover {
+        transform: rotate(360deg);
+      }
 
-        .sanjiao{
-            width: 400px;
-            position: relative;
-            height: 100px;
-            border: 1px solid #000;
-        }
-        .sanjiao::after{
-            content: " ";
-            border-right:1px solid black; 
-            border-bottom:1px solid black; 
-            position: absolute;
-            transform: rotate(45deg);
-            top: 35px;
-            right: 20px;
-            width: 20px;
-            height: 20px;
-        }
-        .sanjiao:hover::after{
-            transform: rotate(225deg)
-        }
+      .sanjiao {
+        width: 400px;
+        position: relative;
+        height: 100px;
+        border: 1px solid #000;
+      }
+      .sanjiao::after {
+        content: " ";
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        position: absolute;
+        transform: rotate(45deg);
+        top: 35px;
+        right: 20px;
+        width: 20px;
+        height: 20px;
+      }
+      .sanjiao:hover::after {
+        transform: rotate(225deg);
+      }
 
-        #some{
-            width: 200px;
-            height: 100px;
-            border:1px solid pink;
-            transition: all 1s;
-        }
-        #some:hover{
-            transform: translate(100px ,150px) rotate(90deg)
-        }
+      #some {
+        width: 200px;
+        height: 100px;
+        border: 1px solid pink;
+        transition: all 1s;
+      }
+      #some:hover {
+        transform: translate(100px, 150px) rotate(90deg);
+      }
     </style>
-
-</head>
-<body>
-    <div class="div">
-        div
-    </div>
-    <div class="transform-origin">
-        
-    </div>
+  </head>
+  <body>
+    <div class="div">div</div>
+    <div class="transform-origin"></div>
     <div class="rotate">旋转的元素</div>
     <div class="sanjiao"></div>
-    
-    <div id="some">
-        移动旋转 放大
-    </div>
-</body>
+
+    <div id="some">移动旋转 放大</div>
+  </body>
 </html>

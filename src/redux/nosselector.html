@@ -1,111 +1,128 @@
 <!-- 待学习 redux react-redux等 -->
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root"></div>
-    <div>FrankFang GitHub这个人
-        我们可以看到只要是 更新了全局状态， 所有连接到的组件都会执行一次，这样并不合适  ->使用selector
+    <div>
+      FrankFang GitHub这个人 我们可以看到只要是 更新了全局状态，
+      所有连接到的组件都会执行一次，这样并不合适 ->使用selector
     </div>
 
     <script type="text/babel">
-        // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
-        const { useRef, useEffect, useState, useMemo, useReducer, useContext } = React;
+      // usereducer const [state, dispatch] = useReducer(reducer, initialArg, init);
+      const { useRef, useEffect, useState, useMemo, useReducer, useContext } =
+        React;
 
-        const context = React.createContext();
-        function App(props) {
-            return <context.Provider value={substore}>
-                <CountH />
-                <OtherCount />
-            </context.Provider>
+      const context = React.createContext();
+      function App(props) {
+        return (
+          <context.Provider value={substore}>
+            <CountH />
+            <OtherCount />
+          </context.Provider>
+        );
+      }
+
+      function Count({ state, dispatch, ...props }) {
+        const user = state.user;
+        console.log("Count render" + Math.random());
+        return (
+          <div>
+            User: userName {user.name} age: {user.age}
+            <button onClick={(e) => dispatch({ type: "increment" })}>
+              {" "}
+              +{" "}
+            </button>
+          </div>
+        );
+      }
+
+      function _OtherCount({ state, dispatch, ...props }) {
+        const user = state.otheruser;
+        console.log("_OtherCount render" + Math.random());
+        return (
+          <div>
+            otherUser: userName {user.name} age: {user.age}
+            <button onClick={(e) => dispatch({ type: "otherincrement" })}>
+              {" "}
+              +{" "}
+            </button>
+          </div>
+        );
+      }
+      const OtherCount = connect(_OtherCount);
+
+      const reducers = function (state, action) {
+        switch (action.type) {
+          case "increment":
+            return {
+              ...state,
+              user: { name: "wang", age: state.user.age + 1 },
+            };
+          case "otherincrement":
+            return {
+              ...state,
+              otheruser: { name: "otheruser", age: state.otheruser.age + 1 },
+            };
+
+          default:
+            return state;
         }
+      };
 
-        function Count({ state, dispatch, ...props }) {
-            const user = state.user;
-            console.log("Count render" + Math.random())
-            return <div>
-                User: userName {user.name} age: {user.age}
-                <button onClick={e => dispatch({ type: "increment" })}> + </button>
-            </div>
-        }
+      function connect(WrapperComponent) {
+        return (props) => {
+          const { state, setstate } = useContext(context);
+          const [update, setupdate] = useState();
+          useEffect(() => {
+            substore.subscribe(() => {
+              setupdate({});
+            });
+          }, []);
+          const dispatch = (action) => {
+            setstate(reducers(state, action));
+            // setupdate({})
+          };
+          return (
+            <WrapperComponent state={state} dispatch={dispatch} {...props} />
+          );
+        };
+      }
+      const CountH = connect(Count);
 
-        function _OtherCount({ state, dispatch, ...props }) {
-            const user = state.otheruser;
-            console.log("_OtherCount render" + Math.random())
-            return <div>
-                otherUser: userName {user.name} age: {user.age}
-                <button onClick={e => dispatch({ type: "otherincrement" })}> + </button>
-            </div>
-        }
-        const OtherCount = connect(_OtherCount)
+      // 在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
 
-        const reducers = function (state, action) {
-            switch (action.type) {
-                case "increment":
-                    return { ...state, user: { name: "wang", age: state.user.age + 1 } }
-                case "otherincrement":
-                    return { ...state, otheruser: { name: "otheruser", age: state.otheruser.age + 1 } }
+      const substore = {
+        state: {
+          user: { name: "wang", age: 1 },
+          otheruser: { name: "otheruser", age: 1 },
+        },
+        setstate(newstate) {
+          substore.state = newstate;
+          substore.subscribes.forEach((i) => i(newstate));
+        },
+        subscribes: [],
+        subscribe(fn) {
+          substore.subscribes.push(fn);
 
-                default:
-                    return state;
-            }
-        }
+          // 取消订阅
+          return () => {
+            const index = substore.subscribes.indexOf(fn);
+            substore.subscribes.splice(index, 1);
+          };
+        },
+      };
 
-        function connect(WrapperComponent) {
-            return (props) => {
-                const { state, setstate } = useContext(context);
-                const [update, setupdate] = useState();
-                useEffect(() => {
-                    substore.subscribe(() => { setupdate({}) })
-                }, [])
-                const dispatch = (action) => {
-                    setstate(reducers(state, action));
-                    // setupdate({})
-                }
-                return <WrapperComponent state={state} dispatch={dispatch} {...props} />
-            }
-        }
-        const CountH = connect(Count)
-
-
-        // 在高阶组件里面 继续判断某个组件的依赖属性是否变化,如果变化才更新,这样又减少了组件的更新
-
-        const substore = {
-            state: {
-                user: { name: "wang", age: 1 },
-                otheruser: { name: "otheruser", age: 1 }
-            },
-            setstate(newstate) {
-                substore.state = newstate;
-                substore.subscribes.forEach(i => i(newstate))
-            },
-            subscribes: [],
-            subscribe(fn) {
-                substore.subscribes.push(fn);
-
-                // 取消订阅
-                return () => {
-                    const index = substore.subscribes.indexOf(fn);
-                    substore.subscribes.splice(index, 1)
-                }
-            }
-
-        }
-
-
-
-
-        ReactDOM.render(<App />, document.getElementById("root"));
+      ReactDOM.render(<App />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>

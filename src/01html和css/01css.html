@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <link rel="stylesheet" href="testcss.css">
+    <link rel="stylesheet" href="testcss.css" />
     <style>
-        span {
-            color: blueviolet;
-            padding: 2px;
-        }
+      span {
+        color: blueviolet;
+        padding: 2px;
+      }
 
-        .mydiv {
-            font-size: 22px;
-            text-align: center;
-            /* 快捷键tac */
-            text-indent: 2em;
-            /* em也是单位长度  是相对于本内容的单位长度 比如段落是汉子那就是一个汉子的长度 */
-        }
+      .mydiv {
+        font-size: 22px;
+        text-align: center;
+        /* 快捷键tac */
+        text-indent: 2em;
+        /* em也是单位长度  是相对于本内容的单位长度 比如段落是汉子那就是一个汉子的长度 */
+      }
 
-        .red {
-            color: red;
-        }
+      .red {
+        color: red;
+      }
 
-        div {
-            font-size: 20px;
-            font-weight: bold;
-            /*font-family设置字体 字体加粗bold相当于700 700没有单位哦 normal不加粗相当于400*/
-        }
+      div {
+        font-size: 20px;
+        font-weight: bold;
+        /*font-family设置字体 字体加粗bold相当于700 700没有单位哦 normal不加粗相当于400*/
+      }
 
-        em {
-            font-style: normal;
-            /*font-style 设置斜体 normal不斜体 italic 设置字体斜体 */
-            /* 当然字体样式是可以连着写的中间空格隔开 选择器{ font: font-style font-weight font-size/line-height font-family } 某个属性不写使用默认值 但必须保留font-size和font-family属性，否则font属性将不起作用。*/
-        }
+      em {
+        font-style: normal;
+        /*font-style 设置斜体 normal不斜体 italic 设置字体斜体 */
+        /* 当然字体样式是可以连着写的中间空格隔开 选择器{ font: font-style font-weight font-size/line-height font-family } 某个属性不写使用默认值 但必须保留font-size和font-family属性，否则font属性将不起作用。*/
+      }
 
-        /* letter-spacing 属性增加或减少字符间的空白（字符间距）。 该属性定义了在文本字符框之间插入多少空间。 由于字符字形通常比其字符框要窄，指定长度值时，会调整字母之间通常的间隔。 */
+      /* letter-spacing 属性增加或减少字符间的空白（字符间距）。 该属性定义了在文本字符框之间插入多少空间。 由于字符字形通常比其字符框要窄，指定长度值时，会调整字母之间通常的间隔。 */
 
-        /* CSS外观属性
+      /* CSS外观属性
         color: 属性值有三种 1 关键字 2 16进制表示用#开头 #rrggbb 第二个r和第一个r值相同可以省略一个 红色：#ff0000 或者#f00 3 rgb
         line-height 行高 快捷键lh+table 单位也是用px 一般比字号大7.8px就好了
         text-align 让标签里面的内容水平对齐 left right center
@@ -47,174 +46,217 @@
         text-decoration 文本装饰 none 取消文本效果（对em strong del设置decoration:none 取消有的效果，只有强调的作用了） underline 下划线 overline上划线 line-through 删除线
          */
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     css阻塞dom渲染吗?? https://zhuanlan.zhihu.com/p/43282197
-    css加载不会阻塞DOM树的解析
-    css加载会阻塞DOM树的渲染
+    css加载不会阻塞DOM树的解析 css加载会阻塞DOM树的渲染
     css加载会阻塞后面js语句的执行
 
-
     <p>我们行内写样式是很臃肿的并且有些样式可能不生效</p>
-    <hr color="red">
-    CSS 美化HTML <br>
-    行内样式：<p style="color: saddlebrown;padding-left: 20">style属性，注意使用；分开</p>
-    内部样式表： <span>我是内部样式表只需要在head里添加style标签然后按照格式书写</span>
-    外部样式表： <div>书写CSS文件，里面不需要写style关键字了 html文件直接link一下</div>
+    <hr color="red" />
+    CSS 美化HTML <br />
+    行内样式：
+    <p style="color: saddlebrown; padding-left: 20">
+      style属性，注意使用；分开
+    </p>
+    内部样式表：
+    <span>我是内部样式表只需要在head里添加style标签然后按照格式书写</span>
+    外部样式表：
+    <div>书写CSS文件，里面不需要写style关键字了 html文件直接link一下</div>
     <h3 style="color: red">选择器</h3>
-    标签选择器 <br>
-    类选择器 <div class="mydiv red">上面点申明，下面class调用</div>
-    id选择器 用#
-    通配符选择器 * 代表所有标签<br>
-    选择器分组： h1,h2,h3{...} <br>
-    属性选择器： a[href] {...} 含有属性href的A标签 <br>
+    标签选择器 <br />
+    类选择器
+    <div class="mydiv red">上面点申明，下面class调用</div>
+    id选择器 用# 通配符选择器 * 代表所有标签<br />
+    选择器分组： h1,h2,h3{...} <br />
+    属性选择器： a[href] {...} 含有属性href的A标签 <br />
     后代选择器： div p {} .suibian p {} 都OK
     <h3>CSS字体样式属性</h3>
-    <div style="font-size: 20px">必须带px单位！！属性值可以是相对长度单位(em--相对于当前对象内文本的字体尺寸;px--像素)，也可以是绝对长度单位（in;cm;mm;pt）；</div>
+    <div style="font-size: 20px">
+      必须带px单位！！属性值可以是相对长度单位(em--相对于当前对象内文本的字体尺寸;px--像素)，也可以是绝对长度单位（in;cm;mm;pt）；
+    </div>
     Chrome默认字体可以在设置中查看 16px
     <div style="font-family: 微软雅黑">font-family用于设置字体</div>
     <em>我是em标签效果 用CSS样式做成不加粗可行？</em>
     <a href="#" target="_blank">我是超链接</a>
 
-    <h3>元素的显示模式 首先：标签的类型（显示模式）主要有两种：块级元素占据一行或者多行；可以设置宽度对齐属性
-        行内元素不占据控件紧靠自己的大小撑起结构；高宽无效，水平的padding和margin可以设置；行内元素肯定不可以放块元素 行内块元素:input img td </h3>
-    标签的显示模式是可以相互转换的 display: inline(块-》行) block(行-》块) inline-block (转成行内块)
-    <br>在调节样式的时候。行内元素和行内块元素可以看成文本 居中可以使用text-align
-    神奇
+    <h3>
+      元素的显示模式
+      首先：标签的类型（显示模式）主要有两种：块级元素占据一行或者多行；可以设置宽度对齐属性
+      行内元素不占据控件紧靠自己的大小撑起结构；高宽无效，水平的padding和margin可以设置；行内元素肯定不可以放块元素
+      行内块元素:input img td
+    </h3>
+    标签的显示模式是可以相互转换的 display: inline(块-》行) block(行-》块)
+    inline-block (转成行内块)
+    <br />在调节样式的时候。行内元素和行内块元素可以看成文本
+    居中可以使用text-align 神奇
     <h1>标签就是盒子</h1>
-    <div>1.写 三个 div 给定 100 * 100 的红色盒子 -- 宽度 高度 背景色
-
-        2.三个 span 也要求 150 * 150 绿色盒子
-
-        三个 a 链接 80 * 20 蓝色 盒子 要求 必须一行显示 这三个盒子
+    <div>
+      1.写 三个 div 给定 100 * 100 的红色盒子 -- 宽度 高度 背景色 2.三个 span
+      也要求 150 * 150 绿色盒子 三个 a 链接 80 * 20 蓝色 盒子 要求 必须一行显示
+      这三个盒子
     </div>
-    <div id='renwu1'>1</div>
-    <div id='renwu1'>2</div>
-    <div id='renwu1'>3</div>
-    <span id='renwu2'>1</span>
-    <span id='renwu2'>2</span>
-    <span id='renwu2'>3</span>
-    <div id='renwu3'></div>
+    <div id="renwu1">1</div>
+    <div id="renwu1">2</div>
+    <div id="renwu1">3</div>
+    <span id="renwu2">1</span>
+    <span id="renwu2">2</span>
+    <span id="renwu2">3</span>
+    <div id="renwu3"></div>
 
-    <hr>
+    <hr />
     <h3>测量行高</h3>
-    顶线，中线，基线，底线 分别是小学英语抄写本上面的四根线<br>
+    顶线，中线，基线，底线 分别是小学英语抄写本上面的四根线<br />
     行高： 基线与基线的距离 底线与底线之间的距离 也就是说汉字高度加上行间距
     我们将行高设置和盒子高度一样，也就是字体的高度是不变的加入是游览器默认的16px，剩下的高度就是
     间距，默认会平分成上下两部分；所以字体就显示出来在中间的效果
-    <br>如果我们设置行高大于盒子高度会出现什么效果？ =》 文字偏下 因为行高-盒子高度 /2 就是文本的上间距
+    <br />如果我们设置行高大于盒子高度会出现什么效果？ =》 文字偏下
+    因为行高-盒子高度 /2 就是文本的上间距
 
-    <hr>
-    <h3>CSS 三大特性 层叠性（样式采用后者居上，按照CSS后者为准）继承性（子标签继承父标签某些样式：文本颜色字号）优先级（权重） </h3>
-    权重：*或者继承 0000 元素选择器0001 class0010 id0100 行内样式 1000 !important 无穷大
-    权重可以叠加 div p {权重0001 + 0001 = 0002} class{权重0010更大} 数字中没有进制之说，000，20也是存在并且小于0010
-    只定义了父类，有important 传入子组件权重也是0 但是父组件 空格 子组件构成的后代选择器等选择器的权重是叠加的
+    <hr />
+    <h3>
+      CSS 三大特性
+      层叠性（样式采用后者居上，按照CSS后者为准）继承性（子标签继承父标签某些样式：文本颜色字号）优先级（权重）
+    </h3>
+    权重：*或者继承 0000 元素选择器0001 class0010 id0100 行内样式 1000
+    !important 无穷大 权重可以叠加 div p {权重0001 + 0001 = 0002}
+    class{权重0010更大} 数字中没有进制之说，000，20也是存在并且小于0010
+    只定义了父类，有important 传入子组件权重也是0 但是父组件 空格
+    子组件构成的后代选择器等选择器的权重是叠加的
     <h3>background背景</h3>
     <div id="background"></div>
-    CSS三大模型：盒子；浮动；定位。 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    CSS三大模型：盒子；浮动；定位。
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     盒子由元素内容，内边距padding,border,margin外边距
-    <div id="border">Chrome F12 盒子的蓝色区域是内容区域，设置的width和height 青色代表内边距 橙色代表外边距</div>
+    <div id="border">
+      Chrome F12 盒子的蓝色区域是内容区域，设置的width和height 青色代表内边距
+      橙色代表外边距
+    </div>
     盒子的border长度是不是包括内容的长度（width和height）+左右padding的数值？
-    因此：padding 会撑开带有width和height属性的盒子 如果盒子卡死200*200同时padding是20则需要设置盒子width、height: 160px
-    <br>小知识点 li前面的小点去掉 用list-style: none 先画盒子？padding后再更改width height
-    <br>大的 用于展示产品的都用插入图片，小的logo 很小的图或者超大的背景用背景图片（方便调整位置）
-    <br>相邻盒子外边距会自动取最大的一个！！ div1 margin-bottom: 100px div2 margin-top: 50px 最终他两间隔100px
-    嵌套块元素垂直塌陷 overflow: hidden 或者外边添加一个border
-
-    内部盒子指定了大小使用margin-left往里面撑一撑 没有大小使用padding-left把里面的内容区块往右边撑一撑
+    因此：padding 会撑开带有width和height属性的盒子
+    如果盒子卡死200*200同时padding是20则需要设置盒子width、height: 160px
+    <br />小知识点 li前面的小点去掉 用list-style: none
+    先画盒子？padding后再更改width height <br />大的
+    用于展示产品的都用插入图片，小的logo
+    很小的图或者超大的背景用背景图片（方便调整位置）
+    <br />相邻盒子外边距会自动取最大的一个！！ div1 margin-bottom: 100px div2
+    margin-top: 50px 最终他两间隔100px 嵌套块元素垂直塌陷 overflow: hidden
+    或者外边添加一个border 内部盒子指定了大小使用margin-left往里面撑一撑
+    没有大小使用padding-left把里面的内容区块往右边撑一撑
     <h3>float使得多个div在一行显示并且没有缝隙</h3>
-    普通流就是常用的div不管宽度是多少 占一行另一个div直接再起一行，相当于高铁按照轨道，依次行驶
-    <br>float是浮在空中的飞机 按照航道形式 某个标签浮动就是不占页面空间 left/right浮动
-    <br>定位 浮在空中的 可以去任意一个地方 相当于UFO
-    块级元素：
-    浮动1 浮动2 显示布局是 飘起来的1 右边2
-    浮动1 浮动2 div3 显示布局是 飘起来的1 右边2 div3在飘起来的元素下面
-    想要div3在浮动1 2 下面 可以给浮动设置个父亲（块元素） 设置好高度
+    普通流就是常用的div不管宽度是多少
+    占一行另一个div直接再起一行，相当于高铁按照轨道，依次行驶
+    <br />float是浮在空中的飞机 按照航道形式 某个标签浮动就是不占页面空间
+    left/right浮动 <br />定位 浮在空中的 可以去任意一个地方 相当于UFO 块级元素：
+    浮动1 浮动2 显示布局是 飘起来的1 右边2 浮动1 浮动2 div3 显示布局是 飘起来的1
+    右边2 div3在飘起来的元素下面 想要div3在浮动1 2 下面
+    可以给浮动设置个父亲（块元素） 设置好高度
     浮动的原则是：找到离他最近的父元素对齐。不会超出内边距的范围（浮动算内容块，不会跨越内边距）
-    浮动的元素具备行内块元素的特性 元素的大小完全取决于定义的大小或者默认的内容多少浮动根据元素书写的位置来显示相应的浮动。
-    （妙用： 行内块元素添加浮动 此时不需要转换为块级别元素也可以有大小）
-    浮动块1 行级元素 显示效果 浮动块1 行级元素 而不是块1压在行级元素上 要是块级别元素就是压了
+    浮动的元素具备行内块元素的特性
+    元素的大小完全取决于定义的大小或者默认的内容多少浮动根据元素书写的位置来显示相应的浮动。
+    （妙用： 行内块元素添加浮动 此时不需要转换为块级别元素也可以有大小） 浮动块1
+    行级元素 显示效果 浮动块1 行级元素 而不是块1压在行级元素上
+    要是块级别元素就是压了
 
-    <br>版心： 页面缩小后的内容区域 两边都是白的
-    <br> 导航栏中的超链接使用ul会不会更好！！
-    margin-top设置成负值，是不是就会压住父盒子边框
-    第五题视频结束 做的案列： 做了个首页
-    <hr>
-    一些常见的上下间距也可以用高度剩余法： 文字的大小是确定的并且默认是左上角开始显示，我给框子line-height大一些是不是下面的就是空；
-    清除浮动：浮动的本质是使得块级元素可以在一行显示，但是需要给定一个高度的父盒子，清除浮动的背景：很多情况下 父盒子的高度我们很难去控制，不给父盒子高度，子元素又
+    <br />版心： 页面缩小后的内容区域 两边都是白的 <br />
+    导航栏中的超链接使用ul会不会更好！！
+    margin-top设置成负值，是不是就会压住父盒子边框 第五题视频结束 做的案列：
+    做了个首页
+    <hr />
+    一些常见的上下间距也可以用高度剩余法：
+    文字的大小是确定的并且默认是左上角开始显示，我给框子line-height大一些是不是下面的就是空；
+    清除浮动：浮动的本质是使得块级元素可以在一行显示，但是需要给定一个高度的父盒子，清除浮动的背景：很多情况下
+    父盒子的高度我们很难去控制，不给父盒子高度，子元素又
     都浮动的话，父盒子高度将是0，变成一条线，下面的元素就会上来，然后浮动的元素就在下面的盒子上面浮动
     清楚浮动的本质：解决子元素浮动导致的父元素高度为0的问题；把浮动的盒子圈起来，让父盒子的高度自动适应浮动元素的高度，父盒子的闭合出口和入口不让他们影响其他元素
-    <h3>清除浮动的方法</h3> clear属性left right both 清楚了浮动，父元素的高度就会自动监测孩子的高度
-    1.额外标签法: 通过在浮动元素末尾添加一个空的标签，比如<div style="clear: both"></div> 或者其他标签br等
-    2.父元素添加overflow属性 hidden auto scroll
-    3.使用after 伪元素清除浮动 大的网站CSS样式里面搜索.clearfix
+    <h3>清除浮动的方法</h3>
+    clear属性left right both 清楚了浮动，父元素的高度就会自动监测孩子的高度
+    1.额外标签法: 通过在浮动元素末尾添加一个空的标签，比如
+    <div style="clear: both"></div>
+    或者其他标签br等 2.父元素添加overflow属性 hidden auto scroll 3.使用after
+    伪元素清除浮动 大的网站CSS样式里面搜索.clearfix
     4.使用before和after双伪元素清除浮动
     <h4>position定位 什么时候用：盖住其他盒子，在一个盒子中任意位置</h4>
-    包括两部分: 定位模式和边偏移（top bottom left right 各方向偏移的距离 属性名就是top）
-    position:{ static(静态定位，默认值唯一用处取消其他的定位效果) relative（相对于其原文档流:相对于之前自己的左上角应该在的位置移动，之前位置的空间仍然占据着）absolute（绝对定位
-    不占据原来空间，相对于上一个已经定位（带有position属性的）的父元素(祖先)（如果没有找到父元素则选择当前屏幕（document）） fixed固定相对于浏览器窗口滑轮滑动不影响；并且不占据空间；是特殊的绝对定位） }
-
-    技巧： 常用子绝父相：儿子用绝对定位的时候（不占据空间），父亲要用相对定位（占据位置同时控制儿子）
+    包括两部分: 定位模式和边偏移（top bottom left right 各方向偏移的距离
+    属性名就是top） position:{
+    static(静态定位，默认值唯一用处取消其他的定位效果)
+    relative（相对于其原文档流:相对于之前自己的左上角应该在的位置移动，之前位置的空间仍然占据着）absolute（绝对定位
+    不占据原来空间，相对于上一个已经定位（带有position属性的）的父元素(祖先)（如果没有找到父元素则选择当前屏幕（document））
+    fixed固定相对于浏览器窗口滑轮滑动不影响；并且不占据空间；是特殊的绝对定位）
+    } 技巧：
+    常用子绝父相：儿子用绝对定位的时候（不占据空间），父亲要用相对定位（占据位置同时控制儿子）
     定位的盒子怎么居中显示：首先加了定位或者浮动的盒子margin auto失效
-    定位的盒子添加属性left：50% 导致盒子走到父盒子中间线右边，在左走自己盒子一半距离（margin-left: -100px）
-    绝对定位和固定定位会将元素的模式转换为 行内块元素（元素的内容撑起宽度高度，可以在一行存在多个可以设置块元素属性 行内块元素不设置宽度，并且包裹内容为空则会出现高度0宽度0 效果就是看不到这个盒子 width:100%等设置）
-    固定定位不占据位置 所以可以在最后写进去并且写在哪里都行
-
-    z-index 设置层叠次序 当多个元素同时设置定位，定位元素可能会重叠（后来者居上）
-    设置某个定位元素CSS： z-index: 1 无单位默认值是0级数字越大跃居上（只有定位的标签才有这个属性）
-
-    多个浮动的div 边框中间肯定有相加的效果 粗一点 可以设置margin-left: -边框粗值 定位都是浮起来的，比标准流高级一点，在页面上体现是压住
+    定位的盒子添加属性left：50%
+    导致盒子走到父盒子中间线右边，在左走自己盒子一半距离（margin-left: -100px）
+    绝对定位和固定定位会将元素的模式转换为
+    行内块元素（元素的内容撑起宽度高度，可以在一行存在多个可以设置块元素属性
+    行内块元素不设置宽度，并且包裹内容为空则会出现高度0宽度0
+    效果就是看不到这个盒子 width:100%等设置） 固定定位不占据位置
+    所以可以在最后写进去并且写在哪里都行 z-index 设置层叠次序
+    当多个元素同时设置定位，定位元素可能会重叠（后来者居上）
+    设置某个定位元素CSS： z-index: 1
+    无单位默认值是0级数字越大跃居上（只有定位的标签才有这个属性） 多个浮动的div
+    边框中间肯定有相加的效果 粗一点 可以设置margin-left: -边框粗值
+    定位都是浮起来的，比标准流高级一点，在页面上体现是压住
 
     <h4>CSS高级技巧</h4>
-    元素的显示和隐藏： display visibility（可见的） overflow 隐藏就是不在源码删除元素，隐藏不可见比如广告
-    display: none 隐藏某个元素 display： block 显示某个元素 特点：隐藏之后，原来的空间不再保留
-    visibility： visible hidden 隐藏之后 继续保留原有的位置
-    overflow： 溢出隐藏（文字超出盒子大小） visible auto（超出显示滚动条） hidden scroll（滚动条 不管内容是否超过盒子都会有--》丑）
-    应用： 视频网站鼠标经过时候显示半透明的盒子
-    <hr>
+    元素的显示和隐藏： display visibility（可见的） overflow
+    隐藏就是不在源码删除元素，隐藏不可见比如广告 display: none 隐藏某个元素
+    display： block 显示某个元素 特点：隐藏之后，原来的空间不再保留 visibility：
+    visible hidden 隐藏之后 继续保留原有的位置 overflow：
+    溢出隐藏（文字超出盒子大小） visible auto（超出显示滚动条） hidden
+    scroll（滚动条 不管内容是否超过盒子都会有--》丑） 应用：
+    视频网站鼠标经过时候显示半透明的盒子
+    <hr />
     鼠标样式： cursor（光标，游标）：pointer（指针）
     <ul>
-        <li id="pointer">pointer</li>
-        <li id="text">text</li>
-        <li id="default">default</li>
-        <li id="move">move</li>
-        <li></li>
+      <li id="pointer">pointer</li>
+      <li id="text">text</li>
+      <li id="default">default</li>
+      <li id="move">move</li>
+      <li></li>
     </ul>
-    <hr>
+    <hr />
     文本域的获取焦点后的蓝色边框： 轮廓线 outline：0 / none常用就是去掉轮廓线
     不同浏览器的border显然出来的效果不同，一般都是先设置border效果统一浏览器在去掉轮廓线；
-    <hr>
-    防止拖拽文本域：textarea的大小是可以拖拽的，占据的空间不同影响布局resize: none
-    图片 表单与文字的对齐方式 设置vertical-align 文字有四条线嘛 默认基线对齐 图片会有很小的下边距到边框就是这个原因，
-
-    vertical-align 垂直对齐， 这个看上去很美好的一个属性， 实际有着不可捉摸的脾气，否则我们也不会这么晚来讲解。
-    vertical-align 不影响块级元素中的内容对齐，它只针对于 行内元素或者行内块元素，特别是行内块元素， 通常用来控制图片/表单与文字的对齐。
-
-    所以经常给图片设置非基线对齐方式 或者设置display: block转成块元素，就不会出现对齐问题 这个属性主要影响行内块元素和行内元素 不影响块元素
-    <hr>
-    文本内容超出边框或者说盒子会自动换行 我们对于标题等信息不想自动换行使用 white-space: nowrap;
-    强制同一行内显示文本 同时对应使用overflow: hidden 但是边框最近的那个文字只显示一半，
-    使用text-overflow 设置clip(不显示省略号，简单的剪切) ellipsis显示省略号 三个都写上
-    <br>
-    CSS精灵 sprite（雪碧 精灵）出现这技术的背景？ 一个网页的背景图有很多，每次哦都去请求服务器还不炸，我们可以吧所有的背景图拼成一个大图（精灵图），然后浏览器请求一次节约资源
+    <hr />
+    防止拖拽文本域：textarea的大小是可以拖拽的，占据的空间不同影响布局resize:
+    none 图片 表单与文字的对齐方式 设置vertical-align 文字有四条线嘛
+    默认基线对齐 图片会有很小的下边距到边框就是这个原因， vertical-align
+    垂直对齐， 这个看上去很美好的一个属性，
+    实际有着不可捉摸的脾气，否则我们也不会这么晚来讲解。 vertical-align
+    不影响块级元素中的内容对齐，它只针对于
+    行内元素或者行内块元素，特别是行内块元素，
+    通常用来控制图片/表单与文字的对齐。 所以经常给图片设置非基线对齐方式
+    或者设置display: block转成块元素，就不会出现对齐问题
+    这个属性主要影响行内块元素和行内元素 不影响块元素
+    <hr />
+    文本内容超出边框或者说盒子会自动换行 我们对于标题等信息不想自动换行使用
+    white-space: nowrap; 强制同一行内显示文本 同时对应使用overflow: hidden
+    但是边框最近的那个文字只显示一半， 使用text-overflow
+    设置clip(不显示省略号，简单的剪切) ellipsis显示省略号 三个都写上
+    <br />
+    CSS精灵 sprite（雪碧 精灵）出现这技术的背景？
+    一个网页的背景图有很多，每次哦都去请求服务器还不炸，我们可以吧所有的背景图拼成一个大图（精灵图），然后浏览器请求一次节约资源
     主要价值： 减少请求次数 注意： 只是很多的背景图拼成精灵图 插入的图片不可以
-    怎么使用：给盒子大小 然后background-position 就显得尤为重要 1.限定盒子大小 2.移动背景图x偏移y偏移（多数都是负值 因为默认是左上角对齐）
-    <br>
-    导航栏上面的滑动门效果： 【这里面的内容增长，背景框子也随着增长】怎么做的 a标签里面放span a设置左括号 span背景里面放右括号和中间横条
+    怎么使用：给盒子大小 然后background-position 就显得尤为重要 1.限定盒子大小
+    2.移动背景图x偏移y偏移（多数都是负值 因为默认是左上角对齐）
+    <br />
+    导航栏上面的滑动门效果： 【这里面的内容增长，背景框子也随着增长】怎么做的
+    a标签里面放span a设置左括号 span背景里面放右括号和中间横条
     经典案例--》07天15视频很重要 自己周末写一写
 
     <h4 class="testBefore">CSS的简单技巧</h4>
     大小使用rem单位 更方便浏览器窗口变化 vscode插件： cssrem;
     背景图随着浏览器自动缩放 background-size: 100% 100%
-    document.querySelector("#demo"); 根据CSS选择器获取DOM对象
+    document.querySelector("#demo"); 根据CSS选择器获取DOM对象 Emmet语法：
+    很重要，快速生成标签HTML和CSS
 
-    Emmet语法： 很重要，快速生成标签HTML和CSS
-
-    <div style="border: 1px solid red; height: 200px;">
-        <span style="margin: 10px;padding: 10px; border: 1px solid red;">span是否可以margin padding </span>
+    <div style="border: 1px solid red; height: 200px">
+      <span style="margin: 10px; padding: 10px; border: 1px solid red"
+        >span是否可以margin padding
+      </span>
     </div>
-</body>
-
+  </body>
 </html>

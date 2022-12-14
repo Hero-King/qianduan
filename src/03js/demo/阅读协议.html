@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        #textarea {
-            width: 300px;
-            height: 300px;
-            /* resize: none; */
-        }
+      #textarea {
+        width: 300px;
+        height: 300px;
+        /* resize: none; */
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <textarea name="" id="textarea">哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或哈哈哈哈哈哈哈</textarea>
-    <input type="button" value="请阅读协议(5s)" id="btn1" disabled>
+  <body>
+    <textarea name="" id="textarea">
+哈哈哈哈哈哈哈哈哈哈或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或或哈哈哈哈哈哈哈</textarea
+    >
+    <input type="button" value="请阅读协议(5s)" id="btn1" disabled />
     <script>
-        window.onload = () => {
-            let btn1 = document.getElementById('btn1');
-            let time = 4;
-            let timeId = setInterval(() => {
-                btn1.value = '请阅读协议(' + time-- + 's)'
-                if (time < 0) {
-                    clearInterval(timeId);  //一定要清除定时器
-                    btn1.value = '同意'
-                }
-            }, 1000)
-        }
+      window.onload = () => {
+        let btn1 = document.getElementById("btn1");
+        let time = 4;
+        let timeId = setInterval(() => {
+          btn1.value = "请阅读协议(" + time-- + "s)";
+          if (time < 0) {
+            clearInterval(timeId); //一定要清除定时器
+            btn1.value = "同意";
+          }
+        }, 1000);
+      };
     </script>
-</body>
-
+  </body>
 </html>

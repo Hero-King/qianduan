@@ -1,66 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
+  </head>
 
-</head>
-
-<body>
-    <div id="root">
-
-    </div>
+  <body>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const {useRef, useEffect, useState, useMemo, useContext} = React;
-        
-        const SizeContext = React.createContext("32")
-        // API const value = useContext(MyContext);
-        // 即使祖先使用 React.memo 或 shouldComponentUpdate，也会在组件本身使用 useContext 时重新渲染。
-        function Counter(props) {
-            const [count, setcount] = useState(0);
-            // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
-            const [count2, setcount2] = useState(() => getInitCount2());
-            const contextValue = useContext(SizeContext)
-            
+      const { useRef, useEffect, useState, useMemo, useContext } = React;
 
-            function getInitCount2() {
-                console.log("getInitCount2")
-                return 100
-            }
-            return <div>
-                count: {count}       count2: {count2}  contextValue: {contextValue}
-                <button onClick={e => setcount(count + 1)}>增加</button>
-                
-                <button onClick={e => setcount2(precount => precount + 1)}>函数式增加</button>
+      const SizeContext = React.createContext("32");
+      // API const value = useContext(MyContext);
+      // 即使祖先使用 React.memo 或 shouldComponentUpdate，也会在组件本身使用 useContext 时重新渲染。
+      function Counter(props) {
+        const [count, setcount] = useState(0);
+        // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
+        const [count2, setcount2] = useState(() => getInitCount2());
+        const contextValue = useContext(SizeContext);
 
-
-                </div>
+        function getInitCount2() {
+          console.log("getInitCount2");
+          return 100;
         }
-        class App extends React.Component{
-            constructor(props) {
-                super(props);
-                this.state= {
-                    bool : false
-                }
-            }
-            render(){
-                const {bool} = this.state;
-                return <div>
-                    <SizeContext.Provider value="30">
-                        <Counter bool={bool}/>
-                    </SizeContext.Provider>
-                    bool: {bool.toString()} <button onClick={e => this.setState({bool: !bool})}>更改App 组件的状态</button>
-                    </div>
-            }
+        return (
+          <div>
+            count: {count} count2: {count2} contextValue: {contextValue}
+            <button onClick={(e) => setcount(count + 1)}>增加</button>
+            <button onClick={(e) => setcount2((precount) => precount + 1)}>
+              函数式增加
+            </button>
+          </div>
+        );
+      }
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bool: false,
+          };
         }
-        ReactDOM.render(<App/>, document.getElementById("root"))
+        render() {
+          const { bool } = this.state;
+          return (
+            <div>
+              <SizeContext.Provider value="30">
+                <Counter bool={bool} />
+              </SizeContext.Provider>
+              bool: {bool.toString()}{" "}
+              <button onClick={(e) => this.setState({ bool: !bool })}>
+                更改App 组件的状态
+              </button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
     </script>
-</body>
-
+  </body>
 </html>

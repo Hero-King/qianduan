@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        #root{
-            width: 100px;
-            height: 100px;
-            border: 1px solid red;
-        }
+      #root {
+        width: 100px;
+        height: 100px;
+        border: 1px solid red;
+      }
     </style>
-
-</head>
-<body>
+  </head>
+  <body>
     <div id="root"></div>
-    屏幕尺寸 是屏幕对角线的长度是
+    屏幕尺寸 是屏幕对角线的长度是 长度单位主要是相对长度(px em pt(点)) 和
+    绝对长度（cm,in（英寸）） 不同屏幕中的px是不同的 像素密度： PPI（pixels per
+    Inch）每英寸的像素数量 物理像素是 根据PPI
+    决定的，是屏幕的物理属性，不可人为改变
 
-    长度单位主要是相对长度(px em pt(点)) 和  绝对长度（cm,in（英寸））
-    不同屏幕中的px是不同的
-
-    像素密度： PPI（pixels per Inch）每英寸的像素数量  
-    物理像素是 根据PPI 决定的，是屏幕的物理属性，不可人为改变
-    
     <p>
-        cSS像素： CSS进行布局时候的长度单位，默认情况下与PC的屏幕像素保持一致，
-        我们可以通过浏览器缩放改变他们的比例关系,
-        css的px是相对单位，window.devicePixelRatio定义 设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 / 独立像素。
+      cSS像素： CSS进行布局时候的长度单位，默认情况下与PC的屏幕像素保持一致，
+      我们可以通过浏览器缩放改变他们的比例关系,
+      css的px是相对单位，window.devicePixelRatio定义
+      设备物理像素和设备独立像素的比例，也就是 devicePixelRatio = 物理像素 /
+      独立像素。
     </p>
 
-    <H2>视口 viewpoint 用来约束网站最顶层html标签的大小</H2>
-    PC端 视口大小就是浏览器窗口大小
-    移动设备上，viewpoint 不在受限浏览器窗口，允许开发者自己设置，一般会大于屏幕的尺寸
+    <h2>视口 viewpoint 用来约束网站最顶层html标签的大小</h2>
+    PC端 视口大小就是浏览器窗口大小 移动设备上，viewpoint
+    不在受限浏览器窗口，允许开发者自己设置，一般会大于屏幕的尺寸
     <!-- <meta name="viewport" content= device-width 设置设口是设备屏幕宽度-->
-    initial-scale 初始缩放比列
-
-    响应式开发是根绝媒体查询实现的
+    initial-scale 初始缩放比列 响应式开发是根绝媒体查询实现的
     <script>
-        const { log} = console;
-        log(window.screen.height)
+      const { log } = console;
+      log(window.screen.height);
     </script>
-</body>
+  </body>
 </html>

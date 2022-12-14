@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        img {
-            display: block;
-        }
+      img {
+        display: block;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div>page</div>
-    浏览器渲染过程: <img src="https://img-blog.csdnimg.cn/img_convert/c27677c78368a4e8d45d0d89aaadbffd.png" id="img1"
-        alt="c27677c78368a4e8d45d0d89aaadbffd.png">
+    浏览器渲染过程:
+    <img
+      src="https://img-blog.csdnimg.cn/img_convert/c27677c78368a4e8d45d0d89aaadbffd.png"
+      id="img1"
+      alt="c27677c78368a4e8d45d0d89aaadbffd.png"
+    />
 
-    原型链: <img src="./img/原型链.png"
-        onload="console.log('img loaded')" />
+    原型链: <img src="./img/原型链.png" onload="console.log('img loaded')" />
 
     <script>
-        //js中的数据类型有哪些?
-        //js中的原始数据类型:number,string,boolean,null,undefined,object
-        /*
-         * number:数字类型(整数和小数)
-         * string:字符串类型(的值一般都是用单引号或者是双引号括起来)  "34"
-         * boolean:布尔类型(值只有两个,true(真1),false(假0))
-         * null:空类型,值只有一个:null,一个对象指向为空了,此时可以赋值为null
-         * undefined:未定义,值只有一个:undefined
-         * 什么情况下的结果是undefined
-         * 变量声明了,没有赋值,结果是undefined
-         * 函数没有明确返回值,如果接收了,结果也是undefined
-         * 如果一个变量的结果是undefined和一个数字进行计算,结果:NaN不是一个数字,也没有意义
-         * object:对象---->
-         *
-         * */
-        //如何获取这个变量的数据类型是什么? 使用typeof关键字 来获取
-        //typeof 的使用的语法
-        /*
-         * 都可以获取这个变量的数据类型是什么!
-         * typeof 变量名
-         * typeof(变量名)
-         *
-         * */
-        var num = 10;
-        var str = "小白";
-        var flag = true;
-        var nll = null;
-        var undef;
-        var obj = new Object();
-        //是使用typeof 获取变量的类型  typeof 少null 多function object
-        console.log(typeof num); //number
-        console.log(typeof str); //string
-        console.log(typeof flag); //boolean
-        console.log(String(nll)); //是null
-        console.log(typeof nll); //不是null 而是object 存储的是对象,只不过没有指向
-        console.log(typeof undef); //undefined
-        console.log(typeof obj); //object
-        console.log(typeof (num));
-        //    console.log("10");
-        //    console.log(10);
-        // 如何准确的判断数据类型
-        console.log(Object.prototype.toString.call("1212")) // [object String]
-        console.log(Object.prototype.toString.call([])); // 03js.html:56 [object Array]
-        console.log(Object.prototype.toString.call({})); // 03js.html:57 [object Object]
-        console.log(Object.prototype.toString.call(12)); // [object Number]
-        console.log(Object.prototype.toString.call(null)); // [object Null]
+      //js中的数据类型有哪些?
+      //js中的原始数据类型:number,string,boolean,null,undefined,object
+      /*
+       * number:数字类型(整数和小数)
+       * string:字符串类型(的值一般都是用单引号或者是双引号括起来)  "34"
+       * boolean:布尔类型(值只有两个,true(真1),false(假0))
+       * null:空类型,值只有一个:null,一个对象指向为空了,此时可以赋值为null
+       * undefined:未定义,值只有一个:undefined
+       * 什么情况下的结果是undefined
+       * 变量声明了,没有赋值,结果是undefined
+       * 函数没有明确返回值,如果接收了,结果也是undefined
+       * 如果一个变量的结果是undefined和一个数字进行计算,结果:NaN不是一个数字,也没有意义
+       * object:对象---->
+       *
+       * */
+      //如何获取这个变量的数据类型是什么? 使用typeof关键字 来获取
+      //typeof 的使用的语法
+      /*
+       * 都可以获取这个变量的数据类型是什么!
+       * typeof 变量名
+       * typeof(变量名)
+       *
+       * */
+      var num = 10;
+      var str = "小白";
+      var flag = true;
+      var nll = null;
+      var undef;
+      var obj = new Object();
+      //是使用typeof 获取变量的类型  typeof 少null 多function object
+      console.log(typeof num); //number
+      console.log(typeof str); //string
+      console.log(typeof flag); //boolean
+      console.log(String(nll)); //是null
+      console.log(typeof nll); //不是null 而是object 存储的是对象,只不过没有指向
+      console.log(typeof undef); //undefined
+      console.log(typeof obj); //object
+      console.log(typeof num);
+      //    console.log("10");
+      //    console.log(10);
+      // 如何准确的判断数据类型
+      console.log(Object.prototype.toString.call("1212")); // [object String]
+      console.log(Object.prototype.toString.call([])); // 03js.html:56 [object Array]
+      console.log(Object.prototype.toString.call({})); // 03js.html:57 [object Object]
+      console.log(Object.prototype.toString.call(12)); // [object Number]
+      console.log(Object.prototype.toString.call(null)); // [object Null]
 
-
-        // JS浮点数也是不准确存储的
-        /*
+      // JS浮点数也是不准确存储的
+      /*
         var num ;
         console.log(num+10 == NAN ) false  
         console.log(isNaN(num)) false NaN(not a number不是一个数字,和其他类型比较就是false)
@@ -124,308 +124,331 @@
         var str2 = new String ('你好')   堆空间
 
          */
-        // alert('都是弟弟');
-        (function () {
-            console.log('我是函数自调用,永远不会被冲突');
-        })();
+      // alert('都是弟弟');
+      (function () {
+        console.log("我是函数自调用,永远不会被冲突");
+      })();
 
-        f();
-        var num = 20;
+      f();
+      var num = 20;
 
-        function f() {
-            console.log(num); //undefined 因为函数申明提前,可以调用函数;其次变量申明到函数内最上面,并没有赋值
-            var num = 10;
-        }
+      function f() {
+        console.log(num); //undefined 因为函数申明提前,可以调用函数;其次变量申明到函数内最上面,并没有赋值
+        var num = 10;
+      }
 
-        // 自己实现系统的math.max方法
-        function MyMath() {
-            this.getMax = function () {
-                let max = arguments[0];
-                for (let i = 0; i < arguments.length; i++) {
-                    if (max < arguments[i]) max = arguments[i];
-                }
-                return max;
-            }
-        }
-        var myMath = new MyMath();
-        console.log(myMath.getMax(1, 2, 5, 50, 23, -10));
-
-        // 随机产生一个十六进制的颜色  #3412ff
-        function getColor() {
-            // 随机生成0-255的数字 
-            let ran = parseInt(Math.random() * 256);
-            let red = ran.toString(16); //将数字转换成16进制
-            ran = parseInt(Math.random() * 256);
-            let green = ran.toString(16); //将数字转换成16进制
-            ran = parseInt(Math.random() * 256);
-            let blue = ran.toString(16); //将数字转换成16进制
-            return '#' + red + green + blue; //等等
-        }
-        console.log(getColor()); //例如#d85fd7
-
-        // console.log(new Date().getMonth()); //老外的日期是从0 开始的0-11月
-
-        // 封装函数返回指定格式的日期: 2019年12月7日 11:12:13  获取当前时间
-        function getDate() {
-            let date = new Date();
-            return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日' + ' ' + date
-                .getHours() + '时' + date.getMinutes() + '分' + date.getSeconds() + '秒';
+      // 自己实现系统的math.max方法
+      function MyMath() {
+        this.getMax = function () {
+          let max = arguments[0];
+          for (let i = 0; i < arguments.length; i++) {
+            if (max < arguments[i]) max = arguments[i];
+          }
+          return max;
         };
-        console.log(getDate());
+      }
+      var myMath = new MyMath();
+      console.log(myMath.getMax(1, 2, 5, 50, 23, -10));
 
-        function Person(name) {
-            this.name = name
+      // 随机产生一个十六进制的颜色  #3412ff
+      function getColor() {
+        // 随机生成0-255的数字
+        let ran = parseInt(Math.random() * 256);
+        let red = ran.toString(16); //将数字转换成16进制
+        ran = parseInt(Math.random() * 256);
+        let green = ran.toString(16); //将数字转换成16进制
+        ran = parseInt(Math.random() * 256);
+        let blue = ran.toString(16); //将数字转换成16进制
+        return "#" + red + green + blue; //等等
+      }
+      console.log(getColor()); //例如#d85fd7
+
+      // console.log(new Date().getMonth()); //老外的日期是从0 开始的0-11月
+
+      // 封装函数返回指定格式的日期: 2019年12月7日 11:12:13  获取当前时间
+      function getDate() {
+        let date = new Date();
+        return (
+          date.getFullYear() +
+          "年" +
+          (date.getMonth() + 1) +
+          "月" +
+          date.getDate() +
+          "日" +
+          " " +
+          date.getHours() +
+          "时" +
+          date.getMinutes() +
+          "分" +
+          date.getSeconds() +
+          "秒"
+        );
+      }
+      console.log(getDate());
+
+      function Person(name) {
+        this.name = name;
+      }
+
+      // 普通方式使用原型：
+      let aa = new Person("小灰灰");
+      console.log(aa.name);
+      Person.prototype.alertMessage = function () {
+        // alert("我是原型链加上的")
+        console.log("我是原型链加上的");
+      };
+      aa.alertMessage();
+      console.log(aa.__proto__ === Person.prototype, "原型"); // true
+      //我们知道 Person = new Function
+      console.log(Person.__proto__ === Function.prototype); // true
+
+      // 静态方法定义和调用
+      Person.static = () => console.log("Person static method");
+      Person.static();
+
+      // jquery学习参见git下面的jquery项目
+
+      // 深浅拷贝[1]
+      function deepClone(obj, endObj) {
+        let type = typeof obj;
+        if (
+          type === "string" ||
+          type === "number" ||
+          obj === null ||
+          type === "undefined"
+        ) {
+          return obj;
         }
-
-        // 普通方式使用原型： 
-        let aa = new Person("小灰灰")
-        console.log(aa.name);
-        Person.prototype.alertMessage = function () {
-            // alert("我是原型链加上的")
-            console.log("我是原型链加上的");
+        let objNew = endObj || {};
+        for (let i in obj) {
+          if (obj.hasOwnProperty(i)) {
+            if (typeof obj[i] === "object") {
+              // [] {}
+              objNew[i] = obj[i].constructor === Array ? [] : {};
+              deepClone(obj[i], objNew[i]);
+            } else {
+              objNew[i] = obj[i];
+            }
+          }
         }
-        aa.alertMessage();
-        console.log(aa.__proto__ === Person.prototype, "原型") // true
-        //我们知道 Person = new Function   
-        console.log(Person.__proto__ === Function.prototype) // true
+        return objNew;
+      }
+      let objTemp = {
+        name: "wang",
+        age: {
+          age: 12,
+          arr: ["arr"],
+        },
+      };
+      let clone = deepClone(objTemp);
+      objTemp.age.age = "12345";
+      console.log("深拷贝后源数据美变化吗", clone.age.age == 12);
 
-        // 静态方法定义和调用
-        Person.static = () => console.log("Person static method");
-        Person.static();
-
-        // jquery学习参见git下面的jquery项目
-
-        // 深浅拷贝[1]
-        function deepClone(obj, endObj) {
-            let type = typeof obj;
-            if (type === "string" || type === "number" || obj === null || type === "undefined") {
-                return obj
-            }
-            let objNew = endObj || {};
-            for (let i in obj) {
-                if (obj.hasOwnProperty(i)) {
-                    if (typeof obj[i] === "object") { // [] {}
-                        objNew[i] = obj[i].constructor === Array ? [] : {};
-                        deepClone(obj[i], objNew[i])
-                    } else {
-                        objNew[i] = obj[i]
-                    }
-                }
-
-            }
-            return objNew
-        }
-        let objTemp = {
-            name: "wang",
-            age: {
-                age: 12,
-                arr: ["arr"]
-            }
-        }
-        let clone = deepClone(objTemp)
-        objTemp.age.age = "12345";
-        console.log("深拷贝后源数据美变化吗", clone.age.age == 12)
-
-        // 深浅拷贝[2]
-        let clone2 = JSON.parse(JSON.stringify(objTemp))
-        clone2["age"].age = "age"
-        console.log(objTemp)
-        // 弊端: 
-        // 如果obj里面有时间对象，则JSON.stringify后再JSON.parse的结果，时间将只是字符串的形式。而不是时间对象；
-        ;(function () {
-            const stringifyDate = JSON.stringify({date: new Date()})
-            console.log("JSON.stringify date", stringifyDate);
-        })();
-        // 如果obj里有RegExp、Error对象，则序列化的结果将只得到空对象；
-        // 如果obj里有函数，undefined，则序列化的结果会把函数或 undefined丢失；
-        // 如果obj里有NaN、Infinity和-Infinity，则序列化的结果会变成null
-        // 如果对象中存在循环引用的情况也无法正确实现深拷贝；
-        // json不能处理undefined类型!!
-        console.log(JSON.stringify({
-            string: "string",
-            int: "int",
-            "null": null,
-            "boolean": true,
-            arr: ["1", "2"]
-        }))
-        console.log("json不能处理undefined", JSON.stringify({
-            "undefined": undefined
-        }))
-        //         有时候，对象需要在 JSON.stringify()之上自定义 JSON 序列化。此时，可以在要序列化的对象
-        // 中添加 toJSON()方法，序列化时会基于这个方法返回适当的 JSON 表示。事实上，原生 Date 对象就
-        // 有一个 toJSON()方法，能够自动将 JavaScript 的 Date 对象转换为 ISO 8601 日期字符串（本质上与在
-        // Date 对象上调用 toISOString()方法一样）。
-        // 感觉也可以
-        let book = {
-            title: "Professional JavaScript",
-            authors: [
-                "Nicholas C. Zakas",
-                "Matt Frisbie"
-            ],
-            edition: 4,
-            year: 2017,
-            toJSON: function () {
-                return this.title;
-            }
-        };
-        let jsonText = JSON.stringify(book);
-        console.log(null === undefined) // false
-
-        function deepClone3(obj) {
-            if (obj === null) {
-                return "null";
-            }
-            if (obj === undefined) {
-                return "undefined";
-            }
-            let objNew = {};
-            for (let i in obj) {
-                if (obj.hasOwnProperty(i)) {
-                    if (typeof obj[i] === "object") {
-                        objNew[i] = deepClone(obj[i])
-                    } else {
-                        objNew[i] = obj[i]
-                    }
-                }
-            }
-            return objNew
-        }
-
-        // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
-        console.log(undefined == null) // true
-        console.log(undefined === null) // false
-        console.log(0.1 + 0.2) // 0.300000000004
-        console.log((0.1 * 100 + 0.2 * 100) / 100) // 0.3
-
-        // 包装对像
-        //  let str = "123"
-        // str.length   内部实现：   let str1 = new String(str)     str1.length  str1 =null
-        // str.x = 3        str.x 显示 undefined 
-
-        // +法 如果是一般数据类型就处理   如果包含一个引用数据类型 需要先对引用数据调用 valueOf() 如果返回
-        // 普通类型 相加即可  不是的话继续调用toString()方法  然后返回值相加
-        console.log([] + []); // "" 
-        console.log("" + []); // ""
-        console.log("" + {}); // "[object Object]"
-        console.log({} + {}); // "[object Object][object Object]"
-        console.log(+"") // 0
-
-
-        // 返回的是本地时间， 如果是抢购等  时间需要用后台的  本地时间是可以改变的
-        console.log(new Date())
-
-        let url = "https://cn.bing.com/search?q=伟大的&sp=4";
-        console.log("encodeUrl", encodeURI(url)); // 会把中文ascall编码
-        console.log("encodeURIComponent", encodeURIComponent(url)); // 会把协议等字符也编码
-
-        // DOM树构建过程
-        /**
-         * 1. 访问server 返回二进制html
-         * 2. 翻译二进制文件成 index.html
-         * 3. HTMl解析器 解析文件   词法解析(生成document对象)  生成节点Node  生成DOM树
-         * 解析过程中，如果遇到link标签，使用browser 进程的网络线程去请求文件 （并行的）
-         * 遇到script 标签，默认属性会停止构建dom 执行js文件      async 不停止渲染，下载完成不需要按顺序执行
-         * defer  不停止渲染，渲染完成后执行，在domcontentloaded之前执行完 多个defer 会按顺序执行
-         * 4. css解析器构建css   每个css文件解析成样式表对象cssstylesheet 包含很多cssrule  在解析词法  生成css树
-         * 5. 构建render树 ：  DOM树 + css树
-         * 6. 布局layout: 计算每个dom节点的盒子大小和页面的坐标，
-         * 7.绘制     重要概念： 回流reflow： 元素属性发生改变且影响布局时（padding height），产生回流，相当于刷新页面
-         *                              repaint 重绘  元素属性发生改变且不影响布局时候（背景图片  透明度  字体样式），产生重绘。相当于不刷新页面动态更新
-         * 回流一定会重绘， 但是重绘不一定会回流（重排）   所以我们尽量去减少重拍：   直接改变元素的classname   设置display: none 在设置display block 而不是创建节点
-         *  需要多次重拍的元素使用position absolute 或者fixed   创建dom节点时候 创建完一次性加入dom
-         */
-
-        // 闭包
-        function bibao() {
-            var index = 0;
-            return function () {
-                console.log(index++)
-            }
-        }
-        const bibaoitem = bibao()
-        bibaoitem() //0
-        bibaoitem() //1
-        bibaoitem() //2
-
-        // this    局部函数的this是window 
-        var mythis = {
-            age: 12,
-            getage: function () {
-                console.log(this.age)
-            },
-            getget: function () {
-                var that = this;
-                var bb = function () {
-                    console.log(this) // windows
-                }
-                bb()
-                console.log(that, "保存下来的that就是调用函数的对象了") //mythis对象
-            }
-        }
-        mythis.getage() //12
-        mythis.getget()
-
-        Function.prototype.mybind = function (obj) {
-            var self = this;
-            return function () {
-                self.apply(obj)
-            }
-        }
-
-        // Object对象
-        let objt = {}
-        Object.defineProperty(objt, "age", {
-            value: 22,
-            enumerable: false, //设置不可枚举 for in 循环不出来
-            writable: true, //设置属性可以修改,
-            configurable: false, //设置属性可否被删除,以及除 value 和 writable 特性外的其他特性是否可以被修改。
+      // 深浅拷贝[2]
+      let clone2 = JSON.parse(JSON.stringify(objTemp));
+      clone2["age"].age = "age";
+      console.log(objTemp);
+      // 弊端:
+      // 如果obj里面有时间对象，则JSON.stringify后再JSON.parse的结果，时间将只是字符串的形式。而不是时间对象；
+      (function () {
+        const stringifyDate = JSON.stringify({ date: new Date() });
+        console.log("JSON.stringify date", stringifyDate);
+      })();
+      // 如果obj里有RegExp、Error对象，则序列化的结果将只得到空对象；
+      // 如果obj里有函数，undefined，则序列化的结果会把函数或 undefined丢失；
+      // 如果obj里有NaN、Infinity和-Infinity，则序列化的结果会变成null
+      // 如果对象中存在循环引用的情况也无法正确实现深拷贝；
+      // json不能处理undefined类型!!
+      console.log(
+        JSON.stringify({
+          string: "string",
+          int: "int",
+          null: null,
+          boolean: true,
+          arr: ["1", "2"],
         })
-        console.log(objt.age);
-        Object.defineProperty(objt, "agebak", {
-            get() {
-                return this.age + "   "
-            }
+      );
+      console.log(
+        "json不能处理undefined",
+        JSON.stringify({
+          undefined: undefined,
         })
-        console.log(objt);
-        // Object.defineProperty(o, "a", { value : 1 });
-        // 等同于：
-        // Object.defineProperty(o, "a", {
-        //   value: 1,
-        //   writable: false,
-        //   configurable: false,
-        //   enumerable: false
-        // });
+      );
+      //         有时候，对象需要在 JSON.stringify()之上自定义 JSON 序列化。此时，可以在要序列化的对象
+      // 中添加 toJSON()方法，序列化时会基于这个方法返回适当的 JSON 表示。事实上，原生 Date 对象就
+      // 有一个 toJSON()方法，能够自动将 JavaScript 的 Date 对象转换为 ISO 8601 日期字符串（本质上与在
+      // Date 对象上调用 toISOString()方法一样）。
+      // 感觉也可以
+      let book = {
+        title: "Professional JavaScript",
+        authors: ["Nicholas C. Zakas", "Matt Frisbie"],
+        edition: 4,
+        year: 2017,
+        toJSON: function () {
+          return this.title;
+        },
+      };
+      let jsonText = JSON.stringify(book);
+      console.log(null === undefined); // false
 
-        // Object.assign   
-        //         这个方法接收一个目标对象和一个
-        // 或多个源对象作为参数，然后将每个源对象中可枚举（Object.propertyIsEnumerable()返回 true）
-        // 和自有（Object.hasOwnProperty()返回 true）属性复制到目标对象。以字符串和符号为键的属性
-        // 会被复制。对每个符合条件的属性，这个方法会使用源对象上的[[Get]]取得属性的值，然后使用目标
-        // 对象上的[[Set]]设置属性的值。
-        dest = {};
-        src = {
-            id: 'src'
+      function deepClone3(obj) {
+        if (obj === null) {
+          return "null";
+        }
+        if (obj === undefined) {
+          return "undefined";
+        }
+        let objNew = {};
+        for (let i in obj) {
+          if (obj.hasOwnProperty(i)) {
+            if (typeof obj[i] === "object") {
+              objNew[i] = deepClone(obj[i]);
+            } else {
+              objNew[i] = obj[i];
+            }
+          }
+        }
+        return objNew;
+      }
+
+      // 特殊类型的转换   NaN 0 undefined null "" 会转换成false
+      console.log(undefined == null); // true
+      console.log(undefined === null); // false
+      console.log(0.1 + 0.2); // 0.300000000004
+      console.log((0.1 * 100 + 0.2 * 100) / 100); // 0.3
+
+      // 包装对像
+      //  let str = "123"
+      // str.length   内部实现：   let str1 = new String(str)     str1.length  str1 =null
+      // str.x = 3        str.x 显示 undefined
+
+      // +法 如果是一般数据类型就处理   如果包含一个引用数据类型 需要先对引用数据调用 valueOf() 如果返回
+      // 普通类型 相加即可  不是的话继续调用toString()方法  然后返回值相加
+      console.log([] + []); // ""
+      console.log("" + []); // ""
+      console.log("" + {}); // "[object Object]"
+      console.log({} + {}); // "[object Object][object Object]"
+      console.log(+""); // 0
+
+      // 返回的是本地时间， 如果是抢购等  时间需要用后台的  本地时间是可以改变的
+      console.log(new Date());
+
+      let url = "https://cn.bing.com/search?q=伟大的&sp=4";
+      console.log("encodeUrl", encodeURI(url)); // 会把中文ascall编码
+      console.log("encodeURIComponent", encodeURIComponent(url)); // 会把协议等字符也编码
+
+      // DOM树构建过程
+      /**
+       * 1. 访问server 返回二进制html
+       * 2. 翻译二进制文件成 index.html
+       * 3. HTMl解析器 解析文件   词法解析(生成document对象)  生成节点Node  生成DOM树
+       * 解析过程中，如果遇到link标签，使用browser 进程的网络线程去请求文件 （并行的）
+       * 遇到script 标签，默认属性会停止构建dom 执行js文件      async 不停止渲染，下载完成不需要按顺序执行
+       * defer  不停止渲染，渲染完成后执行，在domcontentloaded之前执行完 多个defer 会按顺序执行
+       * 4. css解析器构建css   每个css文件解析成样式表对象cssstylesheet 包含很多cssrule  在解析词法  生成css树
+       * 5. 构建render树 ：  DOM树 + css树
+       * 6. 布局layout: 计算每个dom节点的盒子大小和页面的坐标，
+       * 7.绘制     重要概念： 回流reflow： 元素属性发生改变且影响布局时（padding height），产生回流，相当于刷新页面
+       *                              repaint 重绘  元素属性发生改变且不影响布局时候（背景图片  透明度  字体样式），产生重绘。相当于不刷新页面动态更新
+       * 回流一定会重绘， 但是重绘不一定会回流（重排）   所以我们尽量去减少重拍：   直接改变元素的classname   设置display: none 在设置display block 而不是创建节点
+       *  需要多次重拍的元素使用position absolute 或者fixed   创建dom节点时候 创建完一次性加入dom
+       */
+
+      // 闭包
+      function bibao() {
+        var index = 0;
+        return function () {
+          console.log(index++);
         };
-        result = Object.assign(dest, src);
-        // Object.assign 修改目标对象
-        // 也会返回修改后的目标对象
-        console.log(dest === result); // true
-        console.log(dest !== src); // true
-        console.log(result); // { id: src }
-        console.log(dest); // { id: src } 
+      }
+      const bibaoitem = bibao();
+      bibaoitem(); //0
+      bibaoitem(); //1
+      bibaoitem(); //2
 
-        /**
-         * 多个源对象
-         */
-        dest = {};
-        result = Object.assign(dest, {
-            a: 'foo'
-        }, {
-            b: 'bar'
-        });
-        console.log(result); // { a: foo, b: bar }
+      // this    局部函数的this是window
+      var mythis = {
+        age: 12,
+        getage: function () {
+          console.log(this.age);
+        },
+        getget: function () {
+          var that = this;
+          var bb = function () {
+            console.log(this); // windows
+          };
+          bb();
+          console.log(that, "保存下来的that就是调用函数的对象了"); //mythis对象
+        },
+      };
+      mythis.getage(); //12
+      mythis.getget();
 
-        /**
+      Function.prototype.mybind = function (obj) {
+        var self = this;
+        return function () {
+          self.apply(obj);
+        };
+      };
+
+      // Object对象
+      let objt = {};
+      Object.defineProperty(objt, "age", {
+        value: 22,
+        enumerable: false, //设置不可枚举 for in 循环不出来
+        writable: true, //设置属性可以修改,
+        configurable: false, //设置属性可否被删除,以及除 value 和 writable 特性外的其他特性是否可以被修改。
+      });
+      console.log(objt.age);
+      Object.defineProperty(objt, "agebak", {
+        get() {
+          return this.age + "   ";
+        },
+      });
+      console.log(objt);
+      // Object.defineProperty(o, "a", { value : 1 });
+      // 等同于：
+      // Object.defineProperty(o, "a", {
+      //   value: 1,
+      //   writable: false,
+      //   configurable: false,
+      //   enumerable: false
+      // });
+
+      // Object.assign
+      //         这个方法接收一个目标对象和一个
+      // 或多个源对象作为参数，然后将每个源对象中可枚举（Object.propertyIsEnumerable()返回 true）
+      // 和自有（Object.hasOwnProperty()返回 true）属性复制到目标对象。以字符串和符号为键的属性
+      // 会被复制。对每个符合条件的属性，这个方法会使用源对象上的[[Get]]取得属性的值，然后使用目标
+      // 对象上的[[Set]]设置属性的值。
+      dest = {};
+      src = {
+        id: "src",
+      };
+      result = Object.assign(dest, src);
+      // Object.assign 修改目标对象
+      // 也会返回修改后的目标对象
+      console.log(dest === result); // true
+      console.log(dest !== src); // true
+      console.log(result); // { id: src }
+      console.log(dest); // { id: src }
+
+      /**
+       * 多个源对象
+       */
+      dest = {};
+      result = Object.assign(
+        dest,
+        {
+          a: "foo",
+        },
+        {
+          b: "bar",
+        }
+      );
+      console.log(result); // { a: foo, b: bar }
+
+      /**
         Object.is(value1, value2);
         如果满足以下条件则两个值相等:
         都是 undefined
@@ -444,167 +467,162 @@
         与=== (en-US) 运算也不相同。 === 运算符 (也包括 == 运算符) 将数字 -0 和 +0 视为相等 ，而将Number.NaN 与NaN视为不相等.
         */
 
+      //要创建 Person 的实例，应使用 new 操作符。以这种方式调用构造函数会执行如下操作。
+      // (1) 在内存中创建一个新对象。
+      // (2) 这个新对象内部的[[Prototype]]特性被赋值为构造函数的 prototype 属性。
+      // (3) 构造函数内部的 this 被赋值为这个新对象（即 this 指向新对象）。
+      // (4) 执行构造函数内部的代码（给新对象添加属性）。
+      // (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
 
-
-
-        //要创建 Person 的实例，应使用 new 操作符。以这种方式调用构造函数会执行如下操作。
-        // (1) 在内存中创建一个新对象。
-        // (2) 这个新对象内部的[[Prototype]]特性被赋值为构造函数的 prototype 属性。
-        // (3) 构造函数内部的 this 被赋值为这个新对象（即 this 指向新对象）。
-        // (4) 执行构造函数内部的代码（给新对象添加属性）。
-        // (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
-
-        // 创建一个私有属性，只能通过某个方法访问
-        function AA() {
-            const name = "wang";
-            this.getName = function () {
-                return name
-            }
-        }
-        const aa1 = new AA()
-        console.log(aa1.name, aa1.getName()) // undefined wang
-        // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
-        // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
-        // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop 
+      // 创建一个私有属性，只能通过某个方法访问
+      function AA() {
+        const name = "wang";
+        this.getName = function () {
+          return name;
+        };
+      }
+      const aa1 = new AA();
+      console.log(aa1.name, aa1.getName()); // undefined wang
+      // html5 拖拽  https://www.cnblogs.com/wenruo/p/10225377.html
+      // 设置元素可以拖拽: <div draggable="true">  此区域可拖拉</div>  正常的 div 是不能被拖动的，鼠标点击选择后移动没有效果，需要加  draggable="true" 使得元素可以被拖动。
+      // 被拖拽元素的事件：ondragstart，ondragend ondrag 放置元素的事件：ondragenter、ondragover、ondragleave、ondrop
     </script>
 
     <script>
-        function timeoutLog(str) {
-            console.log(str)
+      function timeoutLog(str) {
+        console.log(str);
+      }
+
+      function log(str) {
+        console.log(str);
+      }
+      const img1 = document.getElementById("img1");
+      img1.onclick = function handleClick(e) {
+        console.log("click");
+        log("log函数");
+        // img1.style.border = "2px solid red";    // Schedule Style Recalculation
+        img1.style.fontSize = "20px"; // Schedule Style Recalculation
+        setTimeout(() => {
+          timeoutLog("timeoutlog");
+        }, 0);
+      };
+
+      //总结:如果使用innerText主要是设置文本的,设置标签内容,是没有标签的效果的
+      //总结:innerHTML是可以设置文本内容
+      //总结:innerHTML主要的作用是在标签中设置新的html标签内容,是有标签效果的
+
+      //总结:想要设置标签内容,使用innerHTML,想要设置文本内容,innerText或者textContent,或者innerHTML,推荐用innerHTML
+
+      //获取的时候:
+      //innerText可以获取标签中间的文本内容,但是标签中如果还有标签,那么最里面的标签的文本内容也能获取.---获取不到标签的,文本可以获取
+      //innerHTML才是真正的获取标签中间的所有内容
+
+      // object 定义属性
+      console.log("测试object.defineProperty");
+      const object1 = {};
+
+      Object.defineProperty(object1, "property1", {
+        value: 42,
+        writable: false,
+      });
+
+      object1.property1 = 77; // throws an error in strict mode
+      console.log(object1.property1); // expected output: 42
+
+      const object2 = { name: 1, age: 2 };
+      for (const key in object2) {
+        if (Object.hasOwnProperty.call(object2, key)) {
+          const element = object2[key];
+          console.log(element);
         }
+      }
+      Object.defineProperty(object2, "name", { enumerable: false });
+      for (const key in object2) {
+        console.log(key);
+      }
 
-        function log(str) {
-            console.log(str)
-        }
-        const img1 = document.getElementById("img1")
-        img1.onclick = function handleClick(e) {
-            console.log("click");
-            log("log函数");
-            // img1.style.border = "2px solid red";    // Schedule Style Recalculation
-            img1.style.fontSize = "20px"; // Schedule Style Recalculation
-            setTimeout(() => {
-                timeoutLog("timeoutlog")
-            }, 0);
-        }
+      {
+        // splice 和slice区别
+        let arr = [1, 2, 3, 4];
+        console.log(arr.slice(1), arr); // [2,3,4]  [1,2,3,4]
+        let arrT = [1, 2, 3, 4];
+        console.log(arrT.splice(1, 1), arrT); //[2]   [1,3,4]
+      }
 
-
-        //总结:如果使用innerText主要是设置文本的,设置标签内容,是没有标签的效果的
-        //总结:innerHTML是可以设置文本内容
-        //总结:innerHTML主要的作用是在标签中设置新的html标签内容,是有标签效果的
-
-        //总结:想要设置标签内容,使用innerHTML,想要设置文本内容,innerText或者textContent,或者innerHTML,推荐用innerHTML
-
-
-        //获取的时候:
-        //innerText可以获取标签中间的文本内容,但是标签中如果还有标签,那么最里面的标签的文本内容也能获取.---获取不到标签的,文本可以获取
-        //innerHTML才是真正的获取标签中间的所有内容
-
-        // object 定义属性
-        console.log("测试object.defineProperty")
-        const object1 = {};
-
-        Object.defineProperty(object1, 'property1', {
-            value: 42,
-            writable: false
-        });
-
-        object1.property1 = 77;     // throws an error in strict mode
-        console.log(object1.property1);  // expected output: 42
-
-        const object2 = { name: 1, age: 2 }
-        for (const key in object2) {
-            if (Object.hasOwnProperty.call(object2, key)) {
-                const element = object2[key];
-                console.log(element)
+      {
+        var threeSum = function (nums) {
+          nums.sort();
+          let result = [];
+          if (nums.length < 3) {
+            return result;
+          }
+          for (let i = 0; i < nums.length; i++) {
+            let left = i + 1;
+            let right = nums.length - 1;
+            if (nums[i] > 0) break;
+            if (i > 0 && nums[i] == nums[i - 1]) {
+              continue;
             }
-        }
-        Object.defineProperty(object2, "name", { enumerable: false })
-        for (const key in object2) {
-            console.log(key)
-        }
+            while (left < right) {
+              let sum = nums[i] + nums[left] + nums[right];
 
+              if (sum == 0) {
+                result.push([nums[i], nums[left], nums[right]]);
+                while (left < right && nums[left] == nums[left + 1]) left++;
+                while (left < right && nums[right] == nums[right - 1]) right--;
+                left++;
+                right--;
+              } else if (sum > 0) {
+                right--;
+              } else {
+                left++;
+              }
+            }
+          }
+          return result;
+        };
+        let nums = [-1, 0, 1, 2, -1, -4];
+        console.log(threeSum(nums), "threeSum");
+      }
 
-        {
-            // splice 和slice区别
-            let arr = [1, 2, 3, 4];
-            console.log(arr.slice(1), arr)  // [2,3,4]  [1,2,3,4]
-            let arrT = [1, 2, 3, 4]
-            console.log(arrT.splice(1, 1), arrT) //[2]   [1,3,4]
-        }
+      {
+        // 解构赋值
+        var { foo, bar } = { foo: "aaa", bar: "bbb" };
+        // foo // "aaa"
+        // bar // "bbb"
 
-        {
-            var threeSum = function (nums) {
-                nums.sort();
-                let result = [];
-                if (nums.length < 3) {
-                    return result
-                }
-                for (let i = 0; i < nums.length; i++) {
-                    let left = i + 1;
-                    let right = nums.length - 1;
-                    if (nums[i] > 0) break;
-                    if (i > 0 && nums[i] == nums[i - 1]) {
-                        continue
-                    }
-                    while (left < right) {
-                        let sum = nums[i] + nums[left] + nums[right];
+        // 如果变量名与属性名不一致，必须写成下面这样。
+        var { foo: baz } = { foo: "aaa", bar: "bbb" };
+        // baz // "aaa"
+        // foo ReferenceError: foo is not defined
 
-                        if (sum == 0) {
-                            result.push([nums[i], nums[left], nums[right]]);
-                            while (left < right && nums[left] == nums[left + 1]) left++;
-                            while (left < right && nums[right] == nums[right - 1]) right--;
-                            left++; right--;
-                        } else if (sum > 0) {
-                            right--;
-                        } else {
-                            left++
-                        }
-                    }
-                }
-                return result
-            };
-            let nums = [-1, 0, 1, 2, -1, -4];
-            console.log(threeSum(nums), "threeSum")
-        }
+        let obj = { first: "hello", last: "world" };
+        let { first: f, last: l } = obj;
+        //f // 'hello'
+        //l // 'world'
 
-        {
-            // 解构赋值
-            var { foo, bar } = { foo: "aaa", bar: "bbb" };
-            // foo // "aaa"
-            // bar // "bbb"
+        var node = {
+          loc: {
+            start: {
+              line: 1,
+              column: 5,
+            },
+          },
+        };
 
-            // 如果变量名与属性名不一致，必须写成下面这样。
-            var { foo: baz } = { foo: 'aaa', bar: 'bbb' };
-            // baz // "aaa"
-            // foo ReferenceError: foo is not defined
-
-            let obj = { first: 'hello', last: 'world' };
-            let { first: f, last: l } = obj;
-            //f // 'hello'
-            //l // 'world'
-
-            var node = {
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 5
-                    }
-                }
-            };
-
-            var { loc: { start: { line } } } = node;
-            // line // 1
-            // loc  // error: loc is undefined
-            // start // error: start is undefined
-            // 上面代码中，只有line是变量，loc和start都是模式，不会被赋值。
-            // forin  
-            // 属性的可枚举性和所有权
-            // 可枚举属性是指那些内部 “可枚举” 标志设置为 true 的属性，对于通过直接的赋值和属性初始化的属性，该标识值默认为即为 true，对于通过 Object.defineProperty 等定义的属性，该标识值默认为 false。可枚举的属性可以通过 for...in 循环进行遍历（除非该属性名是一个 Symbol）。属性的所有权是通过判断该属性是否直接属于某个对象决定的，而不是通过原型链继承的。一个对象的所有的属性可以一次性的获取到。有一些内置的方法可以用于判断、迭代/枚举以及获取对象的一个或一组属性，下表对这些方法进行了列举。对于部分不可用的类别，下方的示例代码对获取方法进行了演示。
-        }
+        var {
+          loc: {
+            start: { line },
+          },
+        } = node;
+        // line // 1
+        // loc  // error: loc is undefined
+        // start // error: start is undefined
+        // 上面代码中，只有line是变量，loc和start都是模式，不会被赋值。
+        // forin
+        // 属性的可枚举性和所有权
+        // 可枚举属性是指那些内部 “可枚举” 标志设置为 true 的属性，对于通过直接的赋值和属性初始化的属性，该标识值默认为即为 true，对于通过 Object.defineProperty 等定义的属性，该标识值默认为 false。可枚举的属性可以通过 for...in 循环进行遍历（除非该属性名是一个 Symbol）。属性的所有权是通过判断该属性是否直接属于某个对象决定的，而不是通过原型链继承的。一个对象的所有的属性可以一次性的获取到。有一些内置的方法可以用于判断、迭代/枚举以及获取对象的一个或一组属性，下表对这些方法进行了列举。对于部分不可用的类别，下方的示例代码对获取方法进行了演示。
+      }
     </script>
-
-</body>
-
-
-
+  </body>
 </html>

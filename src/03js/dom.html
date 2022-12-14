@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <script>
-        /**
+      /**
      * 学习使用DOM 文档对象模型  -------------> 视频只看一遍  笔记才是精华
      * 书籍推荐--->无基础  JS王者归来  晋升看JS高级
      * 把整个页面一个HTML文件看成文档 树根对象  所有的标签是对象
@@ -43,13 +42,13 @@
         
      * 
      */
-        // document.getElementById()
-        // document.getElementsByClassName
-        // document.getElementsByName
-        // document.getElementsByTagName
-        // document.getAttribute()
-        // document.setAttribute()
-        /**
+      // document.getElementById()
+      // document.getElementsByClassName
+      // document.getElementsByName
+      // document.getElementsByTagName
+      // document.getAttribute()
+      // document.setAttribute()
+      /**
          * 对于获取到的节点,如果样式是在style标签中,那么点不出来的 比如node.style.left  可以写在标签的style属性中 应该用node.offsetLeft
          * 还有offsetHeight(元素高度)   offsetLeft offsetWidth offsetParent 等   
          * 数值来源: 没有脱离文档流  就是距离最左边屏幕的offset
@@ -79,7 +78,7 @@
             后一个兄弟元素 nextElementSibling 
         */
 
-        /*
+      /*
         元素创建:  为了提高用户体验, 并不是页面的首次加载完成必须的东西和并不是所有用户都需要看到的东西
             使用元素创建的方式,响应用户
         1. document.write("标签和代码")  缺陷 如果页面加载完成后调用这个方法,会把body标签里面所有内容全部干掉
@@ -178,11 +177,11 @@
 
         */
 
-        console.log(document.getElementById('div1')); //这里写就是返回了null因为代码从上往下执行,先执行了JS脚本 此时页面没有渲染出来这个节点
+      console.log(document.getElementById("div1")); //这里写就是返回了null因为代码从上往下执行,先执行了JS脚本 此时页面没有渲染出来这个节点
     </script>
-</head>
-<div id="div1">
-    <input type="button" value="点我换色" id="btn1">
+  </head>
+  <div id="div1">
+    <input type="button" value="点我换色" id="btn1" />
     <span>121212</span>
     <p>我是P标签</p>
     <span>121212</span>
@@ -193,19 +192,19 @@
     <p>　　2、阿甘正传</p>
     <p>　　3、盗梦空间</p>
     <p>坦坦尼克号 当幸福来敲门 希特勒名单 教父 星际穿越 罗马假日</p>
-</div>
-<script>
-    console.log(document.getElementById('div1'));
-    console.log(document.getElementById('div1').childNodes); //返回NOdeList
+  </div>
+  <script>
+    console.log(document.getElementById("div1"));
+    console.log(document.getElementById("div1").childNodes); //返回NOdeList
     console.log(document.getElementById("div1").children); //返回HTMLCollection
-    document.getElementById('btn1').onclick = function () {
-        let pelements = document.getElementsByTagName('p');
-        for (let index = 0; index < pelements.length; index++) {
-            console.log(111);
-            const element = pelements[index];
-            element.style.backgroundColor = "red"
-        }
-    }
+    document.getElementById("btn1").onclick = function () {
+      let pelements = document.getElementsByTagName("p");
+      for (let index = 0; index < pelements.length; index++) {
+        console.log(111);
+        const element = pelements[index];
+        element.style.backgroundColor = "red";
+      }
+    };
     // 使用节点的方式  让P标签换背景色
     /**
 
@@ -249,10 +248,7 @@
 
         html5 新增了classList属性 方便用户操作class    提供了add(value) contains(value)，remove(value)，toggle(value)，
      */
-</script>
+  </script>
 
-<body>
-
-</body>
-
+  <body></body>
 </html>

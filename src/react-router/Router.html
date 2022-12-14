@@ -1,197 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="../lib/babel.min.js"></script>
     <script src="../lib/react.development.js"></script>
     <script src="../lib/react-dom.development.js"></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div id="root"></div>
     <script type="text/babel">
-        const context = React.createContext();
-        class HashRouter extends React.Component {
+      const context = React.createContext();
+      class HashRouter extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            location: {
+              pathname: window.location.hash.slice(1) || "/",
+            },
+            history: {
+              push(to) {
+                window.location.hash = to;
+              },
+            },
+          };
+        }
 
-            constructor() {
-                super();
-                this.state = {
-                    location: {
-                        pathname: window.location.hash.slice(1) || "/",
+        componentDidMount() {
+          location.hash = location.hash || "/";
+          window.addEventListener("hashchange", () => {
+            this.setState({
+              location: {
+                ...this.state.location,
+                pathname: window.location.hash.slice(1) || "/",
+              },
+            });
+          });
+        }
 
-                    },
-                    history: {
-                        push(to) {
-                            window.location.hash = to;
-                        }
-                    }
+        render() {
+          const value = this.state;
+          return (
+            <context.Provider value={value}>
+              {this.props.children}
+            </context.Provider>
+          );
+        }
+      }
+
+      class Route extends React.Component {
+        render() {
+          return (
+            <context.Consumer>
+              {(state) => {
+                console.log(state);
+                let { path, component: Component, exact } = this.props;
+                let { pathname } = state.location;
+
+                const props = {
+                  location: state.location,
+                  history: state.history,
+                  match: {},
+                };
+
+                // 使用正则判断是否应该渲染组件: 源码使用的是path-to-regexp
+                // 我们知道前缀匹配上就可以渲染  在这里自己先试用startwith简单实现下  url中去参数也是使用的上面的模块
+                if (exact) {
+                  return pathname == path ? <Component {...props} /> : null;
+                } else if (pathname.startsWith(path)) {
+                  return <Component {...props} />;
                 }
-            }
 
-            componentDidMount() {
-                location.hash = location.hash || "/";
-                window.addEventListener("hashchange", () => {
-                    this.setState({
-                        location: {
-                            ...this.state.location, pathname: window.location.hash.slice(1) || "/"
-                        }
-                    })
-                })
-            }
-
-            render() {
-                const value = this.state
-                return <context.Provider value={value}>
-                    {this.props.children}
-                </context.Provider>
-            }
+                return null;
+              }}
+            </context.Consumer>
+          );
         }
+      }
 
-        class Route extends React.Component {
-            render() {
-                return <context.Consumer>
-                    {
-                        state => {
-                            console.log(state)
-                            let { path, component: Component, exact } = this.props;
-                            let { pathname } = state.location;
+      function withRouter(WrapperComponent) {
+        return (props) => {
+          const state = React.useContext(context);
+          const extraprops = {
+            location: state.location,
+            history: state.history,
+            match: {},
+          };
+          return <WrapperComponent {...extraprops} {...props} />;
+        };
+      }
 
-                            const props = {
-                                location: state.location,
-                                history: state.history,
-                                match: {}
-                            }
-
-                            // 使用正则判断是否应该渲染组件: 源码使用的是path-to-regexp  
-                            // 我们知道前缀匹配上就可以渲染  在这里自己先试用startwith简单实现下  url中去参数也是使用的上面的模块
-                            if (exact) {
-                                return pathname == path ? <Component {...props} /> : null
-                            } else if (pathname.startsWith(path)) {
-                                return <Component {...props} />
-                            }
-
-
-                            return null
-                        }
-                    }
-                </context.Consumer>
-            }
+      class Link extends React.Component {
+        render() {
+          return (
+            <context.Consumer>
+              {(state) => (
+                <a
+                  onClick={(e) => {
+                    state.history.push(this.props.to);
+                  }}
+                >
+                  {this.props.children}
+                </a>
+              )}
+            </context.Consumer>
+          );
         }
+      }
 
-        function withRouter(WrapperComponent) {
-            return (props) => {
-                const state = React.useContext(context);
-                const extraprops = {
-                    location: state.location,
-                    history: state.history,
-                    match: {}
+      class Redirect extends React.Component {
+        render() {
+          return (
+            <context.Consumer>
+              {(state) => {
+                state.history.push(this.props.to);
+                return null;
+              }}
+            </context.Consumer>
+          );
+        }
+      }
+
+      // 实现思路: 拿到props.children 对比每个组件的path和url的路径,找到返回即可
+      class Switch extends React.Component {
+        render() {
+          return (
+            <context.Consumer>
+              {(state) => {
+                let pathname = state.location.pathname;
+                let child = this.props.children;
+                for (let i = 0; i < child.length; i++) {
+                  const childcomponent = child[i];
+                  let path = childcomponent.props.path || "";
+                  if (path == pathname) {
+                    return childcomponent;
+                  }
                 }
-                return <WrapperComponent {...extraprops}  {...props} />
-            }
+                return null;
+              }}
+            </context.Consumer>
+          );
         }
+      }
 
-        class Link extends React.Component {
-            render() {
-                return <context.Consumer>{
-                    state => <a onClick={e => {
-                        state.history.push(this.props.to)
-                    }}>{this.props.children}</a>
-                }
-                </context.Consumer>
-            }
-        }
-
-        class Redirect extends React.Component {
-            render() {
-                return <context.Consumer>{
-                    state => { state.history.push(this.props.to); return null; }
-                }
-                </context.Consumer>
-            }
-        }
-
-        // 实现思路: 拿到props.children 对比每个组件的path和url的路径,找到返回即可
-        class Switch extends React.Component {
-            render() {
-                return <context.Consumer>{
-                    state => {
-                        let pathname = state.location.pathname;
-                        let child = this.props.children;
-                        for (let i = 0; i < child.length; i++) {
-                            const childcomponent = child[i];
-                            let path = childcomponent.props.path || ""
-                            if (path == pathname) {
-                                return childcomponent
-                            }
-
-                        }
-                        return null;
-                    }
-                }
-                </context.Consumer>
-            }
-        }
-
-
-
-        class Home extends React.Component {
-            render() {
-                console.log(this.props, "Home组件props")
-                return <div>
-                    <ul>
-                        <li><Link to="/home/1">用户1</Link></li>
-                        <li><Link to="/home/2">用户2</Link></li>
-                        <li><Link to="/home/3">用户3</Link></li>
-                    </ul>
-                </div>
-            }
-        }
-
-        function _Test(props) {
-            console.log(props, "test组件props")
-            return <div>Test</div>
-        }
-        const Test = withRouter(_Test)
-
-        const root = <HashRouter>
+      class Home extends React.Component {
+        render() {
+          console.log(this.props, "Home组件props");
+          return (
             <div>
-                <div>
-                    <Link to="/home">to home</Link>
-                </div>
-
-                <div style={{ border: "1px solid red" }}>
-                    <Switch>
-                        <Route path="/home/1212" component={Home} />
-                        <Route path="/home" exact={true} component={Home} />
-                        <Redirect to="/404" />
-                    </Switch>
-                    <Test aa="aa" />
-                </div>
+              <ul>
+                <li>
+                  <Link to="/home/1">用户1</Link>
+                </li>
+                <li>
+                  <Link to="/home/2">用户2</Link>
+                </li>
+                <li>
+                  <Link to="/home/3">用户3</Link>
+                </li>
+              </ul>
             </div>
-        </HashRouter>
-        // <Redirect />
-
-
-        ReactDOM.render(root, document.querySelector("#root"));
-
-
-        // 解构赋值可以从一个对象中提取变量并赋值给和对象属性名不同的新的变量名。
-        var o = { p: 42, q: true };
-        var { p: foo, q: bar } = o;
-
-        // console.log(foo); // 42
-        // console.log(bar); // true 
-
-        function _inherits(subClass, superClass) {
-            subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });
-            if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+          );
         }
+      }
 
+      function _Test(props) {
+        console.log(props, "test组件props");
+        return <div>Test</div>;
+      }
+      const Test = withRouter(_Test);
+
+      const root = (
+        <HashRouter>
+          <div>
+            <div>
+              <Link to="/home">to home</Link>
+            </div>
+
+            <div style={{ border: "1px solid red" }}>
+              <Switch>
+                <Route path="/home/1212" component={Home} />
+                <Route path="/home" exact={true} component={Home} />
+                <Redirect to="/404" />
+              </Switch>
+              <Test aa="aa" />
+            </div>
+          </div>
+        </HashRouter>
+      );
+      // <Redirect />
+
+      ReactDOM.render(root, document.querySelector("#root"));
+
+      // 解构赋值可以从一个对象中提取变量并赋值给和对象属性名不同的新的变量名。
+      var o = { p: 42, q: true };
+      var { p: foo, q: bar } = o;
+
+      // console.log(foo); // 42
+      // console.log(bar); // true
+
+      function _inherits(subClass, superClass) {
+        subClass.prototype = Object.create(superClass && superClass.prototype, {
+          constructor: {
+            value: subClass,
+            enumerable: false,
+            writable: true,
+            configurable: true,
+          },
+        });
+        if (superClass)
+          Object.setPrototypeOf
+            ? Object.setPrototypeOf(subClass, superClass)
+            : (subClass.__proto__ = superClass);
+      }
     </script>
-</body>
-
+  </body>
 </html>

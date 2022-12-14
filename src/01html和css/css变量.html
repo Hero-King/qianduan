@@ -1,51 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>学习css变量</title>
     <style>
-        body{
-            --backCol: yellow;
-        }
+      body {
+        --backCol: yellow;
+      }
 
-        #app div {
-            background-color: var(--backCol);
-        }
-        .aaa{
-            --backCol: red;
-        }
+      #app div {
+        background-color: var(--backCol);
+      }
+      .aaa {
+        --backCol: red;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="app">
-        在编写css公共样式的时候，我们都会声明很多通用的颜色、字号等。现在我们可以通过声明CSS变量来实现了
-        <h3>
-            1.变量的声明
-            CSS变量声明是字母前加两个横线（--）如：
-            body{
-
-            　　--Colors:#dfdfdf;
-
-            　　--fS16px:16px;
-
-            }
-            上述代码中，body选择器中声明了Colors和fS16px两个变量。而使用‘--’是因为$被Sass占用了，@被Less占用了，所以是为了区分它们。
-            变量的声明对大小写敏感。如：colors和Colors表示两个不同的变量
-        </h3>
-        <h3>
-            var函数用来读取变量, var()函数还可以使用第二个参数，表示变量的默认值。如果该变量不存在，就会使用这个默认值。
-            a{
-            color:var(--Colors)
-            }
-        </h3>
-        <hr />
-        效果展示:
-        <div>111</div>
-        <div class="aaa">222</div>
+      在编写css公共样式的时候，我们都会声明很多通用的颜色、字号等。现在我们可以通过声明CSS变量来实现了
+      <h3>
+        1.变量的声明 CSS变量声明是字母前加两个横线（--）如： body{
+        　　--Colors:#dfdfdf; 　　--fS16px:16px; }
+        上述代码中，body选择器中声明了Colors和fS16px两个变量。而使用‘--’是因为$被Sass占用了，@被Less占用了，所以是为了区分它们。
+        变量的声明对大小写敏感。如：colors和Colors表示两个不同的变量
+      </h3>
+      <h3>
+        var函数用来读取变量,
+        var()函数还可以使用第二个参数，表示变量的默认值。如果该变量不存在，就会使用这个默认值。
+        a{ color:var(--Colors) }
+      </h3>
+      <hr />
+      效果展示:
+      <div>111</div>
+      <div class="aaa">222</div>
     </div>
-</body>
-
+  </body>
 </html>
