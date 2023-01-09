@@ -57,11 +57,10 @@
       console.log(typeof num); //number
       console.log(typeof str); //string
       console.log(typeof flag); //boolean
-      console.log(String(nll)); //是null
+      console.log(String(nll)); //是'null'
       console.log(typeof nll); //不是null 而是object 存储的是对象,只不过没有指向
       console.log(typeof undef); //undefined
       console.log(typeof obj); //object
-      console.log(typeof num);
       //    console.log("10");
       //    console.log(10);
       // 如何准确的判断数据类型
@@ -81,7 +80,13 @@
         null是变量的值为空 或者说指向了空  var str = null ; 这个变量是对象类型 释放内存也是用的=null
         
         转Boolean: Boolean()
+        if 等流控制语句会自动执行其他类型值到布尔值的转换
+
+       
         转数字: parseInt parseFloat [Number()比前面两个严格]
+        对于非常大或非常小的数值，浮点值可以用科学记数法来表示,ECMAScript 中科学记数法的格式要求是一个数值（整数或浮点数）后跟一个大
+        写或小写的字母e，再加上一个要乘的10 的多少次幂。 let floatNum = 3.125e7; // 等于31250000
+
         转字符串: tostring()  String(10) 
         变量有意思 可以使用toString方法,没有意思不可以使用
         数组里面的数据类型可以是不同的;同时可以使用访问数组的方式设置数组值

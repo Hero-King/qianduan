@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>左右布局</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        margin: 0;
+      }
+      #app {
+      }
+      .layout-container {
+        height: 200px;
+        width: 100%;
+      }
+      .content {
+        height: 250px;
+      }
+      .left,
+      .right {
+        overflow: auto;
+      }
+      .section1 .left {
+        float: left;
+        width: 200px;
+        height: 100%;
+        background-color: #ccc;
+      }
+      .section1 .right {
+        height: 100%;
+        background-color: aliceblue;
+        margin-left: 200px;
+      }
+
+      .section2 .left {
+        float: left;
+        width: 200px;
+        height: 100%;
+        background-color: #ccc;
+      }
+      .section2 .right {
+        float: left;
+        height: 100%;
+        width: calc(100% - 220px);
+        background-color: aliceblue;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="layout-container section1">
+        <div class="left">
+          <div class="content"></div>
+        </div>
+        <div class="right">
+          左侧float 右侧margin 缺点:
+          虽然右侧宽度自适应了，但是我们尽管给左侧设置了height:
+          100%，也不能让左侧跟随右侧内容撑开高度，只能通过js去设置。
+          <div class="content"></div>
+        </div>
+      </div>
+
+      <h3>float + calc</h3>
+      <div class="layout-container section2">
+        <div class="left">
+          <div class="content"></div>
+        </div>
+        <div class="right">
+          float 右侧calc计算宽度
+          <div class="content"></div>
+        </div>
+      </div>
+
+      <h3>flex</h3>
+      <h3>左侧绝对定位</h3>
+    </div>
+  </body>
+</html>
