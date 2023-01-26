@@ -70,6 +70,31 @@
       console.log(Object.prototype.toString.call(12)); // [object Number]
       console.log(Object.prototype.toString.call(null)); // [object Null]
 
+      // Boolean 对于对象 非null 就返回true
+      console.log(Boolean([]))  // true
+      console.log(Boolean({}))  // true
+      console.log(Boolean(function(){}))  // true
+      console.log(Boolean(null)); // false
+
+      // Number
+      let num1 = Number("Hello world!"); // NaN 
+      let num2 = Number(""); // 0 
+      let num3 = Number("000011"); // 11 
+      let num4 = Number(true); // 1 
+      // parseInt/parseFloat
+      /**
+       * 
+       * parseInt()函数更专注于字符串是否包含数值模式。字符串最前面的空格会被
+忽略，从第一个非空格字符开始转换。如果第一个字符不是数值字符、加号或减号，parseInt()立即
+返回 NaN。这意味着空字符串也会返回 NaN（这一点跟 Number()不一样，它返回 0）。如果第一个字符
+是数值字符、加号或减号，则继续依次检测每个字符，直到字符串末尾，或碰到非数值字符。
+
+parseFloat()函数的另一个不同之处在于，它始终忽略字符串开头的零。这个函数能识别前面讨
+论的所有浮点格式，以及十进制格式（开头的零始终被忽略）。十六进制数值始终会返回 0。因为
+parseFloat()只解析十进制值，因此不能指定底数。
+       * /
+
+
       // JS浮点数也是不准确存储的
       /*
         var num ;
@@ -86,6 +111,8 @@
         转数字: parseInt parseFloat [Number()比前面两个严格]
         对于非常大或非常小的数值，浮点值可以用科学记数法来表示,ECMAScript 中科学记数法的格式要求是一个数值（整数或浮点数）后跟一个大
         写或小写的字母e，再加上一个要乘的10 的多少次幂。 let floatNum = 3.125e7; // 等于31250000
+        浮点值的精确度最高可达 17 位小数，
+        isNaN() 该函数会尝试把参数转换为数值。在判断是否Nan
 
         转字符串: tostring()  String(10) 
         变量有意思 可以使用toString方法,没有意思不可以使用
