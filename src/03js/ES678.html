@@ -38,6 +38,47 @@
         console.log(0 ?? 5); // 0
       }
       fun(); // undefined
+
+      function log() {
+        console.log("---------------", ...arguments, "--------------------");
+      }
+
+      log("Object.fromEntries() ", "Object.entries()");
+      const object1 = {
+        a: "somestring",
+        b: 42,
+      };
+
+      for (const [key, value] of Object.entries(object1)) {
+        console.log(`${key}: ${value}`);
+        // "a: somestring"
+        // "b: 42"
+      }
+
+      // Object.fromEntries() 返回键和值组成的对象，相当于Object.entries()的逆操作
+      log("Map转成对象");
+      const entries = new Map([
+        ["foo", "bar"],
+        ["baz", 42],
+      ]);
+
+      const obj = Object.fromEntries(entries);
+      console.log(obj);
+      // Expected output: Object { foo: "bar", baz: 42 }
+
+      log(" Array 转化为 Object");
+      // 注意数组的形式
+      let arr = [
+        ["a", 1],
+        ["b", 2],
+      ];
+      let obj1 = Object.fromEntries(arr);
+      console.log(obj1); // {a: 1, b: 2}
+
+      log(
+        "globalThis",
+        "全局this，无论是什么环境（浏览器，node等），始终指向全局对象"
+      );
     </script>
   </body>
 </html>

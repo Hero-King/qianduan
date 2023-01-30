@@ -47,19 +47,26 @@
         // // 等同于
         // x && (x = y)
 
-        // // Null 赋值运算符
+        // // Null 赋值运算符 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing
         // x ??= y
         // // 等同于
         // x ?? (x = y)
 
         // 判断非空简写
         // old
+        let value;
         if (value !== null && value !== undefined && value !== "") {
           //...
         }
         // new
         if ((value ?? "") !== "") {
           //...
+        }
+
+        // 非null 非undefined
+        let flag;
+        if ((flag ?? null) !== null) {
+          console.log("非null 非undefined");
         }
       })();
     </script>
