@@ -8,11 +8,169 @@
 
   <body>
     <script>
+      function log() {
+        console.log("---------------", ...arguments, "--------------------");
+      }
+
+      log(
+        "globalThis",
+        "全局this，无论是什么环境（浏览器，node等），始终指向全局对象",
+        "globalThis === window : ",
+        globalThis === window
+      );
+
+      log(
+        "解构赋值",
+        "只要某种数据结构具有 Iterator 接口，都可以采用数组形式的解构赋值。"
+      );
+      // 申明多个变量
+      let [a, b, c] = [1, 2, 3];
+      let [x, y, ...z] = ["a"]; // x: 'a', y: 'undefined', z: []
+      console.log(a, b, c, x, y, z);
+
+      log(
+        "解构赋值-默认值",
+        "ES6 内部使用严格相等运算符（===），判断一个位置是否有值。所以，只有当一个数组成员严格等于undefined，默认值才会生效。"
+      );
+
+      (function () {
+        let [x = 1] = [undefined]; // x // 1
+        let [y = 1] = [null]; // y // null
+      })();
+
+      log("对象解构赋值-变量名");
+      let { foo: baz } = { foo: "aaa", bar: "bbb" }; // baz // "aaa" 对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。
+      log("解构赋值-嵌套赋值");
+      (function () {
+        let obj = {};
+        let arr = [];
+        ({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
+        console.log(obj); // {prop:123}
+        console.log(arr); // [true]
+      })();
+    </script>
+
+    <script>
+      // Number
+      // Number.isFinite()用来检查一个数值是否为有限的（finite），即不是Infinity。 如果参数类型不是数值，Number.isFinite一律返回false。
+      Number.isFinite(15); // true
+      Number.isFinite(0.8); // true
+      Number.isFinite(NaN); // false
+      Number.isFinite(Infinity); // false
+      Number.isFinite(-Infinity); // false
+      Number.isFinite("foo"); // false
+      Number.isFinite("15"); // false
+      Number.isFinite(true); // false
+
+      // Number.isNaN()用来检查一个值是否为NaN。 参数类型不是NaN，Number.isNaN一律返回false。
+      Number.isNaN(NaN); // true
+      Number.isNaN(15); // false
+      Number.isNaN("15"); // false
+      Number.isNaN(true); // false
+      Number.isNaN(9 / NaN); // true
+      Number.isNaN("true" / 0); // true
+      Number.isNaN("true" / "true"); // true
+
+      // 它们与传统的全局方法isFinite()和isNaN()的区别在于，传统方法先调用Number()将非数值的值转为数值，再进行判断，而这两个新方法只对数值有效，Number.isFinite()对于非数值一律返回false, Number.isNaN()只有对于NaN才返回true，非NaN一律返回false
+
+      // Number.isInteger()用来判断一个数值是否为整数。如果参数不是数值，Number.isInteger返回false。注意如果参数长度超过53位,函数会判断出错,故如果对数据精度的要求较高，不建议使用Number.isInteger()判断一个数值是否为整数。
+      Number.isInteger(25); // true
+      Number.isInteger(25.1); // false
+      Number.isInteger(25); // true
+      Number.isInteger(25.0); // true  // JavaScript 内部，整数和浮点数采用的是同样的储存方法，所以 25 和 25.0 被视为同一个值。
+      Number.isInteger(); // false
+      Number.isInteger(null); // false
+      Number.isInteger("15"); // false
+      Number.isInteger(true); // false
+
+      log(
+        "安全整数和 Number.isSafeInteger()",
+        "JavaScript 能够准确表示的整数范围在-2^53到2^53之间（不含两个端点），超过这个范围，无法精确表示这个值。",
+        "同样超过安全值范围的数学运算也是错误的"
+      );
+      Math.pow(2, 53); // 9007199254740992
+      console.log("9007199254740992", 9007199254740992); // 9007199254740992
+      console.log("9007199254740993", 9007199254740993); // 9007199254740992
+      Math.pow(2, 53) === Math.pow(2, 53) + 1; // true
+
+      Number.MAX_SAFE_INTEGER === Math.pow(2, 53) - 1;
+      // true
+      Number.MAX_SAFE_INTEGER === 9007199254740991;
+      // true
+      Number.MIN_SAFE_INTEGER === -Number.MAX_SAFE_INTEGER;
+      // true
+      Number.MIN_SAFE_INTEGER === -9007199254740991;
+      // true
+      Number.isSafeInteger("a"); // false
+      Number.isSafeInteger(null); // false
+      Number.isSafeInteger(NaN); // false
+      Number.isSafeInteger(Infinity); // false
+      Number.isSafeInteger(-Infinity); // false
+      Number.isSafeInteger(3); // true
+      Number.isSafeInteger(1.2); // false
+      Number.isSafeInteger(9007199254740990); // true
+      Number.isSafeInteger(9007199254740992); // false
+      Number.isSafeInteger(Number.MIN_SAFE_INTEGER - 1); // false
+      Number.isSafeInteger(Number.MIN_SAFE_INTEGER); // true
+      Number.isSafeInteger(Number.MAX_SAFE_INTEGER); // true
+      Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1); // false
+
+      // BigInt https://www.bookstack.cn/read/es6-3rd/spilt.9.docs-number.md
+      log("BigInt");
+      console.log(1n + 2n, typeof 123n, 42n === 42); // 3n 'bigint' false
+      BigInt(123); // 123n
+      BigInt("123"); // 123n
+      BigInt(false); // 0n
+      BigInt(true); // 1n
+      /** BigInt()构造函数必须有参数，而且参数必须可以正常转为数值，下面的用法都会报错。
+        new BigInt() // TypeError
+        BigInt(undefined) //TypeError
+        BigInt(null) // TypeError
+        BigInt('123n') // SyntaxError  123n无法解析成 Number 类型
+        BigInt('abc') // SyntaxError
+      */
+    </script>
+
+    <script>
+      // 函数
+      log(
+        "尾调用",
+        "指某个函数的最后一步是调用另一个函数。",
+        "正常函数调用会形成调用栈,占用内存空间,但是尾调用,在f()函数执行到最后一步时,去执行g()这时候f的变量,调用位置等信息都不会在用到了,只要直接用内层函数的调用帧，取代外层函数的调用帧就可以了。"
+      );
+      // https://www.bookstack.cn/read/es6-3rd/spilt.6.docs-function.md
+      function f(x) {
+        return g(x);
+      }
+
+      // 阶乘函数
+      function factorial(n, total) {
+        if (n == 1) {
+          return total;
+        }
+        return factorial(n - 1, n * total);
+      }
+      console.log(factorial(5,1)) // 120
+    </script>
+
+    <script>
       // Array.prototype.includes() 方法
       // String.prototype.includes()
       // str.includes(searchString[, position])
-      console.log("---------------", "includes", "--------------------");
+      console.log("---------------", "String includes", "--------------------");
       console.log("12345包括23吗", "12345".includes("23"));
+      log(
+        "String repeat",
+        "x".repeat(3),
+        "hello".repeat(2),
+        "na".repeat(0) == ""
+      );
+
+      log("String padStart padEnd");
+      "x".padStart(5, "ab"); // 'ababx'
+      "x".padStart(4, "ab"); // 'abax'
+      "x".padEnd(5, "ab"); // 'xabab'
+      "x".padEnd(4, "ab"); // 'xaba'
 
       // arr.includes(searchElement, fromIndex)
       console.log("[1,2,3,4].includes(1) ", [1, 2, 3, 4].includes(1)); // false
@@ -38,10 +196,6 @@
         console.log(0 ?? 5); // 0
       }
       fun(); // undefined
-
-      function log() {
-        console.log("---------------", ...arguments, "--------------------");
-      }
 
       log("Object.fromEntries() ", "Object.entries()");
       const object1 = {
@@ -74,11 +228,6 @@
       ];
       let obj1 = Object.fromEntries(arr);
       console.log(obj1); // {a: 1, b: 2}
-
-      log(
-        "globalThis",
-        "全局this，无论是什么环境（浏览器，node等），始终指向全局对象"
-      );
     </script>
   </body>
 </html>
