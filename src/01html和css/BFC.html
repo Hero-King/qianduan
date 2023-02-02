@@ -11,7 +11,10 @@
     BFC 块级格式化上下文
     一个创建了新的BFC的盒子是独立布局,盒子内的元素布局不会影响盒子外面的布局
     每个BFC区域只包括其子元素,不包括跨级的子元素 触发BFC的条件:
-    body根元素/浮动/定位/行内块显示模式/overflow属性/表格单元格/flex
+    float的值不为none 
+    position的值不为static或者relative 
+    display的值为table-cell, table-caption, inline-block, flex, 或者 inline-flex中的其中一个
+    overflow的值不为visible
 
     <div class="import">每一个BFC都是独立的,布局上相互不影响</div>
 

@@ -7,6 +7,9 @@
   </head>
 
   <body>
+
+    <a href="https://www.bookstack.cn/read/es6-3rd/spilt.3.docs-set-map.md"> 阮一峰 ECMAScript 6 (ES6) 标准入门教程 第三版</a>
+
     <script>
       function log() {
         console.log("---------------", ...arguments, "--------------------");
@@ -41,6 +44,8 @@
       log("对象解构赋值-变量名");
       let { foo: baz } = { foo: "aaa", bar: "bbb" }; // baz // "aaa" 对象的解构赋值的内部机制，是先找到同名属性，然后再赋给对应的变量。真正被赋值的是后者，而不是前者。
       log("解构赋值-嵌套赋值");
+      // 解构赋值的拷贝是浅拷贝，即如果一个键的值是复合类型的值（数组、对象、函数）、那么解构赋值拷贝的是这个值的引用，而不是这个值的副本。
+      // 扩展运算符的解构赋值，不能复制继承自原型对象的属性。
       (function () {
         let obj = {};
         let arr = [];
@@ -150,7 +155,11 @@
         }
         return factorial(n - 1, n * total);
       }
-      console.log(factorial(5,1)) // 120
+      console.log(factorial(5, 1)); // 120
+
+      log(
+        "Function.prototype.toString() 方法返回函数代码本身，以前会省略注释和空格。"
+      );
     </script>
 
     <script>
@@ -228,6 +237,16 @@
       ];
       let obj1 = Object.fromEntries(arr);
       console.log(obj1); // {a: 1, b: 2}
+    </script>
+
+    <script>
+      // Set Map
+      /**
+       * 
+       *  WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
+       * WeakSet 的成员只能是对象，而不能是其他类型的值。
+       * 其次，WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用，也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，不考虑该对象还存在于 WeakSet 之中。
+       * */
     </script>
   </body>
 </html>

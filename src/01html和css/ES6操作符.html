@@ -18,6 +18,23 @@
         console.log(name);
       })();
 
+      /**
+       * 链判断运算符 
+       * ?.运算符，直接在链式调用的时候判断，左侧的对象是否为null或undefined。如果是的，就不再往下运算，而是返回undefined。
+a?.b
+// 等同于
+a == null ? undefined : a.b
+a?.[x]
+// 等同于
+a == null ? undefined : a[x]
+a?.b()
+// 等同于
+a == null ? undefined : a.b()
+a?.()
+// 等同于
+a == null ? undefined : a()
+       * 
+       **/
       (function () {
         const obj = { name: "wang" };
         const name = obj?.name;

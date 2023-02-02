@@ -6,10 +6,24 @@
 参看资料：
 https://blog.csdn.net/mus123/article/details/106499506 https://www.bilibili.com/video/BV1ek4y1r7GT?from=search&seid=6774208587243450087
 
-#### 代学习
+## 面试题
 
-html5 标签 视频 图片
-事件循环
-响应式布局
+### 浏览器
+- 浏览器工作原理 架构知识
+- 渲染进程
+- 垃圾回收机制
+- 上下文和闭包
 
-微信小程序
+### JS
+ES6~12
+bind pipe compose 深拷贝
+
+### CSS
+- BFC
+- flex布局
+
+### 框架
+#### Vue
+- V3组合式API
+- key,diff算法
+- 编译原理
