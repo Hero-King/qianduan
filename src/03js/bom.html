@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+    <script src="/public/myUtil.js"></script>
   </head>
   <body>
     <script>
@@ -35,6 +36,22 @@
                 我们想页面加载完毕就执行   可以定时器外面先手动调用一次
                 setTimeOut()   一次性定时器   定时器都需要手动释放资源  一般都在设置定时器的时候获取到timeId 然后定时器回调中判断条件达到条件清除掉定时器
         */
+
+      var n = new Proxy(navigator, logHandler);
+      log("客户端版本", n.appVersion);
+      log("客户端设备内存", n.deviceMemory);
+      log("网络通断", n.onLine);
+      log("操作系统平台", n.platform);
+      log("浏览器安装的插件", n.plugins);
+      log("pdf预览", n.pdfViewerEnabled);
+      log("浏览器的用户代理字符串", n.userAgent);
+      log("客户端最大触点个数", n.maxTouchPoints);
+      log("浏览器脚本感知当前设备的地理位置", n.geolocation);
+
+      // 网络通断 事件
+      window.ononline = window.onoffline = function (e) {
+        console.log(e);
+      };
     </script>
   </body>
 </html>
