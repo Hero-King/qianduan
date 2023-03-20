@@ -74,6 +74,22 @@
         console.log("IIII");
         // DDDD AAAA GGGG IIII CCCC BBBB
       }
+
+      (function () {
+        console.clear();
+        // async异步函数始终返回Promise
+        async function foo() {
+          console.log(1);
+          // return Promise.reject(2); // catch捕获
+          // Promise.resolve(2);
+          // return await 1000
+          // throw "errrrr"; // catch捕获
+          return new Promise((res, rej) => {
+            setTimeout(Math.random() * 10 > 5 ? res : rej, 2000);
+          });
+        }
+        foo().then(console.log).catch(console.warn); // async函数返回值会被Promise.resolve包裹
+      })();
     </script>
   </body>
 </html>
