@@ -52,6 +52,9 @@
     </style>
   </head>
   <body>
+    <button onclick="drawRectangle()">绘制矩形</button>
+    <button onclick="drawRectangleStroke()">绘制矩形轮廓</button>
+    <button onclick="clean()">清空</button>
     <canvas id="canvas"></canvas>
     <div id="toolbox">
       <button class="square" id="sub">-</button>
@@ -66,7 +69,8 @@
       const squares = d.querySelectorAll(".square");
       const val = d.getElementById("val");
       const canvas = d.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
+      // 2D 上下文有两个基本绘制操作：填充和描边。填充以指定样式（颜色、渐变或图像）自动填充形状，而描边只为图形边界着色。大多数 2D 上下文操作有填充和描边的变体，显示效果取决于两个属性：fillStyle 和 strokeStyle。
+      const context = canvas.getContext("2d");
       squares.forEach((btn) => {
         btn.addEventListener("click", function (e) {
           const id = this.id;
@@ -80,7 +84,7 @@
               val.innerText = textVal >= 50 ? textVal : textVal + 5;
               break;
             case "color":
-              ctx.fillStyle = this.value;
+              context.fillStyle = this.value;
             default:
               break;
           }
@@ -91,6 +95,44 @@
       canvas.addEventListener("mousedown", function (e) {});
 
       function draw() {}
+
+      function drawRectangle() {
+        context.fillStyle = "red";
+        context.fillRect(10, 10, 50, 50);
+
+        // 绘制半透明蓝色矩形
+        context.fillStyle = "rgba(0,0,255,0.5)";
+        context.fillRect(30, 30, 50, 50);
+      }
+
+      function clean() {
+        // 使用 clearRect()方法可以擦除画布中某个区域。
+        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      }
+
+      function drawRectangleStroke(params) {
+        // 绘制红色轮廓的矩形
+        context.strokeStyle = "#ff0000";
+        context.strokeRect(10, 10, 50, 50);
+        // 绘制半透明蓝色轮廓的矩形
+        context.strokeStyle = "rgba(0,0,255,0.5)";
+        context.strokeRect(30, 30, 50, 50);
+      }
+
+      // 绘制路径
+      /**
+       * 首先，你需要创建路径起始点。 beginPath()
+然后你使用画图命令去画出路径。 moveTo()[将笔触移动到指定的坐标 x 以及 y 上。] lineTo()[绘制一条从当前位置到指定 x 以及 y 位置的直线。]  rect(x, y, width, height)[绘制一个左上角坐标为（x,y），宽高为 width 以及 height 的矩形。]  arc(x, y, radius, startAngle, endAngle, anticlockwise) [画一个以（x,y）为圆心的以 radius 为半径的圆弧（圆），从 startAngle 开始到 endAngle 结束，按照 anticlockwise 给定的方向（默认为顺时针）来生成。]
+之后你把路径封闭。closePath()
+一旦路径生成，你就能通过描边或填充路径区域来渲染图形。stroke() fill()
+// 当你调用 fill() 函数时，所有没有闭合的形状都会自动闭合，所以你不需要调用 closePath() 函数。但是调用 stroke() 时不会自动闭合。
+*/
+
+      /**
+       * 使用图像
+       * 1. canvas 可以操作 img标签,video中的当前帧,其他canvas, base64图片 这几种图片源
+       * 2. 使用drawImage(image, x, y)函数将图片绘制到画布上
+       * */
     </script>
   </body>
 </html>
