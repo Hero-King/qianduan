@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.11/dist/g6.min.js"></script>
+
+    <style>
+      #mountNode {
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Step 1 创建容器 -->
+    <div id="mountNode"></div>
+
+    <script>
+      const width = 800;
+      // Step 2 数据准备
+      const data = {
+        // 点集
+        nodes: [
+          {
+            id: "node1", // String，该节点存在则必须，节点的唯一标识
+            x: width / 2, // Number，可选，节点位置的 x 值
+            y: 50, // Number，可选，节点位置的 y 值
+            size: [width, 10],
+            style: {}, // 通过 style 配置来修改节点的填充色、边框颜色、阴影等属性
+            type: "rect",
+            label: "",
+            anchorPoints: [
+              [0.2, 1],
+              [0.4, 1],
+              [0.6, 1],
+            ],
+          },
+          {
+            id: "node2", // String，该节点存在则必须，节点的唯一标识
+            x: width * 0.2, // Number，可选，节点位置的 x 值
+            y: 300, // Number，可选，节点位置的 y 值
+            label: "储能逆变器",
+            labelCfg: {
+              position: "bottom",
+              offset: 10,
+              style: {
+                fill: "#666",
+              },
+            },
+            anchorPoints: [
+              [0.5, 0],
+              [0.5, 1],
+            ],
+          },
+        ],
+        // 边集
+        edges: [
+          {
+            source: "node1", // String，必须，起始点 id
+            target: "node2", // String，必须，目标点 id
+            label: "label",
+            sourceAnchor: 0,
+            labelCfg: {
+              position: "middle",
+              refY: 20, // y轴偏移量
+            },
+            style: {
+              stroke: "#FAD4AF",
+              lineWidth: 7,
+            //   endArrow: {
+            //     path: G6.Arrow.triangle(10, 8, 10), // 使用内置箭头路径函数，参数为箭头的 宽度、长度、偏移量（默认为 0，与 d 对应）
+            //     d: 10,
+            //   },
+            //   startArrow: true,
+            },
+          },
+        ],
+      };
+
+      // Step 3 创建关系图
+      const graph = new G6.Graph({
+        container: "mountNode", // String | HTMLElement，必须，在 Step 1 中创建的容器 id 或容器本身
+        width, // Number，必须，图的宽度
+        height: 500, // Number，必须，图的高度
+        defaultEdge: {
+          style: {
+            endArrow: {
+              path: G6.Arrow.triangle(10, 8, 10), // 使用内置箭头路径函数，参数为箭头的 宽度、长度、偏移量（默认为 0，与 d 对应）
+              d: 10,
+            },
+            startArrow: {
+              path: G6.Arrow.triangle(10, 8, 10), // 使用内置箭头路径函数，参数为箭头的 宽度、长度、偏移量（默认为 0，与 d 对应）
+              d: 10,
+            },
+          },
+        },
+      });
+
+      // Step 4 配置数据源，渲染
+      graph.data(data); // 读取 Step 2 中的数据源到图上
+      graph.render(); // 渲染图
+
+      //   事件
+      graph.on("node:click", (ev) => {
+        console.log(ev, "ev点击");
+        const node = ev.item; // 被点击的节点元素
+        const shape = ev.target; // 被点击的图形，可根据该信息作出不同响应，以达到局部响应效果
+        // ... do sth
+      });
+    </script>
+  </body>
+</html>
