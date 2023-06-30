@@ -48,10 +48,16 @@
           return 100;
         }
 
-        // 如何获取上一轮的数据
+        // 如何获取上一轮的数据 单独修改ref不会引起页面渲染
+        // 页面一挂载会执行一次 相当于didmount
         const prevValue = useRef();
         useEffect(() => {
           prevValue.current = count;
+          console.log(count, "count useeffect", prevValue.current); // 1 'count useeffect' 1   2 'count useeffect' 2
+          return () => {
+            // count 是旧值
+            console.log(count, " count return effect");
+          };
         }, [count]);
 
         return (

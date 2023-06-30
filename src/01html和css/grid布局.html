@@ -4,6 +4,115 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grid布局</title>
+    <style>
+      p {
+        margin: 0;
+      }
+      .grid {
+        display: grid;
+        height: 400px;
+        width: 100%;
+        /* grid-template-columns 基于网格列的维度，去定义网格线的名称和网格轨道的尺寸大小。 */
+        /* 属性定义每一列的列宽 */
+        grid-template-columns: 100px 100px;
+        /* grid-template-rows属性定义每一行的行高。 */
+        grid-template-rows: 50px 50px;
+
+        /* grid-template-columns: 33.33% 33.33% 33.33%;  */
+        grid-template-columns: repeat(
+          3,
+          33.33%
+        ); /** 第一个参数是重复的次数（上例是3），第二个参数是所要重复的值。 */
+        grid-template-rows: 70% 30%;
+
+        /* 有时，单元格的大小是固定的，但是容器的大小不确定。如果希望每一行（或每一列）容纳尽可能多的单元格，这时可以使用auto-fill关键字表示自动填充。 */
+        /* 缩小浏览器窗口查看效果 当innerWidth < 600 会自动换行 */
+        grid-template-columns: repeat(auto-fill, 200px);
+
+        /* fr 关键字 如果两列的宽度分别为1fr和2fr，就表示后者是前者的两倍。 */
+        grid-template-columns: 1fr 2fr;
+
+        /* 属性设置行与行的间隔（行间距）==> row-gap */
+        /* grid-row-gap: 20px; */
+        /* grid-column-gap: 10px; */
+        /* grid-gap: <grid-row-gap> <grid-column-gap>; 简写形式 */
+        /* 根据最新标准，上面三个属性名的grid-前缀已经删除，grid-column-gap和grid-row-gap写成column-gap和row-gap，grid-gap写成gap。 */
+
+        /* grid-template-areas: 网格布局允许指定"区域"（area），一个区域由单个或多个单元格组成。grid-template-areas属性用于定义区域。*/
+        /* 划分成a,b两个区域*/
+        /* grid-template-areas: 'a,a' 'b,b';   */
+
+        /* grid-auto-flow 默认先行后列布局,可以将它设成column，变成"先列后行"。 */
+        grid-auto-flow: row;
+
+        /* justify-items属性设置单元格内容的水平位置（左中右），align-items属性设置单元格内容的垂直位置（上中下）。 */
+        /* place-items: <align-items> <justify-items>; */
+
+        /* justify-content属性是整个内容区域在容器里面的水平位置（左中右），align-content属性是整个内容区域的垂直位置（上中下）。 */
+      }
+
+      .grid > div {
+        border: 1px solid #ccc;
+        /* 项目属性 */
+        /* grid-column-start属性：左边框所在的垂直网格线 从1开始
+grid-column-end属性：右边框所在的垂直网格线
+grid-row-start属性：上边框所在的水平网格线
+grid-row-end属性：下边框所在的水平网格线  */
+      }
+
+      br {
+        height: 2px;
+        width: 100%;
+      }
+
+      .border {
+        border: 1px solid #ccc;
+      }
+
+      .aj-grid {
+        display: grid;
+        height: 400px;
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+        align-items: center;
+      }
+      .aj-grid > div {
+        height: 50px;
+        width: 50px;
+        border: 1px solid #ccc;
+      }
+
+      .flex {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* align-items: center; */
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="grid">
+      <div><p>1</p></div>
+      <div><p>2</p></div>
+      <div><p>3</p></div>
+      <div><p>4</p></div>
+    </div>
+    <div>------------------间隔线-----------------</div>
+
+    <div>align-item justify-items justify-content align-content</div>
+    <div class="aj-grid">
+      <div><p>1</p></div>
+      <div><p>2</p></div>
+      <div><p>3</p></div>
+      <div><p>4</p></div>
+    </div>
+
+    <div>flex</div>
+    <div class="flex border">
+      <button>ddd</button>
+      <button>ddd2</button>
+    </div>
+  </body>
 </html>
