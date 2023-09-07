@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
+    <script src="./asset/world.js"></script>
+    <script src="./asset/china.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app" style="height: 70vh"></div>
+
+    <script>
+      const mode = 2; // 1 绘制series地图 2. 地图作为地球的材质
+      const echart = echarts.init(document.getElementById("app"));
+      const chinaCenter = {
+        alpha: 34.32,
+        beta: 108 + 90,
+      };
+
+      //  使用series 绘制世界地图
+      const opt = {
+        backgroundColor: "#044161",
+        series: [
+          {
+            type: "map",
+            map: "world",
+            // map: "china",
+            // 绘制完整尺寸的 echarts 实例
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            label: {
+              show: false,
+            },
+            boundingCoords: [
+              [-180, 90],
+              [180, -90],
+            ],
+            itemStyle: {
+              emphasis: {
+                areaColor: "#EEF824",
+              },
+            },
+          },
+        ],
+      };
+
+      if (mode == 1) {
+        echart.setOption(opt);
+      } else {
+        var canvas = document.createElement("canvas");
+        var mapChart = echarts.init(canvas, null, {
+          width: 4096,
+          height: 2048,
+        });
+        mapChart.setOption(opt);
+        mapChart.on("click", function (params) {
+          console.log(params, "mapChart click");
+        });
+
+        // 设置3d地球
+        echart.setOption({
+          globe: {
+            // baseTexture: "asset/Earth_Diffuse_6K.png",
+            baseTexture: mapChart,
+            // heightTexture: "asset/Earth_Glossiness_6K.jpg",
+
+            // layers: [
+            //   {
+            //     type: "overlay",  //  overlay | blend
+            //     texture: mapChart,
+            //   },
+            // ],
+
+            shading: "color",
+            environment: "asset/starfield.jpg",
+            atmosphere: {
+              show: true,
+            },
+            viewControl: {
+              autoRotate: false,
+              targetCoord: [100.46, 39.92],
+            },
+          },
+          series: [
+            {
+              name: "数据",
+              type: "scatter3D",
+              coordinateSystem: "globe",
+              emphasis: {
+                itemStyle: { opacity: 1, borderWidth: 4, borderColor: "ref" },
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                },
+              },
+              label: {
+                show: true,
+                formatter: "{b}",
+              },
+              data: [
+                {
+                  name: "北京",
+                  value: [116, 39.9, 0],
+                  extraVal: "xxx",
+                },
+                {
+                  name: "海南",
+                  value: [116, 20, 0],
+                },
+              ],
+            },
+          ],
+        });
+      }
+
+      echart.on("click", function (params) {
+        console.log(params);
+      });
+    </script>
+  </body>
+</html>
