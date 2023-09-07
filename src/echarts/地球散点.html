@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
+    <script src="./asset/china.js"></script>
+    <title>Document</title>
+    <style>
+      #app {
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      const echart = echarts.init(document.getElementById("app"));
+      const beijing = [116, 39.9];
+      const chinaCenter = {
+        alpha: 34.32,
+        beta: 108 + 90,
+      };
+
+      echart.setOption({
+        tooltip: {
+          show: true,
+          enterable: true,
+          hideDelay: 500,
+          // position(point, params, dom, rect) {
+          //   console.log(arguments);
+          //   return;
+          // },
+        },
+        series: [
+          {
+            name: "点位",
+            type: "scatter3D",
+            coordinateSystem: "globe",
+            label: {
+              // position: "top",
+              show: true,
+              formatter: "{b}",
+              textStyle: {
+                // color: "#fff" ,
+                fontSize: 20,
+                fontWeight: "700",
+              },
+            },
+            // 散点图颜色描边等样式。
+            itemStyle: {
+              color: "#317EFF",
+              opacity: 0.6,
+              borderWidth: 4,
+              borderColor: "#317EFF",
+            },
+            symbolSize: 30,
+            // 长度必须大于1 才能有点击事件
+            data: [
+              {
+                name: "北京",
+                value: [116, 39.9, 0],
+                extraVal: "xxx",
+              },
+              {
+                name: "Other",
+                value: [116, 30, 0],
+              },
+            ],
+            blendMode: "source-over", // source-over |
+            emphasis: {
+              itemStyle: { opacity: 1, borderWidth: 0, borderColor: "#fff" },
+            },
+          },
+        ],
+        globe: {
+          baseTexture: "asset/Earth_Diffuse_6K.png",
+          // heightTexture: "asset/Earth_Glossiness_6K.jpg",
+          //   地球顶点位移的大小: 地球表面凹凸效果
+          displacementScale: 0.04,
+          shading: "realistic",
+          environment: "asset/starfield.jpg",
+
+          // realisticMaterial: {
+          //   roughness: 0.9,
+          // },
+          // postEffect: {
+          //   enable: true,
+          // },
+          //   用于地球外部大气层相关设置。
+          atmosphere: {
+            show: true,
+            color: "#317EFF",
+            // 外部大气层相对于默认位置的偏移。
+            offset: 6,
+            // 外部大气层发光功率。
+            glowPower: 10,
+            // 外部大气层内发光功率。
+            // innerGlowPower: 20,
+          },
+          light: {
+            main: {
+              intensity: 1,
+              shadow: true,
+            },
+            ambientCubemap: {
+              //   texture: "asset/studio_small_09_1k.hdr",
+              //   texture: "asset/pisa.hdr",
+              //   diffuseIntensity: 0.1,
+            },
+          },
+          viewControl: {
+            projection: "perspective", // perspective | orthographic
+            autoRotate: false,
+            alpha: chinaCenter.alpha,
+            beta: chinaCenter.beta,
+            minAlpha: chinaCenter.alpha - 10,
+            maxAlpha: chinaCenter.alpha + 10,
+            minBeta: chinaCenter.beta - 10,
+            maxBeta: chinaCenter.beta + 10,
+          },
+        },
+      });
+
+      echart.on("click", function (params) {
+        console.log(params);
+      });
+    </script>
+  </body>
+</html>

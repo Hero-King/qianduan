@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
+    <script src="./asset/china.js"></script>
+    <script src="./asset/world.js"></script>
+    <title>Document</title>
+    <style>
+      #app {
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      let mode = 2; // 1 平面涟漪散点图 // 2 地球上放置中国地图和涟漪散点图: 散点图问题错乱
+      const echart = echarts.init(document.getElementById("app"));
+      const beijing = [116, 39.9];
+      const chinaCenter = {
+        alpha: 34.32,
+        beta: 108 + 90,
+      };
+
+      const opt = {
+        geo: {
+          tooltip: {
+            show: true,
+          },
+          map: "china",
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          boundingCoords: [
+            // 定位左上角经纬度
+            [-180, 90],
+            // 定位右下角经纬度
+            [180, -90],
+          ],
+          itemStyle: {
+            areaColor: "transparent",
+            borderColor: "#00FDFF",
+          },
+          roam: false,
+          regions: [
+            {
+              name: "南海诸岛",
+              value: 0,
+              itemStyle: {
+                normal: {
+                  opacity: 0,
+                  label: {
+                    show: false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        series: [
+          {
+            type: "effectScatter",
+            symbolSize: 10,
+            // 该系列使用的坐标系
+            coordinateSystem: "geo",
+            itemStyle: {
+              color: "#fff",
+            },
+            label: {
+              show: true,
+              position: "top",
+              formatter: "{b}",
+            },
+            rippleEffect: {
+              brushType: "stroke",
+              scale: 4,
+              period: 4,
+            },
+            tooltip: {},
+            data: [
+              {
+                name: "北京",
+                value: [116, 39.9],
+                extraVal: "xxx",
+              },
+              {
+                name: "XXX",
+                value: [116, 30],
+              },
+            ],
+          },
+        ],
+      };
+
+      if (mode == 1) {
+        echart.setOption(opt);
+      } else {
+        // 创建涟漪
+        var canvas = document.createElement("canvas");
+        var mapChart = echarts.init(canvas, null, {
+          width: 4096,
+          height: 2048,
+        });
+        mapChart.setOption(opt);
+        mapChart.on("click", (p) => {
+          console.log("p", "mapChart", p);
+        });
+
+        echart.setOption({
+          tooltip: {
+            show: true,
+            enterable: true,
+            hideDelay: 500,
+            // position(point, params, dom, rect) {
+            //   console.log(arguments);
+            //   return;
+            // },
+          },
+          series: [
+            {
+              type: "lines3D",
+              coordinateSystem: "globe",
+              effect: {
+                trailColor: "#fff",
+                show: true,
+                trailWidth: 3,
+                constantSpeed: 50,
+                trailLength: 0.2,
+              },
+              lineStyle: {
+                width: 1,
+                opacity: 0.5,
+              },
+              data: [
+                [
+                  [116, 39.9, 0],
+                  [116, 30, 0],
+                ],
+              ],
+            },
+          ],
+          globe: {
+            tooltip: {},
+            baseTexture: "asset/Earth_Diffuse_6K.png",
+            // baseTexture: mapChart,
+            // heightTexture: "asset/Earth_Glossiness_6K.jpg",
+
+            layers: [
+              {
+                type: "blend", //  overlay | blend
+                texture: mapChart,
+              },
+            ],
+
+            //   地球顶点位移的大小: 地球表面凹凸效果
+            displacementScale: 0.04,
+            shading: "realistic",
+            environment: "asset/starfield.jpg",
+
+            realisticMaterial: {
+              roughness: 0.9,
+            },
+            postEffect: {
+              enable: true,
+            },
+
+            viewControl: {
+              projection: "perspective", // perspective | orthographic
+              autoRotate: false,
+              alpha: chinaCenter.alpha,
+              beta: chinaCenter.beta,
+              minAlpha: chinaCenter.alpha - 10,
+              maxAlpha: chinaCenter.alpha + 10,
+              minBeta: chinaCenter.beta - 10,
+              maxBeta: chinaCenter.beta + 10,
+            },
+          },
+        });
+      }
+
+      echart.on("click", function (params) {
+        console.log(params);
+      });
+    </script>
+  </body>
+</html>

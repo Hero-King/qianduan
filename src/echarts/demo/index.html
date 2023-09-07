@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>echarts 3D earth</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      #wraper {
+        height: 100%;
+        position: relative;
+        background: url(./img/canvas-bg.jpg) no-repeat center;
+        background-size: cover;
+      }
+      #canvas {
+        height: 100%;
+      }
+      #tooltip {
+        position: absolute;
+        border: none;
+        white-space: nowrap;
+        z-index: 9999999;
+        transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s,
+          top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s;
+        background: transparent;
+        border-radius: 0px;
+        color: rgb(255, 255, 255);
+        font-family: "Microsoft YaHei";
+        pointer-events: none;
+      }
+      .tooltip-wraper {
+        width: 255px;
+        height: 171px;
+        background-size: 100% 100%;
+        background: url("./img/tooltip.png");
+        padding: 26px 18px;
+      }
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        color: #fff;
+        margin: 0;
+      }
+      label {
+        display: inline-block;
+        width: 72px;
+        text-align: right;
+      }
+      span.red {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wraper" @mousemove="getPos">
+      <div id="canvas"></div>
+      <div
+        id="tooltip"
+        :style="{left:tootipPos.left+'px',top:tootipPos.top+'px',display:tootipPos.display}"
+      ></div>
+    </div>
+  </body>
+  <script src="./echarts/dist/echarts.js"></script>
+  <script src="./echarts-gl/dist/echarts-gl.js"></script>
+  <script src="./echarts/map/js/world.js"></script>
+  <script src="./data/data.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.8/vue.js"></script>
+  <script>
+    const blue = "#0780df"; /*主颜色中危*/
+    const yellow = "#ff9f35"; /*主颜色高危*/
+    const red = "#e6453b"; /*主颜色严重*/
+    const grey = "#7289ab"; /*主颜色低危*/
+    const skyblue = "#01cbe3";
+
+    const toolFunc = (p) => `
+	    <div class="tooltip-wraper">
+	      <p><label>时间：</label><span>${p.attack_date}</span></p>
+	      <p><label>被攻击资产：</label><span>${p.attacked_domain}</span></p>
+	      <p><label>资产IP：</label><span>${p.victim_ip}(${p.attacked_city})</span></p>
+	      <p><label>攻击源IP：</label><span>${p.source_ip}(${p.source_city})</span></p>
+	      <p><label>攻击方式：</label><span class="red">${p.attack_mode}(${p.alert_level})</span></p>
+	      <p><label>攻击次数：</label><span>${p.attack_count}</span></p>
+	    </div>
+	  `;
+    var app = new Vue({
+      el: "#wraper",
+      data() {
+        return {
+          chart: null,
+          earthSkin: null,
+          tootipPos: {
+            left: 0,
+            top: 0,
+            display: "none",
+          },
+          colors: {
+            严重: red,
+            高危: yellow,
+            中危: blue,
+            低危: grey,
+          },
+          earthData: json,
+          tootipEl: document.getElementById("tooltip"),
+        };
+      },
+      watch: {
+        left(nv, ov) {
+          if (Math.abs(nv - ov) >= 5 && this.tootipPos.display == "block") {
+            this.tootipPos.display = "none";
+          }
+        },
+        top(nv, ov) {
+          if (Math.abs(nv - ov) >= 5 && this.tootipPos.display == "block") {
+            this.tootipPos.display = "none";
+          }
+        },
+      },
+      beforeDestroy() {
+        this.chart && this.chart.dispose();
+        this.earthSkin && this.earthSkin.dispose();
+        this.chart = null;
+        this.earthSkin = null;
+      },
+      computed: {
+        get3Dserv() {
+          return [
+            {
+              type: "lines3D",
+              coordinateSystem: "globe",
+              effect: {
+                trailColor: "#fff",
+                show: true,
+                trailWidth: 3,
+                constantSpeed: 50,
+                trailLength: 0.2,
+              },
+              lineStyle: {
+                width: 1,
+                opacity: 0.5,
+              },
+              data: this.earthData.map((item, i) => ({
+                coords: [item.source_point, item.attacked_point],
+                lineStyle: {
+                  color: this.colors[item.alert_level],
+                },
+              })),
+            },
+            {
+              type: "scatter3D",
+              coordinateSystem: "globe",
+              symbolSize: 5,
+              data: this.scatterData,
+            },
+          ];
+        },
+        scatterData() {
+          let data = this.earthData;
+          return data
+            .map((item, i) => ({
+              name: item.source_city,
+              value: item.source_point,
+              label: {
+                formatter: (p) => p.data.name,
+              },
+              itemStyle: {
+                color: skyblue,
+              },
+            }))
+            .concat(
+              data.map((item, i) => ({
+                name: item.attacked_city,
+                value: item.attacked_point,
+                info: item,
+                label: {
+                  show: false,
+                },
+                itemStyle: {
+                  color: this.colors[item.alert_level],
+                },
+              }))
+            );
+        },
+        effscatterData() {
+          let data = this.earthData;
+          return data
+            .map((item, i) => ({
+              name: item.source_city,
+              value: item.source_point,
+              symbolSize: 5,
+              itemStyle: {
+                color: skyblue,
+              },
+            }))
+            .concat(
+              data.map((item, i) => ({
+                name: item.attacked_city,
+                value: item.attacked_point,
+                symbolSize: this.symbleSize(item.attack_count),
+                itemStyle: {
+                  color: this.colors[item.alert_level],
+                },
+              }))
+            );
+        },
+        get2Dserv() {
+          return [
+            {
+              type: "effectScatter",
+              coordinateSystem: "geo",
+              rippleEffect: {
+                brushType: "stroke",
+                scale: 4,
+                period: 4,
+              },
+              data: this.effscatterData,
+            },
+          ];
+        },
+        left() {
+          return this.tootipPos.left;
+        },
+        top() {
+          return this.tootipPos.top;
+        },
+      },
+      mounted() {
+        this.initEarth();
+        this.drawData();
+        this.tootipEl = document.getElementById("tooltip");
+		console.log(this.scatterData,"scatterData");
+      },
+      methods: {
+        initEarth() {
+          const canvas = document.createElement("canvas");
+          this.earthSkin = echarts.init(canvas, null, {
+            width: 3800,
+            height: 2800,
+          });
+          this.earthSkin.setOption({
+            backgroundColor: "rgba(0,8,34,0.1)",
+            geo: {
+              map: "world",
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              boundingCoords: [
+                [-180, 90],
+                [180, -90],
+              ],
+              itemStyle: {
+                normal: {
+                  areaColor: "#2455ad",
+                  borderColor: "#000c2d",
+                },
+                emphasis: {
+                  areaColor: "#357cf8",
+                },
+              },
+              roam: false,
+              label: {
+                fontSize: 18,
+              },
+            },
+          });
+          this.chart = echarts.init(document.getElementById("canvas"));
+          this.chart.setOption({
+            globe: {
+              baseTexture: this.earthSkin,
+              shading: "color",
+              top: "middle",
+              left: "center",
+              globeRadius: 60,
+              viewControl: {
+                autoRotate: false,
+              },
+            },
+          });
+          this.chartEvent();
+        },
+        drawData() {
+          this.chart.setOption({
+            series: this.get3Dserv,
+          });
+          this.earthSkin.setOption({
+            series: this.get2Dserv,
+          });
+        },
+        symbleSize(val) {
+          val = val > 200 ? 200 : val < 50 ? 50 : val;
+          return Math.ceil(val / 10);
+        },
+        getPos(e) {
+          this.tootipPos.left = e.offsetX;
+          this.tootipPos.top = e.offsetY;
+        },
+        chartEvent() {
+          this.chart.on("mouseover", (p) => {
+            if (
+              p.componentType === "series" &&
+              p.componentSubType === "scatter3D" &&
+              p.color != skyblue
+            ) {
+              this.tootipEl.innerHTML = toolFunc(p.data.info);
+              this.tootipPos.display = "block";
+            }
+          });
+        },
+      },
+    });
+  </script>
+</html>

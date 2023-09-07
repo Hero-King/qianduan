@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
+    <script
+      src="./3DEarth_files/china.js.下载"
+      type="text/javascript"
+      charset="utf-8"
+    ></script>
+    <title>Document</title>
+    <style>
+      #app {
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      /**
+       * globe 默认效果: 一个自转的地球, 带黑白两面投影
+       * 本页面效果 3d地球 + 旋转角度限制 + scatter3D 三维散点
+       * 
+       * echart地球开源参考: https://www.makeapie.cn/echarts_content/xhjTsVBioC.html  echarts5.2.0
+       * */
+      const echart = echarts.init(document.getElementById("app"));
+      const beijing = [116, 39.9];
+      const chinaCenter = {
+        alpha: 34.32,
+        beta: 108 + 90,
+      };
+
+      echart.setOption({
+        tooltip: {
+          show: true,
+          enterable: true,
+          hideDelay: 500,
+          // position(point, params, dom, rect) {
+          //   console.log(arguments);
+          //   return;
+          // },
+        },
+        series: [
+          {
+            name: "点位",
+            type: "scatter3D",
+            coordinateSystem: "globe",
+            label: {
+              // position: "top",
+              show: true,
+              formatter: "{b}",
+              textStyle: {
+                // color: "#fff" ,
+                fontSize: 20,
+                fontWeight: "700",
+              },
+            },
+            // 散点图颜色描边等样式。
+            itemStyle: {
+              color: "#317EFF",
+              opacity: 0.6,
+              borderWidth: 4,
+              borderColor: "#317EFF",
+            },
+            symbolSize: 30,
+            // 长度必须大于1 才能有点击事件
+            data: [
+              {
+                name: "北京",
+                value: [116, 39.9, 0],
+                extraVal: "xxx",
+              },
+              {
+                name: "海南",
+                value: [116, 20, 0],
+              },
+            ],
+            blendMode: "source-over", // source-over |
+            emphasis: {
+              itemStyle: { opacity: 1, borderWidth: 0, borderColor: "#fff" },
+            },
+          },
+        ],
+        globe: {
+          baseTexture: "asset/Earth_Diffuse_6K.png",
+          // heightTexture: "asset/Earth_Glossiness_6K.jpg",
+          //   地球顶点位移的大小: 地球表面凹凸效果
+          displacementScale: 0.04,
+          shading: "realistic",
+          environment: "asset/starfield.jpg",
+
+          // realisticMaterial: {
+          //   roughness: 0.9,
+          // },
+          // postEffect: {
+          //   enable: true,
+          // },
+          //   用于地球外部大气层相关设置。
+          atmosphere: {
+            show: true,
+            color: "#317EFF",
+            // 外部大气层相对于默认位置的偏移。
+            offset: 6,
+            // 外部大气层发光功率。
+            glowPower: 10,
+            // 外部大气层内发光功率。
+            // innerGlowPower: 20,
+          },
+          light: {
+            main: {
+              intensity: 1,
+              shadow: true,
+            },
+            ambientCubemap: {
+              //   texture: "asset/studio_small_09_1k.hdr",
+              //   texture: "asset/pisa.hdr",
+              //   diffuseIntensity: 0.1,
+            },
+          },
+          viewControl: {
+            projection: "perspective", // perspective | orthographic
+            autoRotate: false,
+            alpha: chinaCenter.alpha,
+            beta: chinaCenter.beta,
+            minAlpha: chinaCenter.alpha - 10,
+            maxAlpha: chinaCenter.alpha + 10,
+            minBeta: chinaCenter.beta - 10,
+            maxBeta: chinaCenter.beta + 10,
+          },
+
+          // 光照相关的设置。
+          // light: {
+          //   main: {
+          //     // color: "#fff",
+          //     intensity: 1, // 主光源的强度。
+          //   //   alpha: 90
+          //   },
+          //   ambientCubemap : {
+
+          // }
+          // },
+          //   viewControl: {
+          // projection: "perspective", // 投影方式,
+          // autoRotate: true,
+          // autoRotateDirection: "cw", // cw:顺时针; ccw:逆时针\
+          // autoRotateAfterStill: 3, // 在鼠标静止操作后恢复自动旋转的时间间隔
+          // damping: 0.8, // 鼠标进行旋转，缩放等操作时的迟滞因子
+          // rotateSensitivity: 1, // 旋转操作的灵敏度，值越大越灵敏。支持使用数组分别设置横向和纵向的旋转灵敏度。 设置为0后无法旋转。
+          // zoomSensitivity: 1, //缩放操作的灵敏度，值越大越灵敏。默认为1。 设置为0后无法缩放。
+          // panSensitivity: 1, // 平移操作的灵敏度，值越大越灵敏 设置为0后无法平移。
+          // distance: 150, // 默认视角距离主体的距离，对于 globe 来说是距离地球表面的距离，对于 grid3D 和 geo3D 等其它组件来说是距离中心原点的距离。在 projection 为'perspective'的时候有效。
+          // minDistance: 40, // 视角通过鼠标控制能拉近到主体的最小距离
+          // maxDistance: 400,
+          // orthographicSize: 150, // 正交投影的大小。在 projection 为'orthographic'的时候有效。
+          // targetCoord: // 定位目标的经纬度坐标。
+          //   },
+        },
+      });
+
+      echart.on("click", function (params) {
+        console.log(params);
+      });
+      // echart.getZr().on("click", function (params) {
+      //   console.log("getZr", params);
+      // });
+    </script>
+  </body>
+</html>
