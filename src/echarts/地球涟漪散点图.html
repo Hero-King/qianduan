@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.2/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
     <script src="./asset/china.js"></script>
     <script src="./asset/world.js"></script>
@@ -13,14 +13,21 @@
       #app {
         height: 100vh;
       }
+      #tooltip {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
     </style>
   </head>
   <body>
     <div id="app"></div>
+    <div id="tooltip"></div>
 
     <script>
       let mode = 2; // 1 平面涟漪散点图 // 2 地球上放置中国地图和涟漪散点图: 散点图问题错乱
       const echart = echarts.init(document.getElementById("app"));
+      const tip = document.getElementById("tooltip");
       const beijing = [116, 39.9];
       const chinaCenter = {
         alpha: 34.32,
@@ -29,9 +36,6 @@
 
       const opt = {
         geo: {
-          tooltip: {
-            show: true,
-          },
           map: "china",
           left: 0,
           top: 0,
@@ -44,21 +48,25 @@
             [180, -90],
           ],
           itemStyle: {
-            areaColor: "transparent",
-            borderColor: "#00FDFF",
+            areaColor: "rgba(49,126,255, 0.5)",
+            // 图形的描边颜色
+            borderColor: "white",
+          },
+          emphasis: {
+            disabled: true,
           },
           roam: false,
           regions: [
             {
               name: "南海诸岛",
-              value: 0,
+              emphasis: {
+                disabled: true,
+              },
+              label: {
+                show: false,
+              },
               itemStyle: {
-                normal: {
-                  opacity: 0,
-                  label: {
-                    show: false,
-                  },
-                },
+                opacity: 0,
               },
             },
           ],
@@ -73,7 +81,9 @@
               color: "#fff",
             },
             label: {
+              color: "white",
               show: true,
+              fontSize: 16,
               position: "top",
               formatter: "{b}",
             },
@@ -82,10 +92,16 @@
               scale: 4,
               period: 4,
             },
-            tooltip: {},
+            // 在地球中时没效果
+            tooltip: {
+              position: "right",
+              formatter() {
+                return 1212;
+              },
+            },
             data: [
               {
-                name: "北京",
+                name: "北京11",
                 value: [116, 39.9],
                 extraVal: "xxx",
               },
@@ -111,52 +127,62 @@
         mapChart.on("click", (p) => {
           console.log("p", "mapChart", p);
         });
+        mapChart.on("mouseover", (e) => {
+          const { componentType, seriesType, name, data, event } = e;
+          if (componentType == "series" && seriesType == "effectScatter") {
+            console.log("mouseover", "mapChart", e);
+            tip.style.left = event.offsetX + "px";
+            tip.style.right = event.offsetY + "px";
+          }
+        });
 
         echart.setOption({
-          tooltip: {
-            show: true,
-            enterable: true,
-            hideDelay: 500,
-            // position(point, params, dom, rect) {
-            //   console.log(arguments);
-            //   return;
-            // },
-          },
-          series: [
-            {
-              type: "lines3D",
-              coordinateSystem: "globe",
-              effect: {
-                trailColor: "#fff",
-                show: true,
-                trailWidth: 3,
-                constantSpeed: 50,
-                trailLength: 0.2,
-              },
-              lineStyle: {
-                width: 1,
-                opacity: 0.5,
-              },
-              data: [
-                [
-                  [116, 39.9, 0],
-                  [116, 30, 0],
-                ],
-              ],
-            },
-          ],
+          // tooltip: {
+          //   show: true,
+          //   enterable: true,
+          //   hideDelay: 500,
+          //   // position(point, params, dom, rect) {
+          //   //   console.log(arguments);
+          //   //   return;
+          //   // },
+          // },
+          // series: [
+          //   {
+          //     type: "lines3D",
+          //     coordinateSystem: "globe",
+          //     effect: {
+          //       trailColor: "#fff",
+          //       show: true,
+          //       trailWidth: 3,
+          //       constantSpeed: 50,
+          //       trailLength: 0.2,
+          //     },
+          //     lineStyle: {
+          //       width: 1,
+          //       opacity: 0.5,
+          //     },
+          //     data: [
+          //       [
+          //         [116, 39.9, 0],
+          //         [116, 30, 0],
+          //       ],
+          //     ],
+          //   },
+          // ],
           globe: {
-            tooltip: {},
-            baseTexture: "asset/Earth_Diffuse_6K.png",
+            // baseTexture: "asset/earth1.jpg",
+            baseTexture: "asset/world.topo.bathy.200401.jpg",
+            heightTexture: "asset/world.topo.bathy.200401.jpg",
+            // baseTexture: "asset/Earth_Diffuse_6K.png",
             // baseTexture: mapChart,
             // heightTexture: "asset/Earth_Glossiness_6K.jpg",
 
-            layers: [
-              {
-                type: "blend", //  overlay | blend
-                texture: mapChart,
-              },
-            ],
+            // layers: [
+            //   {
+            //     type: "blend", //  overlay | blend
+            //     texture: mapChart,
+            //   },
+            // ],
 
             //   地球顶点位移的大小: 地球表面凹凸效果
             displacementScale: 0.04,
@@ -168,6 +194,28 @@
             },
             postEffect: {
               enable: true,
+            },
+            //   用于地球外部大气层相关设置。
+            atmosphere: {
+              show: true,
+              color: "#317EFF",
+              // 外部大气层相对于默认位置的偏移。
+              offset: 6,
+              // 外部大气层发光功率。
+              glowPower: 10,
+              // 外部大气层内发光功率。
+              // innerGlowPower: 20,
+            },
+            light: {
+              main: {
+                intensity: 1,
+                shadow: true,
+              },
+              ambientCubemap: {
+                texture: "asset/studio_small_09_1k.hdr",
+                // texture: "asset/pisa.hdr",
+                diffuseIntensity: 0.2,
+              },
             },
 
             viewControl: {
@@ -186,6 +234,9 @@
 
       echart.on("click", function (params) {
         console.log(params);
+      });
+      echart.on("mouseover", (p) => {
+        console.log("mouseover", p);
       });
     </script>
   </body>

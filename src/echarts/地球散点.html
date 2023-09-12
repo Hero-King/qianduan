@@ -30,10 +30,18 @@
           show: true,
           enterable: true,
           hideDelay: 500,
-          // position(point, params, dom, rect) {
-          //   console.log(arguments);
-          //   return;
-          // },
+          triggerOn: "mousemove", // mousemove | click
+          position(point, params, dom, rect) {
+            return point.map((i) => i + 10);
+          },
+          formatter(params) {
+            console.log(params, "params");
+            return `
+              <div>
+                <a href="" >${params.name}</a>
+                </div>
+            `;
+          },
         },
         series: [
           {
@@ -84,12 +92,12 @@
           shading: "realistic",
           environment: "asset/starfield.jpg",
 
-          // realisticMaterial: {
-          //   roughness: 0.9,
-          // },
-          // postEffect: {
-          //   enable: true,
-          // },
+          realisticMaterial: {
+            roughness: 0.9,
+          },
+          postEffect: {
+            enable: true,
+          },
           //   用于地球外部大气层相关设置。
           atmosphere: {
             show: true,
@@ -108,7 +116,7 @@
             },
             ambientCubemap: {
               //   texture: "asset/studio_small_09_1k.hdr",
-              //   texture: "asset/pisa.hdr",
+              texture: "asset/pisa.hdr",
               //   diffuseIntensity: 0.1,
             },
           },
