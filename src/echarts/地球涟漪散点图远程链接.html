@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts-gl/2.0.8/echarts-gl.js"></script>
+    <script src="https://mp-c64ab410-0068-4865-8214-7780d79210cb.cdn.bspapp.com/china.js"></script>
+    <title>Document</title>
+    <style>
+      #app {
+        height: 100vh;
+      }
+      #tooltip {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="tooltip"></div>
+
+    <script>
+      let mode = 2; // 1 平面涟漪散点图 // 2 地球上放置中国地图和涟漪散点图: 散点图问题错乱
+      const echart = echarts.init(document.getElementById("app"));
+      const tip = document.getElementById("tooltip");
+
+      const beijing = [116, 39.9];
+      const chinaCenter = {
+        alpha: 34.32,
+        beta: 108 + 90,
+      };
+
+      const opt = {
+        geo: {
+          map: "china",
+          left: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          boundingCoords: [
+            // 定位左上角经纬度
+            [-180, 90],
+            // 定位右下角经纬度
+            [180, -90],
+          ],
+          itemStyle: {
+            areaColor: "rgba(49,126,255, 0.5)",
+            // 图形的描边颜色
+            borderColor: "white",
+          },
+          emphasis: {
+            disabled: true,
+          },
+          roam: false,
+          regions: [
+            {
+              name: "南海诸岛",
+              emphasis: {
+                disabled: true,
+              },
+              label: {
+                show: false,
+              },
+              itemStyle: {
+                opacity: 0,
+              },
+            },
+          ],
+        },
+        series: [
+          {
+            type: "effectScatter",
+            symbolSize: 10,
+            // 该系列使用的坐标系
+            coordinateSystem: "geo",
+            itemStyle: {
+              color: "#fff",
+            },
+            label: {
+              color: "white",
+              show: true,
+              fontSize: 16,
+              position: "top",
+              formatter: "{b}",
+            },
+            rippleEffect: {
+              brushType: "stroke",
+              scale: 4,
+              period: 4,
+            },
+            // 在地球中时没效果
+            tooltip: {
+              position: "right",
+              formatter() {
+                return 1212;
+              },
+            },
+            data: [
+              {
+                name: "北京11",
+                value: [116, 39.9],
+                extraVal: "xxx",
+              },
+              {
+                name: "XXX",
+                value: [116, 30],
+              },
+            ],
+          },
+        ],
+      };
+
+      if (mode == 1) {
+        echart.setOption(opt);
+      } else {
+        // 创建涟漪
+        var canvas = document.createElement("canvas");
+        var mapChart = echarts.init(canvas, null, {
+          width: 4096,
+          height: 2048,
+        });
+        mapChart.setOption(opt);
+        mapChart.on("click", (p) => {
+          console.log("p", "mapChart", p);
+        });
+        mapChart.on("mouseover", (e) => {
+          const { componentType, seriesType, name, data, event } = e;
+          if (componentType == "series" && seriesType == "effectScatter") {
+            console.log("mouseover", "mapChart", e);
+            tip.style.left = event.offsetX + "px";
+            tip.style.right = event.offsetY + "px";
+          }
+        });
+
+        echart.setOption({
+          globe: {
+            // baseTexture: "asset/gai.jpg",
+            baseTexture: "https://mp-c64ab410-0068-4865-8214-7780d79210cb.cdn.bspapp.com/gai.jpg",
+            // heightTexture: "asset/Earth_Glossiness_6K.jpg",
+
+            layers: [
+              {
+                type: "blend", //  overlay | blend
+                texture: mapChart,
+              },
+            ],
+
+            //   地球顶点位移的大小: 地球表面凹凸效果
+            displacementScale: 0.04,
+            shading: "realistic",
+            environment:
+              "https://mp-c64ab410-0068-4865-8214-7780d79210cb.cdn.bspapp.com/bg.jpg",
+
+            realisticMaterial: {
+              roughness: 0.9,
+            },
+            postEffect: {
+              enable: true,
+            },
+            //   用于地球外部大气层相关设置。
+            atmosphere: {
+              show: true,
+              color: "#317EFF",
+              // 外部大气层相对于默认位置的偏移。
+              offset: 6,
+              // 外部大气层发光功率。
+              glowPower: 10,
+              // 外部大气层内发光功率。
+              // innerGlowPower: 20,
+            },
+            light: {
+              main: {
+                intensity: 1,
+                shadow: true,
+              },
+              ambientCubemap: {
+                texture:
+                  "https://mp-c64ab410-0068-4865-8214-7780d79210cb.cdn.bspapp.com/pisa.hdr",
+                diffuseIntensity: 0.2,
+              },
+            },
+
+            viewControl: {
+              projection: "perspective", // perspective | orthographic
+              autoRotate: false,
+              alpha: chinaCenter.alpha,
+              distance: 100,
+              // minAlpha: chinaCenter.alpha - 10,
+              // maxAlpha: chinaCenter.alpha + 10,
+              // minBeta: chinaCenter.beta - 10,
+              // maxBeta: chinaCenter.beta + 10,
+            },
+          },
+        });
+      }
+      setTimeout(() => {
+        echart.setOption({
+          globe: {
+            viewControl: {
+              beta: chinaCenter.beta,
+              animationEasingUpdate: "linear",
+              animationDurationUpdate: 3000,
+              animation: true,
+              distance: 80,
+            },
+          },
+        });
+
+        //  minDistance: 60,
+        // maxDistance: 100,
+      }, 2000);
+    </script>
+  </body>
+</html>
