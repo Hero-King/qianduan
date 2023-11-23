@@ -120,7 +120,7 @@
         // window.postMessage("我被点击了", "*")        // 这个消息发送出去会被自己接受 因为是使用的当前窗口window发送的
       });
       window.addEventListener("message", function (e) {
-        console.log(e.data);
+        console.log('windows收到消息',e.data);
       });
 
       console.log(
@@ -140,7 +140,7 @@
         }, 1000 * 2);
       }
 
-      createAdv(null, 200, 200);
+      // createAdv(null, 200, 200);
     </script>
   </body>
 </html>

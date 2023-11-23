@@ -10,6 +10,9 @@
     this.html
     <a href="this.html" target="_parent">href=this.html target=_parent</a>
     <script>
+
+      console.log(window.opener, "window.opener")
+
       class C {
         constructor(props) {
           console.log("C 构造函数执行, props: ", props);
