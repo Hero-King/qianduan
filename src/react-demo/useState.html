@@ -20,17 +20,42 @@
         // const [count2, setcount2] = useState( getInitCount2())  //这种方式不正确
         const [count2, setcount2] = useState(() => getInitCount2());
 
+        // state 中可以保存任意类型的 JavaScript 值，包括对象,数组。但是，你不应该直接修改存放在 React state 中的对象, 你应该 把所有存放在 state 中的 JavaScript 对象都视为只读的。
+        const [obj, setobj] = useState({ a: { b: 1 } });
+
         function getInitCount2() {
           console.log("getInitCount2");
           return 100;
         }
+
+        function handleChangeObj(e) {
+          // obj.a.b += 1; // error react认为state中保存的数据都是不可变immutability的 需要改变数据时 请用set方法传入新的对象, 使用Immer 流行库
+
+          setobj({
+            a: {
+              b: obj.a.b + 1,
+            },
+          });
+        }
+
+        console.log("Counter组件 render");
         return (
           <div>
-            count: {count} count2: {count2}
-            <button onClick={(e) => setcount(count + 1)}>增加</button>
+            count: {count} count2: {count2} obj.a.b: {obj.a.b}
+            <button
+              onClick={(e) => {
+                setcount(count + 1);
+                setTimeout(() => {
+                  alert(`${count}`); // 输出count值 注意是渲染之前的count值  一个 state 变量的值永远不会在一次渲染的内部发生变化;
+                }, 2000);
+              }}
+            >
+              增加
+            </button>
             <button onClick={(e) => setcount2((precount) => precount + 1)}>
               函数式增加
             </button>
+            <button onClick={handleChangeObj}>更改对象</button>
           </div>
         );
       }

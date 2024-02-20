@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.production.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script> -->
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo } = React;
+      // useMemo 是一个 React Hook，它在每次重新渲染的时候能够缓存计算的结果。 类似vue中computed的效果, 依赖项变化后自动计算新的数值
+      window.useMemoFlag = true;
+
+      function Counter(props) {
+        const [count, setcount] = useState(0);
+        const [count2, setcount2] = useState(0);
+
+        const intervalRef = useRef();
+        useEffect(() => {
+          console.log("Counter 组件挂载完成");
+          intervalRef.current = setInterval(() => {
+            setcount((count) => count + 1);
+          }, 1000);
+          return () => {
+            clearInterval(intervalRef.current);
+          };
+        }, []);
+
+        // 比较耗时的计算函数
+        function calcLongTime(data = 0) {
+          console.warn("比较耗时的函数执行了");
+          return data * 1000;
+        }
+
+        const allCount = window.useMemoFlag
+          ? useMemo(() => calcLongTime(count2), [count2])
+          : calcLongTime(count2);
+
+        console.log("Counter组件 render 了");
+        return (
+          <div>
+            count: {count}
+            <button onClick={(e) => setcount(count + 1)}>增加</button>
+            <br />
+            count2: {count2}
+            <button onClick={(e) => setcount2(count2 + 1)}>count2++</button>
+            allCount: {allCount}
+          </div>
+        );
+      }
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bool: false,
+          };
+        }
+        render() {
+          const { bool } = this.state;
+          return (
+            <div>
+              bool: {bool.toString()}{" "}
+              <button onClick={(e) => this.setState({ bool: !bool })}>
+                更改 Counter 组件的入参
+              </button>
+              <Counter bool={bool} />
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

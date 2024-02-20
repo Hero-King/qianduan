@@ -45,7 +45,7 @@
       // dispatch 方法存放到context里面去 避免层层传递
       function DeepChild(props) {
         const context = React.useContext(reduxContext);
-        console.log("render");
+        console.log("DeepChild render");
         return (
           <button onClick={() => context({ type: "increment" })}>
             deepChild +
