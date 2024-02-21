@@ -21,7 +21,7 @@
       // useImperativeHandle 可以让你在使用 ref 时自定义暴露给父组件的实例值。在大多数情况下，应当避免使用 ref 这样的命令式代码。useImperativeHandle 应当与 forwardRef 一起使用;
 
       const MyInput = React.forwardRef(function (props, ref) {
-        console.log(props); //ref需要转发  下面的方式是获取不到的
+        console.log(props); //ref需要转发
         return <input ref={ref} />;
       });
 
@@ -86,11 +86,6 @@
           </div>
         );
       }
-
-      // function Myinput(props) {
-      //     console.log(props);  //ref需要转发  下面的方式是获取不到的
-      //     return <input ref={props.ref}/>
-      // }
 
       function MyinputR(props) {
         console.log(props); //ref需要转发  下面的方式是获取不到的
