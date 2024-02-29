@@ -45,7 +45,7 @@
             width: document.documentElement.clientWidth,
           });
         }, []);
-        // window onresize 这个hooks也会刷新
+        // window onresize => 触发 setstate => 组件重新渲染 => useResize hook重新执行 => 打印 console.log(screen);
         console.log("useResize render");
 
         useEffect(() => {
@@ -61,6 +61,7 @@
       }
 
       function App() {
+        console.log("App render");
         // 使用自定义的hooks 内部状态变化后,组件会更新
         // 个人对自定义hooks理解就是 抽离了本来应该写在这个组件里面的,公共代码到自定义hooks去
         const screen = useResize();
@@ -75,14 +76,11 @@
         const [state, setstate] = useState(initValue);
         const call = useRef();
         const setXState = (newState, callback) => {
-          setstate((pre) => {
-            call.current = callback;
-            return typeof newState == "function" ? newState(pre) : newState;
-          });
+          call.current = callback;
+          setstate(newState);
         };
 
         useEffect(() => {
-          console.log(state);
           if (call.current) {
             call.current(state);
           }
@@ -104,7 +102,7 @@
             <button
               onClick={(e) =>
                 setcount(count + 1, (newstate) => {
-                  console.log("update", newstate);
+                  console.log("updated", newstate);
                 })
               }
             >

@@ -20,11 +20,14 @@
 
       // useSyncExternalStore 用于订阅外部 store
       // useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot?)
+      // hook在被多个组件同时使用时, 会被创建多次; 或者说自定义 Hook 共享的是状态逻辑，而不是状态本身
 
       function subscribe(callback) {
+        console.log("window.addEventListener");
         window.addEventListener("online", callback);
         window.addEventListener("offline", callback);
         return () => {
+          console.log("indow.removeEventListener");
           window.removeEventListener("online", callback);
           window.removeEventListener("offline", callback);
         };
