@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo } = React;
+
+      function Counter(props) {
+        const [count, setcount] = useState(0);
+        console.log("Counter组件 render");
+        useEffect(() => {
+          console.log("Counter组件 Mounted");
+          return () => {
+            console.log("Counter组件 unMounted");
+          };
+        }, []);
+
+        return <button onClick={(e) => setcount(count + 1)}>{count}</button>;
+      }
+
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bool: false,
+          };
+        }
+        render() {
+          const { bool } = this.state;
+          return (
+            <div>
+              bool: {bool.toString()}{" "}
+              <button onClick={(e) => this.setState({ bool: !bool })}>
+                更改App 组件的状态
+              </button>
+              <div>
+                <h2>将bool作为参数传入到组件 bool变化后组件更新</h2>
+                {/* <Counter bool={bool} /> */}
+              </div>
+              <div>
+                <h2>bool && 组件 bool为false组件卸载 true时重新生成实例</h2>
+                {/*{bool && <Counter />}*/}
+              </div>
+              <div>
+                <h2>三木运算符 渲染不同组件 组件状态丢失</h2>
+                {/*{bool ? <Counter /> : <p>11111</p>}*/}
+              </div>
+              <div>
+                <h2>三木运算符 渲染相同组件组件状态保留</h2>
+                {bool ? <Counter /> : <Counter />}
+                {/*上述jsx转换后的代码是: [bool ? _jsx(Counter, {}) : _jsx(Counter, {})] */}
+              </div>
+              <div>
+                <h2>
+                  bool && 组件 + !bool && 组件 将组件渲染在不同位置, 状态丢失
+                </h2>
+                {bool && <Counter />}
+                {!bool && <Counter />}
+                {/*上述jsx转换后的代码是: [bool && _jsx(Counter, {}), !bool && _jsx(Counter, {})] */}
+              </div>
+              <div>
+                <h2>
+                  使用 key 来重置 state ; 同一个组件同一个位置不同key
+                  组件会重新卸载挂载
+                </h2>
+                {bool ? <Counter key="1" /> : <Counter key="2" />}
+              </div>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

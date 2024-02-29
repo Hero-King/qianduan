@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "react": "https://unpkg.com/react@17.0.2/umd/react.development.js",
+          "react-dom": "https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"
+        }
+      }
+    </script> -->
+
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script>
+      window.react = React; // use-immer.umd.js读取react变量
+    </script>
+    <script src="https://unpkg.com/immer@9.0.21/dist/immer.umd.development.js"></script>
+    <script src="https://unpkg.com/use-immer@0.9.0/dist/use-immer.umd.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo, useCallback } = React;
+      const { useImmer, useImmerReducer } = useImmer;
+      const initObj = { a: { b: 1 }, aa: { bb: 2 } };
+      const initImmerObj = { a: { b: 1 }, aa: { bb: 2 } };
+
+      function Counter(props) {
+        const [count, setcount] = useState(0);
+
+        // state 中可以保存任意类型的 JavaScript 值，包括对象,数组。但是，你不应该直接修改存放在 React state 中的对象, 你应该 把所有存放在 state 中的 JavaScript 对象都视为只读的。
+        const [obj, setobj] = useState(initObj);
+        const [immgerObj, setImmerObj] = useImmer(initImmerObj);
+
+        function handleChangeObj(e) {
+          // obj.a.b += 1; // error react认为state中保存的数据都是不可变immutability的 需要改变数据时 请用set方法传入新的对象, 使用Immer 流行库
+          setobj({
+            ...obj,
+            a: {
+              b: obj.a.b + 1,
+            },
+          });
+        }
+
+        const handleChangeImmerObj = () => {
+          setImmerObj((draf) => {
+            draf.a.b += 1;
+          });
+        };
+
+        console.log(
+          "setobj展开运算符普通方式设置新的对象, 展开运算符是浅拷贝, 所以a指向新的地址aa还是原来的地址",
+          initObj.a === obj.a,
+          initObj.aa === obj.aa
+        );
+        console.log(
+          "immer方式 setImmerObj  a指向新的地址aa还是原来的地址",
+          initImmerObj.a === immgerObj.a,
+          initImmerObj.aa === immgerObj.aa
+        );
+
+        console.log("Counter组件 render");
+        return (
+          <div>
+            count: {count} obj.a.b: {obj.a.b} | immgerObj.a.b: {immgerObj.a.b}
+            <button
+              onClick={(e) => {
+                setcount(count + 1);
+              }}
+            >
+              增加
+            </button>
+            <button onClick={handleChangeObj}>更改对象</button>
+            <button onClick={handleChangeImmerObj}>Immer方式更改对象</button>
+          </div>
+        );
+      }
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bool: false,
+          };
+        }
+        render() {
+          const { bool } = this.state;
+          return (
+            <div>
+              <Counter bool={bool} />
+              bool: {bool.toString()}{" "}
+              <button onClick={(e) => this.setState({ bool: !bool })}>
+                更改App 组件的状态
+              </button>
+            </div>
+          );
+        }
+      }
+      ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- <script type="importmap">
+      {
+        "imports": {
+          "react": "https://unpkg.com/react@17.0.2/umd/react.development.js",
+          "react-dom": "https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"
+        }
+      }
+    </script> -->
+
+    <script src="../lib/babel.min.js"></script>
+    <script src="../lib/react.development.js"></script>
+    <script src="../lib/react-dom.development.js"></script>
+    <script>
+      window.react = React; // use-immer.umd.js读取react变量
+    </script>
+    <script src="https://unpkg.com/immer@9.0.21/dist/immer.umd.development.js"></script>
+    <script src="https://unpkg.com/use-immer@0.9.0/dist/use-immer.umd.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo, useCallback, useReducer } =
+        React;
+      const { produce } = immer;
+      const { useImmer, useImmerReducer } = useImmer;
+      const initObj = { a: { b: 1 }, aa: { bb: 2 } };
+      const initImmerObj = { a: { b: 1 }, aa: { bb: 2 } };
+
+      // produce(currentState, recipe: (draftState) => void): nextState
+      // produce(recipe: (draftState) => void): function 返回柯里化函数 // https://immerjs.github.io/immer/zh-CN/curried-produce
+      let aa = produce((draft, action) => {
+        switch (action.type) {
+          case "toggle":
+            const todo = draft.find((todo) => todo.id === action.id);
+            todo.done = !todo.done;
+            break;
+          case "add":
+            draft.push({
+              id: action.id,
+              title: "A new todo",
+              done: false,
+            });
+            break;
+          default:
+            break;
+        }
+      });
+      console.log(aa, "aa");
+
+      const TodoList = () => {
+        // 可以使用useImmerReducer 进行优化
+        const [todos, dispatch] = useReducer(aa, [
+          {
+            id: 0,
+            done: false,
+            title: "react stu",
+          },
+        ]);
+
+        const unfinishedTodoCount = todos.filter(
+          (todo) => todo.done == false
+        ).length;
+        const handleToggle = useCallback((id) => {
+          dispatch({
+            type: "toggle",
+            id,
+          });
+        }, []);
+
+        const handleAdd = useCallback(() => {
+          dispatch({
+            type: "add",
+            id: "todo_" + Math.random(),
+          });
+        }, []);
+
+        return (
+          <ul>
+            <button onClick={handleAdd}>添加</button>
+            unfinishedTodoCount: {unfinishedTodoCount}
+            {todos.map((i) => (
+              <li key={i.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={i.done}
+                    onChange={(e) => handleToggle(i.id)}
+                  />
+                  {i.title}
+                </label>
+              </li>
+            ))}
+          </ul>
+        );
+      };
+
+      ReactDOM.render(<TodoList />, document.getElementById("root"));
+    </script>
+  </body>
+</html>

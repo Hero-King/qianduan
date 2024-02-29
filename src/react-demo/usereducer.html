@@ -20,6 +20,8 @@
 
       const initialState = { count: 0 };
 
+      // reducers 必须是纯粹的,当输入相同时，输出也是相同,这一点和 状态更新函数 是相似的; 它们应该以不可变值的方式去更新 对象 和 数组
+      // 每个 action 都描述了一个单一的用户交互，即使它会引发数据的多个变化
       function reducer(state, action) {
         switch (action.type) {
           case "increment":
