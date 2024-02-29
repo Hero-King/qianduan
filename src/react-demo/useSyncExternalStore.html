@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.22.17/babel.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useRef, useEffect, useState, useMemo, useSyncExternalStore } =
+        React;
+
+      const { createRoot } = ReactDOM;
+
+      // useSyncExternalStore 用于订阅外部 store
+      // useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot?)
+
+      function subscribe(callback) {
+        window.addEventListener("online", callback);
+        window.addEventListener("offline", callback);
+        return () => {
+          window.removeEventListener("online", callback);
+          window.removeEventListener("offline", callback);
+        };
+      }
+
+      function Counter(props) {
+        const isOnline = useSyncExternalStore(
+          subscribe, // 只要传递的是同一个函数，React 不会重新订阅
+          () => navigator.onLine, // 如何在客户端获取值
+          () => true // 如何在服务端获取值
+        );
+        console.log("Counter组件 render");
+        return <h1>{isOnline ? "✅ Online" : "❌ Disconnected"}</h1>;
+      }
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            bool: false,
+          };
+        }
+        render() {
+          const { bool } = this.state;
+          return (
+            <div>
+              <Counter bool={bool} />
+              bool: {bool.toString()}{" "}
+              <button onClick={(e) => this.setState({ bool: !bool })}>
+                更改App 组件的状态
+              </button>
+            </div>
+          );
+        }
+      }
+      const root = createRoot(document.getElementById("root")); // createRoot(container!) if you use TypeScript
+      root.render(<App />);
+    </script>
+  </body>
+</html>

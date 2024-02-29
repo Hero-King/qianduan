@@ -1,36 +1,18 @@
 {
-  "name": "qianduanstu",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "moment": "^2.29.4",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0"
-  },
+  "name": "html-css",
+  "version": "1.0.0",
+  "description": "A template for HTML and CSS",
+  "main": "index.html",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prettier": "prettier --write ."
+    "start": "serve"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "keywords": [
+    "html",
+    "css"
+  ],
+  "author": "Ives van Hoorne",
+  "license": "MIT",
   "devDependencies": {
-    "prettier": "2.8.1"
+    "serve": "11.2.0"
   }
 }

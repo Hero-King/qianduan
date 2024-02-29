@@ -397,6 +397,20 @@
       }
 
       {
+        // 展开运算符
+        const arr = [{ age: 1, name: "张三" }];
+        const newArr = [...arr];
+        const sliceArr = arr.slice();
+        console.log(newArr[0] === arr[0], "展开运算符在数组上操作是浅拷贝"); // true '展开运算符在数组上操作'
+        console.log(
+          "arr.slice返回值与arr是否是同一个引用",
+          sliceArr === arr,
+          "; arr.slice是否是浅拷贝数据",
+          sliceArr[0] === arr[0]
+        ); // arr.slice返回值与arr是否是同一个引用 false; arr.slice是否是浅拷贝数据 true
+      }
+
+      {
         // bar();//报错
         var foo = function bar(name) {
           console.log("hello" + name);
