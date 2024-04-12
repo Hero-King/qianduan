@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Axios config</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <script>
+      Mock.mock("/getDetail", { "age|1-100": 10 });
+      axios
+        .post("/getDetail")
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {});
+
+      // axios post 入参 对象形式 => 生成的请求头 Content-Type: application/json
+      axios.post("/postMethodUseObject", { id: 10 });
+
+      //   axios post 入参 字符串形式 => 生成的请求头 Content-Type: application/x-www-form-urlencoded ：form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）
+      axios.post("/postMethodUseString", "Country=Brasil&City=Belo Horizonte");
+
+      // axios post body:{id: 10}, url: ?url=xxx
+      axios.post(
+        "/postWithParams",
+        { id: 10 },
+        {
+          params: {
+            url: "xxx",
+          },
+        }
+      );
+
+      axios.post(
+        "/postWithParamsAndParamsSerializer",
+        { id: 10 },
+        {
+          params: {
+            url: "xxx",
+          },
+          // 主要用于序列化`params` 参数就是请求config中的params, 一般结合qs库一起使用
+          paramsSerializer(params) {
+            return "name=Hero";
+          },
+        }
+      );
+    </script>
+  </body>
+</html>
