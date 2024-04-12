@@ -4,18 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Axios config</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
+    <div id="getDetail"></div>
+    <h3>怎么判断 ajax modifier 插件是否拦截成功？</h3>
+    <p>
+      在控制台中查看 ajax_interceptor_qoweifjqon.settings.ajaxInterceptor_rules
+      是否有规则
+    </p>
+    <p>
+      查看axios响应中的request属性(是触发这次响应的请求实例) 是不是myXHR;
+      mockjs是MockXMLHttpRequest构造函数
+    </p>
+    <p>
+      normal规则: 判断请求URL中是否包含关键词, thisRequestUrl.indexOf(match) >
+      -1
+    </p>
+    <p>regex规则: thisRequestUrl.match(new RegExp(match, 'i'))</p>
+    <h3>他们的实现原理是什么？</h3>
+    <p>通过拦截window.XMLHttpRequest和fetch函数实现, 可以查看他两指向哪个函数</p>
     <script>
-      Mock.mock("/getDetail", { "age|1-100": 10 });
-      axios
-        .post("/getDetail")
-        .then((result) => {
-          console.log(result);
-        })
-        .catch((err) => {});
+      Mock.mock("/api/getDetail", { "age|1-100": 10 });
+
+      setTimeout(() => {
+        axios
+          .post("/api/getDetail")
+          .then((result) => {
+            console.log(result);
+            document.getElementById("getDetail").innerText = JSON.stringify(
+              result.data ?? {}
+            );
+          })
+          .catch((err) => {});
+      }, 500);
 
       // axios post 入参 对象形式 => 生成的请求头 Content-Type: application/json
       axios.post("/postMethodUseObject", { id: 10 });
