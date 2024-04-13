@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+  </head>
+  <body>
+    <script>
+      // 最基础的Ajax请求
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("get", "/package.json");
+      //   xhr.send();
+      //   xhr.addEventListener("readystatechange", function () {
+      //     if (this.readyState == 4 && this.status == 200) {
+      //       console.log("请求成功");
+      //     }
+      //   });
+      //   xhr.onloadend = function () {
+      //     console.log(this);
+      //   };
+    </script>
+
+    <script>
+      const interceptList = [
+        {
+          method: "get",
+          keyword: "package",
+          timeout: 200,
+          status: 200,
+          response: JSON.stringify({ name: "mockName", isMock: true }),
+        },
+      ];
+      // 屏蔽请求的Mock方式
+      class MyXMLHttpRequest extends XMLHttpRequest {
+        mockItem = null;
+        status = 0;
+        readyState = 0;
+        response = null;
+        responseText = null;
+
+        open(method, url) {
+          super.open(...arguments);
+          this.mockItem = this.getMatchedIntercept(...arguments);
+        }
+
+        send() {
+          setTimeout(() => {
+            this.status = this.mockItem.status;
+            this.readyState = 4;
+            this.response = this.mockItem.response;
+            this.responseText = this.mockItem.response;
+            this.dispatchEvent(new CustomEvent("readystatechange"));
+            this.dispatchEvent(new CustomEvent("loadend"));
+          }, this.mockItem.timeout);
+        }
+
+        getMatchedIntercept(requestMethod, url) {
+          return interceptList.find((i) => {
+            return (
+              i.keyword.length > 0 &&
+              (i.method === "ALL" ||
+                requestMethod.toUpperCase() === i.method.toUpperCase()) &&
+              url.includes(i.keyword)
+            );
+          });
+        }
+      }
+      const test = new MyXMLHttpRequest();
+      test.open("get", "/package.json");
+      test.send();
+      test.addEventListener("readystatechange", function () {
+        if (this.readyState == 4 && this.status == 200) {
+          console.log("请求成功", this.response);
+        }
+      });
+
+      //   将构建好的构造器替换到原生的XMLHttpRequest
+      window.XMLHttpRequest = MyXMLHttpRequest;
+      axios
+        .get("/package.json", {
+          //   validateStatus(status) {
+          //     return status < 500;
+          //   },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    </script>
+  </body>
+</html>
