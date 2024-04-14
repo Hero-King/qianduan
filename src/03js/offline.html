@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN" manifest="/public/offine.appcache">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>离线应用和客户端存储</title>
+</head>
+
+<body>
+
+    <p>我是一段文字</p>
+    <img src="/public/logo192.png" alt="" srcset="">
+
+    更新缓存
+    一旦应用被缓存，它就会保持缓存直到发生下列情况：
+
+    用户清空浏览器缓存
+    manifest 文件被修改（参阅下面的提示）
+    由程序来更新应用缓存
+
+
+    <script>
+        // 用来描述客户端网络是否正常
+        console.log(navigator.onLine);
+
+        // window也有对应的事件
+        window.addEventListener('online', () => {
+            console.log('online');
+        })
+        window.addEventListener('offline', () => {
+            console.log('offline');
+        })
+
+        /**
+         * 如需启用应用程序缓存，请在文档的 <html> 标签中包含 manifest 属性：
+         * 每个指定了 manifest 的页面在用户对其访问时都会被缓存。如果未指定 manifest 属性，则页面不会被缓存（除非在 manifest 文件中直接指定了该页面）。
+
+
+         * 
+        */
+    </script>
+</body>
+
+</html>

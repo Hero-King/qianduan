@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intersection observer</title>
+
+    <style>
+      body {
+        margin: 0;
+      }
+      .content {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .target {
+        height: 20px;
+        background-color: #88bc73;
+      }
+      #app {
+        height: 400px;
+        overflow: auto;
+      }
+      .show {
+        background-color: aquamarine;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <div style="height: 400px; overflow: auto">
+        <div style="height: 450px; background-color: #ccc"></div>
+        <div class="qing" style="height: 300px; background-color: aqua"></div>
+      </div>
+      <div id="app"></div>
+    </div>
+
+    <script>
+      const ob = new IntersectionObserver(
+        (entries) => {
+          console.log(entries, "entries");
+        },
+        {
+          root: document.body.firstElementChild,
+          threshold: 0.5, // 定义进入的比例，达到0.5则处罚回调
+        }
+      );
+
+      ob.observe(document.querySelector(".qing"));
+    </script>
+    <script>
+      const app = document.getElementById("app");
+      app.innerHTML = new Array(100)
+        .fill("<div class='target'></div>")
+        .join("");
+
+      const observer = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((i) => {
+            i.intersectionRatio > 0.01 && i.target.classList.add("show");
+          });
+        },
+        {
+          root: app,
+          threshold: 0.01
+        }
+      );
+
+      //   监听很多目标元素
+      document.querySelectorAll(".target").forEach((i) => observer.observe(i));
+    </script>
+  </body>
+</html>
