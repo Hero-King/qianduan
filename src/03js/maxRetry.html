@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
+  </head>
+  <body>
+    <button onclick="commonUse()">常规方式发送请求</button>
+    <button onclick="maxRetryClick()">maxRetry发送请求</button>
+    <button onclick="maxRetry2Click()">maxRetry2方式发送请求</button>
+    <button onclick="maxRetry3Click()">async await方式发送请求</button>
+    <script>
+      // 不太优雅的逻辑
+      const maxRetry = (fn, retry = 3, delay = 5, immediate = true) => {
+        return new Promise((resolve, reject) => {
+          if (!immediate) {
+            setTimeout(() => {
+              const p = fn()
+                .then((res) => {
+                  resolve(res);
+                })
+                .catch((err) => {
+                  if (retry > 0) {
+                    maxRetry(fn, retry - 1, delay, false).then(resolve);
+                  } else {
+                    reject(err);
+                  }
+                });
+            }, delay * 1000);
+          } else {
+            const p = fn()
+              .then((res) => {
+                resolve(res);
+              })
+              .catch((err) => {
+                if (retry > 0) {
+                  maxRetry(fn, retry - 1, delay, false).then(resolve);
+                } else {
+                  reject(err);
+                }
+              });
+          }
+        });
+      };
+
+      function sleep(interval) {
+        return new Promise((res) => {
+          setTimeout(res, 1000 * interval);
+        });
+      }
+      //   这种方式very good
+      const maxRetry2 = (fn, retry = 3, delay = 5) => {
+        return fn().catch((err) => {
+          if (retry > 0) {
+            return sleep(delay).then((res) => maxRetry2(fn, retry - 1, delay));
+          } else {
+            return Promise.reject(err);
+          }
+        });
+      };
+
+      //   美滋滋
+      const maxRetry3 = async (fn, retry, delay) => {
+        let res = null;
+        for (let i = 0; i < retry; i++) {
+          try {
+            const data = await fn();
+            if (data) {
+              res = data;
+              break;
+            }
+          } catch (error) {
+            if (i + 1 == retry) {
+              return Promise.reject(error);
+            } else {
+              await sleep(delay);
+            }
+          }
+        }
+        return res;
+      };
+
+      const getPackageJson = () => {
+        return axios.get("/package.json");
+      };
+
+      const handlePromise = (pro) => {
+        if (!(pro instanceof Promise)) {
+          throw new Error("use error, please input promise");
+        }
+        pro
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log("promise catch");
+            console.error(err);
+          });
+      };
+      function commonUse() {
+        handlePromise(getPackageJson());
+      }
+
+      function maxRetryClick() {
+        handlePromise(maxRetry(getPackageJson, 5, 5));
+      }
+      function maxRetry2Click() {
+        handlePromise(maxRetry2(getPackageJson, 5, 1));
+      }
+      function maxRetry3Click() {
+        handlePromise(maxRetry3(getPackageJson, 5, 3));
+      }
+    </script>
+  </body>
+</html>
