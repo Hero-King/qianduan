@@ -375,8 +375,8 @@ parseFloat()只解析十进制值，因此不能指定底数。
        * 2. 翻译二进制文件成 index.html
        * 3. HTMl解析器 解析文件   词法解析(生成document对象)  生成节点Node  生成DOM树
        * 解析过程中，如果遇到link标签，使用browser 进程的网络线程去请求文件 （并行的）
-       * 遇到script 标签，默认属性会停止构建dom 执行js文件      async 不停止渲染，下载完成不需要按顺序执行
-       * defer  不停止渲染，渲染完成后执行，在domcontentloaded之前执行完 多个defer 会按顺序执行
+       * 遇到script 标签，默认属性会停止构建dom 执行js文件      async 不停止渲染，下载完成不需要按顺序执行(优先)
+       * defer(次之)  不停止渲染，渲染完成后执行，在domcontentloaded之前执行完 多个defer 会按顺序执行
        * 4. css解析器构建css   每个css文件解析成样式表对象cssstylesheet 包含很多cssrule  在解析词法  生成css树
        * 5. 构建render树 ：  DOM树 + css树
        * 6. 布局layout: 计算每个dom节点的盒子大小和页面的坐标，

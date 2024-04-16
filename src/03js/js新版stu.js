@@ -32,14 +32,11 @@ script 标签位置
 导致页面渲染的明显延迟，在此期间浏览器窗口完全空白。
 为解决这个问题，现代 Web 应用程序通常将所有 JavaScript 引用放在<body>元素中的页面内容后面，
 
-为<script>元素定义了一个叫 defer 的属性。这个属性表示脚本在执行的时候不会改
-变页面的结构。也就是说，脚本会被延迟到整个页面都解析完毕后再运行。因此，在<script>元素上
-设置 defer 属性，相当于告诉浏览器立即下载，但延迟执行。
+为<script>元素定义了一个叫 defer 的属性。这个属性表示脚本异步下载,在Dom结构(渲染引擎)解析完,DomContentLoad事件前执行完成
 <!DOCTYPE html>
 <html>
  <head>
  <title>Example HTML Page</title>
- <script defer src="example1.js"></script>
  <script defer src="example2.js"></script>
  </head>
  <body>
@@ -49,7 +46,7 @@ script 标签位置
 虽然这个例子中的<script>元素包含在页面的<head>中，但它们会在浏览器解析到结束的
 </html>标签后才会执行。
 
-标记为 async 的脚本并不保证能按照它们出现的次序执行
+标记为 async 的脚本并不保证能按照它们出现的次序执行, 下载时不影响Dom结构解析, 用于加载完全独立的模块场景
 
 <script>标签还是要放到最后 </body>上面  性能最好 不影响渲染 webpack打包后就是这样的</script>
 
