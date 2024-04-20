@@ -95,7 +95,11 @@
         // 新窗口的名称。该字符串可以用来作为超链接 <a> 或表单 <form> 元素的目标属性值。字符串中不能含有空白字符。注意：strWindowName 并不是新窗口的标题。
 
         // 如果已经存在以 strWindowName 为名称的窗口，则不再打开一个新窗口，而是把 strUrl 加载到这个窗口中。在这种情况下，方法的返回值是这个已经打开的窗口，并忽略参数 strWindowFeatures 。strUrl设为空字符串时，可以在不改变窗口地址的情况下获得一个已经打开的同名窗口的引用。如果要在每次调用 window.open()时都打开一个新窗口，则要把参数 strWindowName 设置为 _blank。
-        newHtml = window.open("./this.html", "this.html","height: 40,width: 40, top: 40, status: yes");
+        newHtml = window.open(
+          "./this.html",
+          "this.html",
+          "height: 40,width: 40, top: 40, status: yes"
+        );
         console.log(newHtml);
         // newHtml 挂载了this.html的很多方法 可以直接调用  newHtml.name就是this.html
         console.log(newHtml.parent === window); // false newHtml.parent指向新标签页的自己window
@@ -116,11 +120,13 @@
         console.log("---------------", "开始发送消息", "--------------------");
 
         // 想让谁接受消息 就拿到那个window对象,使用window对象的postMessage方法发送消息
-        newHtml.postMessage("发消息给孩子了", "*");
+        newHtml.postMessage("发消息给孩子了", location.origin);
         // window.postMessage("我被点击了", "*")        // 这个消息发送出去会被自己接受 因为是使用的当前窗口window发送的
       });
       window.addEventListener("message", function (e) {
-        console.log('windows收到消息',e.data);
+        if (e.origin === location.origin) {
+          console.log("windows收到消息", e.data);
+        }
       });
 
       console.log(

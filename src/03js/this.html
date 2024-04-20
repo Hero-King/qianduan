@@ -10,8 +10,7 @@
     this.html
     <a href="this.html" target="_parent">href=this.html target=_parent</a>
     <script>
-
-      console.log(window.opener, "window.opener")
+      console.log(window.opener, "window.opener");
 
       class C {
         constructor(props) {
@@ -65,9 +64,10 @@
       // 事件处理函数中,this指向触发事件的目标对象
 
       window.addEventListener("message", function (e) {
-        console.log("---------------", "e", "--------------------");
-        console.log(e);
-        window.opener.postMessage("孩子发消息", "*");
+        if (e.origin === location.origin) {
+          console.log("---------------", "e", "--------------------");
+          window.opener.postMessage("孩子发消息", location.origin);
+        }
       });
     </script>
   </body>
