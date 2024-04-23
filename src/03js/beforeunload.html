@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.js"></script>
+  </head>
+  <body>
+    <h2>如果用户没有和页面交互, beforeunload事件不生效</h2>
+    <p>beforeunload</p>
+    <button onclick="syncPost()">syncPost ajax</button>
+    <button onclick="post()">Post ajax</button>
+
+    <h3>总结</h3>
+    <ul>
+      <li>下述代码尝试使用ajax的同步和异步方式请求</li>
+      <li>在beforeunload事件中发送Ajax 场景没办法保证一定能够发送出去</li>
+      <li>如果实在需要, 用navigator.sendBeacon(rul,data)发送post请求</li>
+      <li>
+        sendBeacon 如果成功进入浏览器的发送队列后, 会返回true;
+        如果受到队列总数、数据大小的限制后, 会返回false。但返回ture,
+        只是表示进入了发送队列, 浏览器会尽力保证发送成功, 但是否成功了,
+        不会再有任何返回值。
+      </li>
+    </ul>
+
+    <script>
+      function commonUse() {
+        // 为了兼容性, 需要以下写法
+        window.addEventListener("beforeunload", (e) => {
+          // 并非所有浏览器都支持此方法,  而有些浏览器需要事件处理程序实现两个遗留方法中的一个作为代替; 1. 将字符串分配给事件的returnValue属性 2. 从事件处理程序返回一个字符串。
+          e.preventDefault(); // 根据规范,  要显示确认对话框,  事件处理程序需要在事件上调用preventDefault()。
+          const message = "你确定要离开吗";
+          e.returnValue = message;
+          return message;
+        });
+      }
+
+      //   commonUse(); // 阻止用户刷新/关闭浏览器
+      // beforeunloadSyncAjax();
+      beforeunloadAjax();
+
+      function beforeunloadSyncAjax() {
+        window.addEventListener("beforeunload", (e) => {
+          //   e.preventDefault();
+          syncPost(); // chrome报错; 不能在 beforeunload事件中发送同步ajax
+          console.log("beforeunload run");
+        });
+      }
+      function beforeunloadAjax() {
+        window.addEventListener("beforeunload", (e) => {
+          //   e.preventDefault();
+          post(); // 异步请求, 刷新能将ajax发送后端; 关闭页签; 关闭浏览器存在发送不到后端的情况
+
+          console.log("beforeunload run");
+        });
+      }
+
+      const ajaxConfig = {
+        method: "POST",
+        url: "http://localhost:3000/",
+        success(data) {
+          console.log("success", data);
+        },
+        error(xhr, status, error) {
+          console.error(error);
+        },
+      };
+
+      //   先打印 ajax结果, 在打印 post run
+      function syncPost() {
+        $.ajax({
+          async: false, // ajax为同步请求
+          ...ajaxConfig,
+        });
+        console.log("post run");
+      }
+
+      function post() {
+        $.ajax({
+          ...ajaxConfig,
+        });
+      }
+    </script>
+  </body>
+</html>
