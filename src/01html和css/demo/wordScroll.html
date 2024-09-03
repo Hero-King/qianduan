@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文字滚动,公告滚动</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        ul>li {
+            margin: 0 20px;
+        }
+
+        nav {
+            border-bottom: 1px solid #ccc;
+        }
+
+        .text-scroll-container {
+            width: 300px;
+            overflow: hidden;
+            white-space: nowrap;
+            background-color: blanchedalmond;
+        }
+
+        /* 初始文本在右侧，最终文本在左侧 */
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .scroll-text {
+            animation: scroll-text 10s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root flex flex-col h-lvh overflow-hidden">
+        <nav class="nav h-[50px] flex items-center justify-around px-[20px]">
+            <img src="/public/favicon.ico" class="logo" style="height: 40px; width: 40px;"></img>
+            <div class="mx-auto ml-20 text-scroll-container">
+                <div class="scroll-text">我们的数据都已经加密处理, 请不要泄露数据</div>
+            </div>
+            <ul class="flex">
+                <li>今日热点</li>
+                <li>短视频</li>
+                <li>新闻播报</li>
+                <li>用户名</li>
+            </ul>
+        </nav>
+        <div class="content flex-1">content</div>
+    </div>
+</body>
+
+</html>

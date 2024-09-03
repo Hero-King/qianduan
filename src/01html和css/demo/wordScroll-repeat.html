@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuous Text Scroll</title>
+    <!-- 原理参考： https://blog.csdn.net/songhongchuang/article/details/115122810 -->
+    <style>
+        .scroll-container {
+            width: 300px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            padding: 10px 0 ;
+            background-color: #f4f4f4;
+            position: relative;
+            margin: 0 auto;
+            min-height: 50px;
+        }
+
+        .scroll-content {
+            display: flex;
+            will-change: transform;
+            width: fit-content;
+            animation: scroll-content 4s linear infinite;
+        }
+
+        .scroll-text {
+            flex-shrink: 0;
+            padding-right: 20px;
+            white-space: nowrap;
+        }
+
+        @keyframes scroll-content {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="scroll-container">
+    <div class="scroll-content">
+        <div class="scroll-text">
+            This is the scrolling text. It will continuously scroll from right to left.
+        </div>
+        <div class="scroll-text">
+            This is the scrolling text. It will continuously scroll from right to left.    
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
