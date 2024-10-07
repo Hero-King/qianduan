@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: flex;
+        text-align: center;
+      }
+      .container > div {
+        padding: 0 20px;
+      }
+      img {
+        width: 200px;
+      }
+      #origin {
+        filter: unset !important;
+      }
+      .blur {
+        filter: blur(5px);
+      }
+      .contrast {
+        filter: contrast(200%);
+      }
+      .grayscale {
+        filter: grayscale(100%);
+      }
+      .drop-shadow {
+        filter: drop-shadow(10px 10px 5px #444);
+      }
+
+      /* backdrop-filter CSS 属性可以让你为一个元素后面区域添加图形效果（如模糊或颜色偏移）。因为它适用于元素背后的所有元素，为了看到效果，必须使元素或其背景至少部分透明。 */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <p>原图效果</p>
+        <img
+          id="origin"
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg"
+        />
+      </div>
+      <div>
+        <p>filter-blur 模糊</p>
+        <img
+          class="blur"
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg"
+        />
+      </div>
+      <div>
+        <p>filter-contrast 对比度</p>
+        <img
+          class="contrast"
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg"
+        />
+      </div>
+      <div>
+        <p>filter-grayscale 灰度</p>
+        <img
+          class="grayscale"
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg"
+        />
+      </div>
+      <div>
+        <p>filter-drop-shadow 阴影</p>
+        <img
+          class="drop-shadow"
+          src="https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg"
+        />
+      </div>
+    </div>
+  </body>
+</html>
