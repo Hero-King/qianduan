@@ -8,6 +8,10 @@
 
   <body>
     postmessage
+    一个窗口可以获得对另一个窗口的引用(例如，通过targetWindow=window.opener)，然后使用targetWindow.postMessage()在其上派发MessageEvent;
+    监听时使用window.addEventListener("message",(e)=>{}, false),
+    必须保证监听的window和发送消息的window相同
+
     <script>
       window.isParent = false;
       window.addEventListener(

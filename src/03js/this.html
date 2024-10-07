@@ -65,7 +65,12 @@
 
       window.addEventListener("message", function (e) {
         if (e.origin === location.origin) {
-          console.log("---------------", "e", "--------------------");
+          console.log(
+            "孩子收到消息了",
+            "---------------",
+            e,
+            "--------------------"
+          );
           window.opener.postMessage("孩子发消息", location.origin);
         }
       });

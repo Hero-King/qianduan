@@ -1,3 +1,13 @@
+<!--
+ * @Author: HeroKing-hack 838774057@qq.com
+ * @Date: 2024-04-12 20:26:20
+ * @LastEditors: HeroKing-hack 838774057@qq.com
+ * @LastEditTime: 2024-10-07 18:08:45
+ * @FilePath: /qianduanstu/src/03js/跨域.html
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,53 +18,57 @@
 
   <body>
     <div id="root">root</div>
-    <a href="http://ruanyifeng.com/blog/2016/04/same-origin-policy.html"
-      >同源策略详解</a
-    >
-    同源策略限制了一下行为： Cookie、LocalStorage 和 IndexDB 无法读取 DOM 和 JS
-    对象无法获取 Ajax请求发送不出去
-    浏览器的同源策略目的是为了保护用户的信息安全,为了防止恶意网站窃取用户在浏览器上的数据,如果不是同源的站点,将不能进行如下操作
-    : Cookie、LocalStorage 和 IndexDB 无法读写 DOM 和 Js对象无法获得
-    AJAX请求不能发送 #1.2.1 不能读写Cookie、Session Storage、Local
-    Storage、Cache、Indexed DB
-    用户登录某个站点,站点后端服务器验证账号密码正确之后,会返回Cookie、Token
-    或者是用户名和密码给客户端浏览器,浏览器会将这些个人数据保存到Cookie、Session
-    Storage、Local Storage、Cache、Indexed
-    DB其中的一个(具体怎么保存,取决网站开发人员),如果浏览器没有同源策略,当用户访问恶意网站时,恶意网站就可以通过脚本获取用户的数据,这是极其不安全的行为
-    所以在不是同源的情况下,不能读写其他站点设置的Cookie、Session Storage、Local
-    Storage、Cache、Indexed DB #1.2.2 DOM
-    来自一个源的js只能读写自己源的DOM树不能读取其他源的DOM树 #1.2.3 异步请求
-    一般而言来自一个源的js只能向自己源的接口发送请求,不能向其他源的接口发送请求。当然其实本质是，一方面浏览器发现一个源的js向其他源的接口发送请求时会自动带上Origin头标识来自的源，让服务器能通过Origin判断要不要向应；另一方面，浏览器在接收到响应后如果没有发现Access-Control-Allow-Origin允许发送请求的域进行请求那也不允许解析
-    1、普通跨域请求：只需服务器端设置Access-Control-Allow-Origin
-    2、带cookie跨域请求：前后端都需要进行设置 服务端设置: //
-    允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
-    response.setHeader("Access-Control-Allow-Origin", "http://www.domain1.com");
-    //
-    允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
-    response.setHeader("Access-Control-Allow-Credentials", "true"); //
-    提示OPTIONS预检时，后端需要设置的两个常用自定义头
-    response.setHeader("Access-Control-Allow-Headers",
-    "Content-Type,X-Requested-With"); ———————————————— 1.跨域问题的由来
-    何谓同源:URL由协议、域名、端口和路径组成，如果两个URL的协议、域名和端口相同，则表示它们同源。浏览器的同源策略，从一个域上加载的脚本不允许访问另外一个域的文档属性
-    ，是浏览器上为安全性考虑实施的非常重要的安全策略。举个例子：比如一个恶意网站的页面通过iframe嵌入了银行的登录页面（二者不同源），如果没有同源限制，恶意网页上的javascript脚本就可以在用户登录银行的时候获取用户名和密码。
-    2.跨域的影响范围
-    <!-- 在浏览器中，<script>、<img>、<iframe>、<link>等标签都可以加载跨域资源，而不受同源限制， -->
-    但浏览器会限制脚本中发起的跨域请求。比如，使用 XMLHttpRequest
-    对象和Fetch发起 HTTP 请求就必须遵守同源策略。 3. 解决措施 JSONP
-    nginx反向代理, 同源策略是客户端的,在代理层不适用 cors 跨域资源共享 设置
-    Access-Control-Allow-Origin -->
-    https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS
+    <a href="http://ruanyifeng.com/blog/2016/04/same-origin-policy.html">
+      同源策略详解
+    </a>
+    <p>
+      同源策略限制了一下行为： Cookie、LocalStorage 和 IndexDB 无法读取 DOM 和
+      JS 对象无法获取 Ajax请求发送不出去
+      浏览器的同源策略目的是为了保护用户的信息安全,为了防止恶意网站窃取用户在浏览器上的数据,如果不是同源的站点,将不能进行如下操作
+      : Cookie、LocalStorage 和 IndexDB 无法读写 DOM 和 Js对象无法获得
+      AJAX请求不能发送 #1.2.1 不能读写Cookie、Session Storage、Local
+      Storage、Cache、Indexed DB
+      用户登录某个站点,站点后端服务器验证账号密码正确之后,会返回Cookie、Token
+      或者是用户名和密码给客户端浏览器,浏览器会将这些个人数据保存到Cookie、Session
+      Storage、Local Storage、Cache、Indexed
+      DB其中的一个(具体怎么保存,取决网站开发人员),如果浏览器没有同源策略,当用户访问恶意网站时,恶意网站就可以通过脚本获取用户的数据,这是极其不安全的行为
+      所以在不是同源的情况下,不能读写其他站点设置的Cookie、Session
+      Storage、Local Storage、Cache、Indexed DB #1.2.2 DOM
+      来自一个源的js只能读写自己源的DOM树不能读取其他源的DOM树 #1.2.3 异步请求
+      一般而言来自一个源的js只能向自己源的接口发送请求,不能向其他源的接口发送请求。当然其实本质是，一方面浏览器发现一个源的js向其他源的接口发送请求时会自动带上Origin头标识来自的源，让服务器能通过Origin判断要不要向应；另一方面，浏览器在接收到响应后如果没有发现Access-Control-Allow-Origin允许发送请求的域进行请求那也不允许解析
+      1、普通跨域请求：只需服务器端设置Access-Control-Allow-Origin
+      2、带cookie跨域请求：前后端都需要进行设置 服务端设置: //
+      允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
+      response.setHeader("Access-Control-Allow-Origin",
+      "http://www.domain1.com"); //
+      允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
+      response.setHeader("Access-Control-Allow-Credentials", "true"); //
+      提示OPTIONS预检时，后端需要设置的两个常用自定义头
+      response.setHeader("Access-Control-Allow-Headers",
+      "Content-Type,X-Requested-With"); ———————————————— 1.跨域问题的由来
+      何谓同源:URL由协议、域名、端口和路径组成，如果两个URL的协议、域名和端口相同，则表示它们同源。浏览器的同源策略，从一个域上加载的脚本不允许访问另外一个域的文档属性
+      ，是浏览器上为安全性考虑实施的非常重要的安全策略。举个例子：比如一个恶意网站的页面通过iframe嵌入了银行的登录页面（二者不同源），如果没有同源限制，恶意网页上的javascript脚本就可以在用户登录银行的时候获取用户名和密码。
+      2.跨域的影响范围
+      在浏览器中，script、img、iframe、link等标签都可以加载跨域资源，而不受同源限制，
+      但浏览器会限制脚本中发起的跨域请求。比如，使用 XMLHttpRequest
+      对象和Fetch发起 HTTP 请求就必须遵守同源策略。 3. 解决措施 JSONP
+      nginx反向代理, 同源策略是客户端的,在代理层不适用 cors 跨域资源共享 设置
+      Access-Control-Allow-Origin
+      https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS
+    </p>
 
-    <!-- 访问本文件的方式: http://127.0.0.1:5501/src/03js/%E8%B7%A8%E5%9F%9F.html -->
     <!-- 同源的 -->
-    <!-- <iframe id="myiframe" width="100%" src="http://127.0.0.1:5501/src/03js/postmessage.html"> -->
-    <!-- 非同源的 -->
     <iframe
       id="myiframe"
       width="100%"
+      src="http://127.0.0.1:5500/src/03js/postmessage.html"
+    ></iframe>
+    <!-- 非同源的 -->
+    <!-- <iframe
+      id="myiframe"
+      width="100%"
       src="http://localhost:5501/src/03js/postmessage.html"
-    >
-    </iframe>
+    /> -->
 
     <script>
       // 查看当前域的cookie  没有设置cookie
@@ -78,14 +92,12 @@
     <!-- <script src="./跨域.js"></script> -->
     <!-- <script src="./跨域2.js"></script> -->
 
-    <!-- <script src="http://192.168.1.200/跨域.js"></script> -->
-    <!-- <script src="http://192.168.1.200/跨域2.js"></script> -->
     <!-- 打印: 
         获取id为root的元素:  <div id=​"root">​</div>​
         我要去获取跨域脚本1 创建的div了 <div id=​"kuayujs-create">​我是跨域.js 创建的div​</div>​
     -->
 
-    <script src="http://localhost:5501/src/03js/跨域.js"></script>
+    <script src="http://localhost:5500/src/03js/跨域.js"></script>
     <script src="http://192.168.1.200/跨域2.js"></script>
   </body>
 </html>
