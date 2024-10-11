@@ -71,7 +71,7 @@
             e,
             "--------------------"
           );
-          window.opener.postMessage("孩子发消息", location.origin);
+          e.source.postMessage("孩子发消息方式", location.origin);
         }
       });
     </script>
