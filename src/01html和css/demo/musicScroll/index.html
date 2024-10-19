@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>歌词滚动</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        text-align: center;
+        background-color: rgb(63, 61, 61);
+        font-size: 16px;
+      }
+      audio {
+        margin: 20px 0;
+        width: 50vw;
+      }
+      .container {
+        height: 600px;
+        overflow: hidden;
+      }
+      .content {
+        color: #888;
+        transition: 0.4s;
+      }
+      .text {
+        height: 30px;
+        line-height: 30px;
+      }
+      .text.active {
+        color: white;
+        transform: scale(1.2);
+      }
+    </style>
+  </head>
+  <body>
+    <audio id="audio" src="./assets/music.mp3" controls></audio>
+    <div class="container">
+      <div class="content"></div>
+    </div>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
