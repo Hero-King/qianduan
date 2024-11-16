@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常规布局实现</title>
+    <style>
+      .container {
+        height: 400px;
+      }
+      .flex{
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>三栏布局</h2>
+    <div class="container flex">
+        <div style="flex: 1;">1</div>
+        <div style="flex: 1;">2</div>
+        <div style="flex: 1;">3</div>
+    </div>
+
+    <h2>三行三列</h2>
+    <div class="container flex" style="flex-wrap: wrap;">
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+        <div style="flex: 33.33333%;">1</div>
+    </div>
+
+    <hr/>
+
+    <div class="container" style="display: grid;grid-template-columns: 1fr 1fr 1fr;">
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+        <div class="grid-item">1</div>
+    </div>
+  </body>
+</html>
