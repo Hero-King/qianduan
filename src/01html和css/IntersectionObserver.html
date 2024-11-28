@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片懒加载</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f7f7f7;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        width: 90%;
+        max-width: 800px;
+      }
+
+      .image-item {
+        width: 100%;
+        padding-top: 100%; /* 保持图片比例为正方形 */
+        position: relative;
+        background-color: #e0e0e0; /* 占位背景色 */
+        overflow: hidden;
+      }
+
+      .image-item img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+      .loading{
+        width: 50px;
+        height: 50px;
+        border: 4px solid #ccc;
+        border-radius: 50%;
+        border-top-color: dodgerblue;
+        margin: 10px 0 50px;
+        animation: rotate 1s linear infinite;
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-grid">
+      <!-- 示例图片，真实加载时使用 data-src -->
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片1" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片2" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片3" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片4" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片5" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片6" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片7" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片8" />
+      </div>
+      <div class="image-item">
+        <img data-src="https://picsum.photos/300" alt="图片9" />
+      </div>
+    </div>
+    <div class="loading"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // 图片懒加载
+        const images = document.querySelectorAll(".image-item img");
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              const src = img.getAttribute("data-src");
+              if (src) {
+                img.src = src; // 设置真实图片地址
+                img.onload = () => (img.style.opacity = 1); // 图片加载完成后显示
+              }
+              observer.unobserve(img); // 停止观察已经加载的图片
+            }
+          });
+        });
+        images.forEach((img) => observer.observe(img));
+
+        // 滚动加载
+        const domGrid = document.querySelector(".image-grid");
+        let isLoading = false;
+        const loadingObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if(isLoading){
+                return
+            }
+            isLoading = true
+            if (entry.isIntersecting) {
+              for (let i = 0; i < 3; i++) {
+                const div = document.createElement("div");
+                div.className = "image-item";
+                const img = document.createElement("img");
+                img.src = "https://picsum.photos/300";
+                div.appendChild(img);
+                domGrid.appendChild(div);
+                observer.observe(img);
+              }
+            }
+            isLoading = false
+          })
+        }, {
+            threshold: 1,
+            rootMargin: "0px 0px -20px 0px" // 视口底部缩短20px
+        })
+        loadingObserver.observe(document.querySelector(".loading"))
+      });
+    </script>
+  </body>
+</html>
