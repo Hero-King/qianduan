@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图片懒加载 & 定位到上一次浏览的位置</title>
+  </head>
+  <body>
+    <div id="image-container"></div>
+
+    <script>
+      const width = Math.min(window.innerHeight, window.innerWidth);
+      const imgUrlList = [];
+      function generateImages(count) {
+        const container = document.getElementById("image-container");
+        for (let i = 0; i < count; i++) {
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = width;
+          const ctx = canvas.getContext("2d");
+
+          // 绘制灰色背景
+          ctx.fillStyle = "gray";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // 绘制数字
+          ctx.fillStyle = "white";
+          ctx.font = "bold 100px Arial";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(i, canvas.width / 2, canvas.height / 2);
+
+          // 将 Canvas 转换为图片
+          const img = document.createElement("img");
+          const imgSrc = canvas.toDataURL("image/png"); // 生成 base64 图片
+          imgUrlList.push(imgSrc);
+          // img.alt = `Image ${i}`;
+          img.width = width;
+          img.height = width;
+          img.setAttribute("id", i);
+
+          // 挂载到 DOM
+          container.appendChild(img);
+        }
+      }
+      generateImages(10); // 生成10张图片
+
+      // 先滚动，在监听懒加载
+      const url = new URL(window.location.href);
+      const activeId = url.searchParams.get("id");
+      if (activeId) {
+        const img = document.getElementById(activeId);
+        img.scrollIntoView();
+      } else {
+        window.scrollTo(0, localStorage.getItem("scrollY") || 0);
+      }
+      window.addEventListener("beforeunload", function () {
+        localStorage.setItem("scrollY", window.scrollY);
+      });
+
+      // 图片懒加载
+      const os = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              const id = img.getAttribute("id");
+              const imgSrc = imgUrlList[id];
+              img.src = imgSrc;
+              os.unobserve(img);
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: "200px 0px", // 用于定义观察区域的边界; rootMargin: "100px"：观察区域向四周扩展 100px
+        }
+      );
+      const imgs = document.querySelectorAll("img");
+      imgs.forEach((img) => {
+        os.observe(img);
+      });
+    </script>
+  </body>
+</html>

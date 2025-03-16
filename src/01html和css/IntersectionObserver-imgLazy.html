@@ -135,7 +135,7 @@
             isLoading = false
           })
         }, {
-            threshold: 1,
+            threshold: 1, // 监听目标与边界盒交叉区域的比例值，0~1；若指定值为0.0，则意味着监听元素即使与根有1像素交叉，此元素也会被视为可见. 若指定值为1.0，则意味着整个元素都在可见范围内时才算可见。阈值的默认值为0.0
             rootMargin: "0px 0px -20px 0px" // 视口底部缩短20px
         })
         loadingObserver.observe(document.querySelector(".loading"))
