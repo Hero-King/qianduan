@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch使用</title>
+    <!-- 引入Cookies -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/js-cookie/3.0.5/js.cookie.js"></script>
+  </head>
+  <body>
+    <script>
+      Cookies.set("name", "mockName");
+      Cookies.set("key", "value", {
+        expires: 7,
+        path: "/src",
+        domain: "127.0.0.1",
+      });
+      fetch("http://127.0.0.1:3000/package.json", {
+        credentials: "include", // 跨域请求是否携带Cookie，与mode: "cors" 不能同时使用
+        credentials: "same-origin", //
+        // mode: "no-cors",  // 仅允许简单请求 用于获取资源（如图片、脚本） 响应被视为 “不透明”（opaque），无法访问响应数据
+        mode: "cors", // 允许跨域请求
+        // mode: "same-origin", // 仅允许同源请求
+
+        // 添加header
+        headers: {
+          "Content-Type": "application/json", // 构成非简单请求，会触发浏览器的option请求
+          "Content-Type": "application/x-www-form-urlencoded", // 简单请求
+        },
+      })
+        .then(async (res) => {
+          console.log(res.ok); // true / false
+          console.log(res.status); // 200 等HTTP状态码
+          console.log(res.statusText); // 成功时 "ok"
+          const json = await res.json();
+          console.log(json);
+        })
+        .catch((err) => {
+          console.log(err, "服务不可用");
+        });
+    </script>
+  </body>
+</html>

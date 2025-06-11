@@ -4,7 +4,8 @@
   "description": "A template for HTML and CSS",
   "main": "index.html",
   "scripts": {
-    "start": "serve"
+    "start": "serve --cors -l tcp://127.0.0.1:3000",
+    "start:noCors": "serve -l tcp://127.0.0.1:3000"
   },
   "keywords": [
     "html",
